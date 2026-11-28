@@ -38,15 +38,66 @@
   .card td { padding: 4px 0; }
   .card td:first-child { opacity: 0.75; width: 46%; }
   kbd { display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-bottom-width: 2px; border-radius: 5px; padding: 0 6px; font-family: inherit; font-size: 13px; margin-right: 2px; }
+  .card.wide { max-width: 600px; }
+  #title { justify-content: flex-end; padding: 16px 4vw; box-sizing: border-box; overflow-y: auto; background: linear-gradient(90deg, rgba(2,12,22,0) 25%, rgba(2,12,22,0.78)); }
+  #title .card { margin: auto 0; }
+  .sect { margin: 16px 0 8px; font-size: 13px; letter-spacing: 2px; opacity: 0.75; display: flex; justify-content: space-between; align-items: baseline; }
+  .sect .hint { letter-spacing: 0; font-size: 12px; }
+  .pick-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .pick { text-align: left; font: inherit; color: inherit; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 10px 12px; cursor: pointer; }
+  .pick:hover { background: rgba(255,255,255,0.09); }
+  .pick.on { border-color: var(--accent); background: rgba(63,224,255,0.12); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .pick .nm { font-weight: 800; font-size: 17px; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+  .pick .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; box-shadow: 0 0 0 2px rgba(255,255,255,0.25); }
+  .pick .ty { font-size: 12px; opacity: 0.8; margin: 2px 0 6px; }
+  .pick .ds { font-size: 12px; opacity: 0.7; line-height: 1.4; }
+  #machinedesc { font-size: 13px; opacity: 0.85; margin-top: 8px; min-height: 1.4em; }
+  .stat { display: grid; grid-template-columns: 4.2em 1fr; align-items: center; gap: 6px; font-size: 11px; opacity: 0.9; margin: 1px 0; }
+  .stat .bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; }
+  .stat .bar i { height: 6px; border-radius: 2px; background: rgba(255,255,255,0.15); }
+  .stat .bar i.f { background: linear-gradient(90deg, #5fe8ff, #a98cff); }
+  .courses { grid-template-columns: 1fr; }
+  @media (min-width: 1000px) {   /* 横に広い画面では 4 機を 1 列に並べ、スタートまでスクロールせずに届くようにする */
+    .card.wide { max-width: 720px; }
+    #machines { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  .courses .pick { display: flex; gap: 12px; align-items: center; }
+  .courses canvas { flex: none; width: 60px; height: 60px; border-radius: 8px; background: rgba(0,0,0,0.25); }
+  #title .card h1 { font-size: 32px; }
+  #title .card .sub { margin-bottom: 4px; }
+  /* 選択画面ではレースの表示（周回・速度・コースマップ）を出さない */
+  .intitle .hud { display: none !important; }
+  details.howto { margin-top: 14px; font-size: 14px; }
+  details.howto summary { cursor: pointer; opacity: 0.8; }
+  details.howto table { margin-top: 8px; }
+  .btn.pm { outline: 3px solid transparent; outline-offset: 2px; }
+  .btn.pm.sel { outline-color: #fff; }
+  .btn.btn2 { margin-top: 8px; background: rgba(255,255,255,0.12); color: var(--hud); font-size: 15px; padding: 9px; }
   .btn { margin-top: 20px; display: block; width: 100%; padding: 12px; font-size: 18px; font-weight: 800; border: 0; border-radius: 10px; cursor: pointer; color: #04202f; background: linear-gradient(90deg, #5fe8ff, #a98cff); }
   .hidden { display: none !important; }
   /* 自動走行（index の背景）では、速度とコースマップだけを出す */
   .attract .hud:not(#speed):not(#minimap), .attract .overlay { display: none !important; }
+  /* 起動時のデモ（AI の自動走行）：速度とコースマップだけを出し、PRESS ENTER を重ねる */
+  .demo .hud:not(#speed):not(#minimap), .demo #title, .demo #result { display: none !important; }
+  #press { display: none; position: fixed; inset: 0; flex-direction: column; align-items: center; justify-content: space-between; padding: 9vh 16px 13vh; cursor: pointer;
+    background: linear-gradient(180deg, rgba(2,12,22,0.45), rgba(2,12,22,0) 30%, rgba(2,12,22,0) 65%, rgba(2,12,22,0.55)); }
+  #press .bottom { text-align: center; }
+  .demo #press { display: flex; }
+  .attract #press { display: none !important; }
+  #press h1 { margin: 0; font-size: clamp(40px, 8vw, 88px); letter-spacing: 6px; font-weight: 900; text-align: center;
+    background: linear-gradient(90deg, #7ff0ff, #b9a2ff); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 14px rgba(0,0,0,0.45)); }
+  #press .go { font-size: clamp(20px, 3vw, 30px); font-weight: 800; letter-spacing: 8px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.6); animation: blink 1.1s steps(1, end) infinite; }
+  #press .tap { margin-top: 10px; font-size: 13px; opacity: 0.75; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { #press .go { animation: none; } }
   @media (max-width: 640px) {
     #speed .num { font-size: 48px; }
     #boostbar { width: 160px; }
     #minimap { display: none; }
     #center { font-size: 64px; }
+    #title { justify-content: center; background: radial-gradient(ellipse at center, rgba(4,30,50,0.55), rgba(2,12,22,0.85)); }
+    .card { padding: 20px 18px; }
+    .card h1 { font-size: 30px; }
   }
 </style>
 </head>
@@ -74,21 +125,46 @@
 <div id="laptoast" class="hud"></div>
 <div id="msg" class="hud"></div>
 
+<div id="press" role="button" tabindex="0" aria-label="スタート画面へ">
+  <h1>AQUA HOVER 300</h1>
+  <div class="bottom">
+    <div class="go">PRESS ENTER</div>
+    <div class="tap">クリック／タップでも進む</div>
+  </div>
+</div>
+
 <div id="title" class="overlay">
-  <div class="card">
+  <div class="card wide">
     <h1>AQUA HOVER 300</h1>
     <div class="sub">水上を滑るホバー機で、浮きガードレールに囲まれたコースを3周するレース。</div>
-    <table>
-      <tr><td>加速</td><td><kbd>↑</kbd><kbd>W</kbd></td></tr>
-      <tr><td>ブレーキ／後退</td><td><kbd>↓</kbd><kbd>S</kbd></td></tr>
-      <tr><td>旋回</td><td><kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd></td></tr>
-      <tr><td>エアブレーキ（ドリフト）</td><td><kbd>Space</kbd></td></tr>
-      <tr><td>ブースト</td><td><kbd>Shift</kbd></td></tr>
-      <tr><td>コースに戻る</td><td><kbd>R</kbd></td></tr>
-      <tr><td>一時停止／消音</td><td><kbd>P</kbd> / <kbd>M</kbd></td></tr>
-    </table>
-    <div class="sub" style="margin:14px 0 0;font-size:14px;">ドリフト中はブーストが溜まる。水面の光るパネルを踏むと加速する。</div>
+    <div class="sect"><span>マシン</span><span class="hint"><kbd>←</kbd><kbd>→</kbd> で選ぶ</span></div>
+    <div id="machines" class="pick-grid"></div>
+    <div id="machinedesc"></div>
+    <div class="sect"><span>コース</span></div>
+    <div id="courses" class="pick-grid courses"></div>
+    <details class="howto">
+      <summary>操作方法</summary>
+      <table>
+        <tr><td>加速</td><td><kbd>↑</kbd><kbd>W</kbd></td></tr>
+        <tr><td>ブレーキ／後退</td><td><kbd>↓</kbd><kbd>S</kbd></td></tr>
+        <tr><td>旋回</td><td><kbd>←</kbd><kbd>→</kbd> / <kbd>A</kbd><kbd>D</kbd></td></tr>
+        <tr><td>エアブレーキ（ドリフト）</td><td><kbd>Space</kbd></td></tr>
+        <tr><td>ブースト</td><td><kbd>Shift</kbd></td></tr>
+        <tr><td>コースに戻る</td><td><kbd>R</kbd></td></tr>
+        <tr><td>一時停止／消音</td><td><kbd>Esc</kbd> <kbd>P</kbd> / <kbd>M</kbd></td></tr>
+      </table>
+      <div class="sub" style="margin:10px 0 0;font-size:13px;">レース中は Esc で一時停止（リタイアもここから）。選択画面の Esc でデモ画面に戻る。ドリフト中はブーストが溜まる。水面の光るパネルを踏むと加速する。黄色いジャンプ台で跳ぶ。機雷に当たると爆発で吹き飛ばされる。機雷原は緑の灯りの機雷の間が通り道。機雷原の手前は、加速パネルの勢いのままジャンプ台に乗れば飛び越せる。</div>
+    </details>
     <button class="btn" id="startbtn">スタート（Enter）</button>
+  </div>
+</div>
+
+<div id="pause" class="overlay hidden">
+  <div class="card" style="max-width:360px;text-align:center">
+    <h1>PAUSE</h1>
+    <button class="btn pm" id="resumebtn" type="button">レースに戻る</button>
+    <button class="btn btn2 pm" id="retirebtn" type="button">リタイアする</button>
+    <div class="sub" style="margin:14px 0 0;font-size:13px;"><kbd>↑</kbd><kbd>↓</kbd> で選んで <kbd>Enter</kbd> ／ <kbd>Esc</kbd> でレースに戻る</div>
   </div>
 </div>
 
@@ -98,6 +174,7 @@
     <div class="sub" id="resultsub"></div>
     <table id="resulttable"></table>
     <button class="btn" id="retrybtn">もう一度（Enter）</button>
+    <button class="btn btn2" id="menubtn">マシンを選び直す（Esc）</button>
   </div>
 </div>
 
@@ -133,7 +210,8 @@
     scene.fog = new THREE.Fog(FOG_COLOR, FOG_NEAR, FOG_FAR);
 
     const sunDir = new THREE.Vector3(-0.45, 0.6, -0.65).normalize();
-    scene.add(new THREE.HemisphereLight(0xd6f0ff, 0x2f5566, 0.75));
+    const hemi = new THREE.HemisphereLight(0xd6f0ff, 0x2f5566, 0.75);
+    scene.add(hemi);
     const sun = new THREE.DirectionalLight(0xfff4e0, 1.05);
     sun.position.copy(sunDir).multiplyScalar(1000);
     scene.add(sun);
@@ -188,17 +266,44 @@
       }
       const gray = (v) => [v, v, v];
 
-      // 岩：粗いまだら＋層状の筋＋細いひび
-      const rf = fbm(11, 4, 5), rs = periodicNoise(12, 8), rc = fbm(13, 8, 3), rm = fbm(14, 4, 2);
-      const rockFn = (u, v) => {
-        const n = rf(u, v);
-        const strata = 0.5 + 0.5 * Math.sin((v + rs(u, v) * 0.15) * Math.PI * 2 * 6);
-        const cw = Math.abs(rc(u, v) - 0.5), crack = rm(u, v) > 0.62 && cw < 0.01 ? 0.78 + cw * 10 : 1;
-        const l = (0.62 + 0.45 * (n - 0.5) * 2 * 0.6 + strata * 0.12) * crack;
-        return [l * 1.02, l, l * 0.95];
-      };
-      const rock = make(256, rockFn, [2, 2]);
-      const rockBump = make(256, (u, v) => gray(rf(u, v) * 0.7 + 0.3 * (0.5 + 0.5 * Math.sin((v + rs(u, v) * 0.15) * Math.PI * 12))), [2, 2]);
+      // 岩：カオス理論の考え方で、自然の岩に近い「規則があるのに繰り返さない」模様を作る
+      //  - 地層：ロジスティック写像 x ← r·x·(1−x)（r = 3.93 のカオス領域）の値の並びで、層の厚さと明るさを決める
+      //  - 岩肌：フラクタル雑音（fBm）で座標をゆがめ、そのゆがんだ座標でもう一度 fBm を読む（ドメインワーピング）。流れるような自己相似の模様になる
+      //  - ひび：fBm の「尾根」（|2n−1| が 0 に近い所）を細い筋として刻む
+      // どれも周期つきの雑音から作るので、繰り返し貼っても継ぎ目は出ない
+      const RS = 384;   // 起動時に作る（大きくすると起動が遅くなる）
+      const fA = fbm(11, 4, 4), fB = fbm(15, 4, 3), fC = fbm(17, 8, 4), fK = fbm(19, 6, 3);
+      const layers = (() => {
+        let x = 0.3719, total = 0;
+        const L = [];
+        for (let k = 0; k < 23; k++) {
+          x = 3.93 * x * (1 - x); const th = 0.15 + x * x;            // 厚さ：薄い層が続いたあと急に厚い層が来る
+          x = 3.93 * x * (1 - x); const tone = x;                       // 明るさ
+          x = 3.93 * x * (1 - x); const warm = x;                       // 色み（黄土〜青灰）
+          L.push({ th, tone, warm }); total += th;
+        }
+        let acc = 0;
+        for (const l of L) { l.end = (acc += l.th) / total; }
+        return L;
+      })();
+      const layerAt = (v) => { v -= Math.floor(v); for (const l of layers) if (v < l.end) return l; return layers[layers.length - 1]; };
+      const rockH = new Float32Array(RS * RS), rockC = new Float32Array(RS * RS * 3);
+      for (let y = 0; y < RS; y++) for (let x = 0; x < RS; x++) {
+        const u = x / RS, v = y / RS;
+        const qx = fA(u, v), qy = fA(u + 0.37, v + 0.71);                                   // 1 段目のゆがみ
+        const rx = fB(u + 1.6 * qx, v + 1.6 * qy), ry = fB(u + 0.53 + 1.6 * qx, v + 0.29 + 1.6 * qy);   // 2 段目のゆがみ
+        const h = fC(u + 1.1 * rx, v + 1.1 * ry);                                           // ゆがんだ座標で読む岩肌の起伏
+        const lay = layerAt(v + 0.09 * (rx - 0.5) + 0.04 * (h - 0.5));                     // 地層も岩肌に合わせて少しうねる
+        const ridge = 1 - Math.abs(2 * fK(u + 0.4 * qx, v + 0.4 * qy) - 1);                  // ひびの尾根
+        const crack = ridge > 0.965 ? 0.62 + (1 - ridge) * 8 : 1;
+        const l = (0.6 + 0.5 * (h - 0.5) + 0.22 * (lay.tone - 0.5)) * crack;
+        const i = y * RS + x;
+        rockH[i] = Math.max(0, Math.min(1, 0.5 + (h - 0.5) * 1.6 + (lay.tone - 0.5) * 0.25 - (crack < 1 ? 0.35 : 0)));
+        rockC[i * 3] = l * (1.0 + 0.08 * (lay.warm - 0.5)); rockC[i * 3 + 1] = l * (0.98 - 0.01 * (lay.warm - 0.5)); rockC[i * 3 + 2] = l * (0.93 - 0.1 * (lay.warm - 0.5));
+      }
+      const at = (u, v) => Math.min(RS - 1, Math.floor(v * RS)) * RS + Math.min(RS - 1, Math.floor(u * RS));
+      const rock = make(RS, (u, v) => { const i = at(u, v); return [rockC[i * 3], rockC[i * 3 + 1], rockC[i * 3 + 2]]; }, [2, 2]);
+      const rockBump = make(RS, (u, v) => gray(rockH[at(u, v)]), [2, 2]);
 
       // 砂：細かい粒
       const sn = fbm(21, 16, 3), sg = periodicNoise(22, 128);
@@ -276,7 +381,9 @@
         uWaveA: { value: uWaveA }, uWaveB: { value: uWaveB },
         uHorizon: { value: FOG_COLOR }, uZenith: { value: new THREE.Color(0x2f86cc) },
         uFogColor: { value: FOG_COLOR }, uFogNear: { value: FOG_NEAR }, uFogFar: { value: FOG_FAR },
-        uRefl: { value: null }, uReflMat: { value: new THREE.Matrix4() }, uReflOn: { value: 0 }
+        uRefl: { value: null }, uReflMat: { value: new THREE.Matrix4() }, uReflOn: { value: 0 },
+        // 屋根の下（トンネルなど）の印：上から見た白黒の画像と、それを貼る範囲（x, z, 幅, 奥行き）
+        uShade: { value: null }, uShadeBox: { value: new THREE.Vector4(0, 0, 1, 1) }, uShadeOn: { value: 0 }
       },
       vertexShader: WAVE_GLSL + `
         uniform mat4 uReflMat; varying vec4 vRef;
@@ -299,9 +406,14 @@
       fragmentShader: WAVE_GLSL + `
         uniform float uFogNear, uFogFar, uReflOn; uniform vec3 uSun, uFogColor, uHorizon, uZenith;
         uniform sampler2D uRefl; varying vec4 vRef;
+        uniform sampler2D uShade; uniform vec4 uShadeBox; uniform float uShadeOn;
         varying vec3 vPos; varying float vH;
         void main(){
           float dist = length(uCam - vPos);
+          // 屋根の下は日が当たらない（太陽の照り返しを消し、水を暗くする）
+          vec2 su = (vPos.xz - uShadeBox.xy) / uShadeBox.zw;
+          float inBox = step(0.0, su.x) * step(su.x, 1.0) * step(0.0, su.y) * step(su.y, 1.0);
+          float shade = uShadeOn * inBox * texture2D(uShade, clamp(su, 0.0, 1.0)).r;
           vec2 g = vec2(0.0), gBig = vec2(0.0);
           for (int i = 0; i < ${WAVE_N}; i++) {
             vec4 a = uWaveA[i], b = uWaveB[i];
@@ -318,21 +430,27 @@
           float F = 0.02 + 0.98 * pow(1.0 - NdV, 5.0);   // 鏡面反射が有効なときは下で底上げする
           vec3 R = reflect(-V, n); R.y = abs(R.y);
           vec3 skyR = mix(uHorizon, uZenith, pow(clamp(R.y, 0.0, 1.0), 0.5));
+          float skyVis = 1.0;   // 映り込みの先が空なら 1、岩壁・機体などの物なら 0（空は透明度 0 で描いてある）
           if (uReflOn > 0.5) {
             // 鏡面反射：上下反転したカメラで描いた景色を、波の傾きでずらして読む（遠いほどずらしを弱める）
             // 細かいさざ波でずらすと映った物が破片のように割れるので、大きいうねりの傾きで少しだけずらす
             vec2 ruv = vRef.xy / vRef.w - gBig * 0.016 * (1.0 - smoothstep(150.0, 1500.0, dist));
             // 水は光を吸うので、映った景色を少し暗く青緑寄りにする（空の映り込みが白く飛ばず、映った物がくっきり残る）
-            skyR = texture2D(uRefl, clamp(ruv, vec2(0.002), vec2(0.998))).rgb * vec3(0.62, 0.74, 0.80);
-            // 本物の水の式だと見下ろす角度ではほとんど映らないので、ゲームとして映り込みを強くする
-            F = clamp(0.62 + 0.38 * pow(1.0 - NdV, 2.0), 0.0, 1.0);
+            vec4 refl = texture2D(uRefl, clamp(ruv, vec2(0.002), vec2(0.998)));
+            skyR = refl.rgb * vec3(0.62, 0.74, 0.80);
+            skyVis = 1.0 - refl.a;
+            // 本物の水の式だと見下ろす角度ではほとんど映らないので、ゲームとして映り込みを強くする。
+            // 映り込みの強さは大きいうねりの傾きだけで決める（細かいさざ波で決めると、暗い映り込みと水の色が細かく入れ替わって白っぽいムラになる）
+            vec3 nB = normalize(mix(normalize(vec3(-gBig.x, 1.0, -gBig.y)), vec3(0.0, 1.0, 0.0), smoothstep(700.0, 2200.0, dist) * 0.7));
+            F = clamp(0.62 + 0.38 * pow(1.0 - max(dot(nB, V), 0.0), 2.0), 0.0, 1.0);
           }
           float sr = max(dot(R, uSun), 0.0);
-          vec3 sunR = vec3(1.0, 0.95, 0.85) * (pow(sr, 900.0) * 5.0 + pow(sr, 80.0) * 0.25);
+          vec3 sunR = vec3(1.0, 0.95, 0.85) * (pow(sr, 900.0) * 5.0 + pow(sr, 80.0) * 0.25) * (1.0 - shade) * skyVis;   // 照り返しは空が映る所だけ（岩壁の映り込みに白い粒を出さない）
+          if (uReflOn < 0.5) skyR *= 1.0 - 0.85 * shade;
           // 水の色：深い青に、波の山で透ける明るい緑青を足す
           vec3 deep = vec3(0.012, 0.11, 0.19), scatter = vec3(0.04, 0.40, 0.45);
           float crest = clamp(vH * 0.9 + 0.35, 0.0, 1.0);
-          float lit = 0.45 + 0.55 * max(dot(n, uSun), 0.0);
+          float lit = (0.45 + 0.55 * max(dot(n, uSun), 0.0)) * (1.0 - 0.8 * shade);
           vec3 waterCol = (deep + scatter * crest * 0.55) * lit;
           float fogAmt = smoothstep(uFogNear, uFogFar, dist);
           // 映り込みの映像は描いた時点で霧が掛かっているので、水面の霧は水の色だけに掛ける（二重に掛けると白く飛ぶ）
@@ -341,7 +459,9 @@
           // 山の白い泡（近くだけ）
           float fn = sin(dot(vPos.xz, vec2(1.3, 2.1)) + uTime * 0.7) * sin(dot(vPos.xz, vec2(-2.4, 1.1)) - uTime * 0.9);
           float foam = smoothstep(0.45, 0.8, vH) * smoothstep(0.1, 0.7, fn * 0.5 + 0.5) * (1.0 - smoothstep(80.0, 400.0, dist));
-          col = mix(col, vec3(0.88, 0.94, 0.96), foam * 0.55);
+          // 泡は白く光らせず、日の当たり方と映り込みの暗さに合わせて暗くする（日陰・岩壁の映り込みの上で白く浮かせない）
+          vec3 foamCol = vec3(0.88, 0.94, 0.96) * (0.45 + 0.55 * max(dot(n, uSun), 0.0)) * (0.35 + 0.65 * skyVis);
+          col = mix(col, foamCol, foam * 0.55 * (1.0 - shade) * (0.4 + 0.6 * skyVis));
           if (uReflOn < 0.5) col = mix(col, uFogColor, fogAmt);
           gl_FragColor = vec4(col, 1.0);
         }`
@@ -394,11 +514,16 @@
       r.setClearColor(_cc, ca); r.setRenderTarget(prevRT);
       water.visible = true;
     }
-    return { FOG_COLOR, TEX, renderReflection, sky, sunDir, water, waterMat, waveH };
+    // 屋根の下の印を渡す（tex: 白＝屋根の下、box: [x, z, 幅, 奥行き]）
+    function setShade(tex, box) {
+      waterMat.uniforms.uShade.value = tex; waterMat.uniforms.uShadeBox.value.set(box[0], box[1], box[2], box[3]); waterMat.uniforms.uShadeOn.value = tex ? 1 : 0;
+    }
+    return { FOG_COLOR, TEX, hemi, renderReflection, setShade, sky, sun, sunDir, water, waterMat, waveH };
   }
 
   function createCourse(ctx) {
     const { FOG_COLOR, HALF, N, SEG, TEX, TNx, TNz, TPx, TPz, TTx, TTz, camera, clamp, minDistToTrack, mulberry32, rand, scene, sunDir, waveH, wrap } = ctx;
+    // コースごとに変わる配置（加速パネルの位置・岩場の区間。周回に対する割合）。省略時は湖コースの値。avoid(x, z, 半径)：島を置かない場所
 
     // ---------- 遠景の山脈 ----------
     // 輪の形の帯をノイズで盛り上げ、尾根と谷が続く山並みにする。3層に重ね、遠い層ほど空の色へ寄せる（空気遠近法）。
@@ -588,31 +713,138 @@
       floatMesh.instanceMatrix.needsUpdate = true; railMesh.instanceMatrix.needsUpdate = true; postMesh.instanceMatrix.needsUpdate = true;
     }
 
-    // 市松模様のテクスチャ（スタートゲート）
-    function checkerTexture() {
-      const c = document.createElement('canvas'); c.width = 256; c.height = 32; const g = c.getContext('2d');
-      for (let x = 0; x < 16; x++) for (let y = 0; y < 2; y++) { g.fillStyle = (x + y) % 2 ? '#111' : '#fff'; g.fillRect(x * 16, y * 16, 16, 16); }
-      const tex = new THREE.CanvasTexture(c); return tex;
-    }
-    function makeGate(i, label) {
-      const g = new THREE.Group();
-      const pillarMat = new THREE.MeshStandardMaterial({ color: 0x1b2a38, metalness: 0.6, roughness: 0.4 });
-      for (const s of [-1, 1]) {
-        const p = new THREE.Mesh(new THREE.BoxGeometry(1.6, 14, 1.6), pillarMat);
-        p.position.set(s * (HALF + 4), 7, 0); g.add(p);
-        const glow = new THREE.Mesh(new THREE.BoxGeometry(0.4, 12, 0.4), new THREE.MeshBasicMaterial({ color: 0x3fe0ff }));
-        glow.position.set(s * (HALF + 4) - s * 0.9, 7, 0); g.add(glow);
+    // ---------- ゲート：物の柱や梁は置かず、光だけで描く立体映像（ホログラム） ----------
+    // ネオン管の枠（∩ 字・二重）とそのにじみ、上に浮かぶ半透明の看板（走査線と横ずれのちらつき）、水面に引いた光の線。
+    // ゴールは赤紫と白で、看板は市松模様と FINISH。区間の境目は水色で SECTOR 2 / 3。遠くでは薄れる
+    const HOLO_VS = `varying vec2 vUv; varying vec3 vN; varying vec3 vW;
+      void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal);
+        gl_Position = projectionMatrix * viewMatrix * w; }`;
+    const HOLO_COMMON = `uniform float uTime, uSeed; uniform vec3 uColor;
+      varying vec2 vUv; varying vec3 vN; varying vec3 vW;
+      float h1(float x){ return fract(sin(x * 91.7 + uSeed * 13.1) * 43758.5453); }
+      float flick(){   // ゆらぎ＋ときどき一瞬暗くなる
+        float f = 0.88 + 0.12 * sin(uTime * 53.0 + uSeed) * sin(uTime * 17.0);
+        return f * (1.0 - 0.6 * step(0.965, h1(floor(uTime * 9.0))));
       }
-      const beam = new THREE.Mesh(new THREE.BoxGeometry((HALF + 4) * 2 + 1.6, 2.4, 1.2),
-        label ? new THREE.MeshBasicMaterial({ map: checkerTexture() }) : new THREE.MeshStandardMaterial({ color: 0x3fe0ff, emissive: 0x0b4a66 }));
-      beam.position.y = 14; g.add(beam);
+      float fade(){ return 1.0 - smoothstep(700.0, 1700.0, length(vW - cameraPosition)); }`;
+    // ネオン管：芯は白っぽく、外の管は向こう側が透けるにじみ（正面ほど濃い）
+    function neonMat(color, halo, seed) {
+      return new THREE.ShaderMaterial({
+        uniforms: { uTime: { value: 0 }, uSeed: { value: seed }, uColor: { value: new THREE.Color(color) } },
+        vertexShader: HOLO_VS,
+        fragmentShader: HOLO_COMMON + `
+          void main(){
+            float facing = abs(dot(normalize(vN), normalize(cameraPosition - vW)));
+            float run = 0.75 + 0.25 * sin(vUv.x * 60.0 - uTime * 6.0);   // 管の中を流れる光
+            vec3 c; float a;
+            if (${halo ? 'true' : 'false'}) { a = pow(facing, 3.0) * 0.3 * run; c = uColor; }   // にじみは控えめに（明るい空の前で白く飛ばない）
+            else { a = 1.0; c = mix(uColor, vec3(1.0), 0.55) * (0.9 + 0.2 * run); }
+            a *= flick() * fade();
+            gl_FragColor = vec4(c * a, 1.0);
+          }`,
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false,
+      });
+    }
+    // 看板：白黒の画像（文字・模様）を光の形として読み、走査線・下から上へ流れる帯・行ごとの横ずれを重ねる
+    function holoPanelMat(tex, color, seed) {
+      return new THREE.ShaderMaterial({
+        uniforms: { uTime: { value: 0 }, uSeed: { value: seed }, uColor: { value: new THREE.Color(color) }, uTex: { value: tex } },
+        vertexShader: HOLO_VS,
+        fragmentShader: HOLO_COMMON + `
+          uniform sampler2D uTex;
+          void main(){
+            vec2 uv = vUv;
+            float row = floor(uv.y * 48.0);
+            uv.x += (step(0.93, h1(row + floor(uTime * 12.0))) - 0.5) * 0.02 * step(0.6, h1(floor(uTime * 3.0)));   // 横ずれ
+            float m = texture2D(uTex, uv).r;
+            float scan = 0.65 + 0.35 * sin(vUv.y * 260.0 - uTime * 8.0);
+            float band = smoothstep(0.08, 0.0, abs(fract(vUv.y - uTime * 0.4) - 0.5) - 0.42);   // 流れる明るい帯
+            float edge = smoothstep(0.0, 0.08, vUv.y) * smoothstep(1.0, 0.92, vUv.y);
+            float a = (0.04 + 1.1 * m) * scan * (0.75 + 0.6 * band) * edge * flick() * fade();
+            vec3 c = mix(uColor, vec3(1.0), m * 0.45);
+            gl_FragColor = vec4(c * a, 1.0);
+          }`,
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false,
+      });
+    }
+    // 水面の光の線：横に走る光の脈。ゴールは市松模様
+    function waterLineMat(color, checker, seed) {
+      return new THREE.ShaderMaterial({
+        uniforms: { uTime: { value: 0 }, uSeed: { value: seed }, uColor: { value: new THREE.Color(color) }, uCheck: { value: checker ? 1 : 0 } },
+        vertexShader: HOLO_VS,
+        fragmentShader: HOLO_COMMON + `
+          uniform float uCheck;
+          void main(){
+            float pulse = 0.55 + 0.45 * pow(abs(sin(vUv.x * 3.1416 * 2.0 - uTime * 3.0)), 6.0);
+            float pat = mod(floor(vUv.x * 26.0) + floor(vUv.y * 2.0), 2.0);
+            pat = uCheck > 0.5 ? (0.25 + 0.75 * pat) : 1.0;
+            float edge = smoothstep(0.0, 0.3, vUv.y) * smoothstep(1.0, 0.7, vUv.y);
+            float a = 1.6 * pulse * pat * edge * flick() * fade();
+            gl_FragColor = vec4(mix(uColor, vec3(1.0), 0.3) * a, 1.0);
+          }`,
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false,
+        polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4,
+      });
+    }
+    function bannerTexture(label, checker) {
+      const c = document.createElement('canvas'); c.width = 1024; c.height = 128; const g = c.getContext('2d');
+      g.fillStyle = '#000'; g.fillRect(0, 0, 1024, 128);
+      if (checker) { g.fillStyle = '#fff'; for (let x = 0; x < 64; x++) for (const y of [0, 1]) if ((x + y) % 2) { g.fillRect(x * 16, y * 14, 16, 14); g.fillRect(x * 16, 100 + y * 14, 16, 14); } }
+      g.fillStyle = '#fff'; g.font = 'bold 64px "Segoe UI", "Arial Black", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+      if ('letterSpacing' in g) g.letterSpacing = '18px';
+      g.fillText(label, 512, 66);
+      // 文字の縁を少しにじませる
+      g.globalCompositeOperation = 'lighter'; g.filter = 'blur(6px)'; g.globalAlpha = 0.5; g.drawImage(c, 0, 0); g.filter = 'none'; g.globalAlpha = 1;
+      const t = new THREE.CanvasTexture(c); t.minFilter = THREE.LinearFilter; return t;
+    }
+    const gates = [];
+    function makeHoloGate(i, label, color, finish) {
+      const g = new THREE.Group(), seed = i * 0.37;
+      const W = HALF + 4, H = 13, r = 3;
+      // ∩ 字の道筋（左下 → 左上の角 → 右上の角 → 右下）
+      const arch = (w, h, rr) => {
+        const P = (x, y) => new THREE.Vector3(x, y, 0), cp = new THREE.CurvePath();
+        cp.add(new THREE.LineCurve3(P(-w, -0.6), P(-w, h - rr)));
+        cp.add(new THREE.QuadraticBezierCurve3(P(-w, h - rr), P(-w, h), P(-w + rr, h)));
+        cp.add(new THREE.LineCurve3(P(-w + rr, h), P(w - rr, h)));
+        cp.add(new THREE.QuadraticBezierCurve3(P(w - rr, h), P(w, h), P(w, h - rr)));
+        cp.add(new THREE.LineCurve3(P(w, h - rr), P(w, -0.6)));
+        return cp;
+      };
+      const mats = [];
+      const add = (geo, mat) => { g.add(new THREE.Mesh(geo, mat)); mats.push(mat); };
+      const outer = arch(W, H, r), inner = arch(W - 1.3, H - 1.3, r * 0.6);
+      add(new THREE.TubeGeometry(outer, 260, 0.16, 8, false), neonMat(color, false, seed));          // 外の管の芯
+      add(new THREE.TubeGeometry(outer, 260, 0.9, 10, false), neonMat(color, true, seed));           // そのにじみ
+      add(new THREE.TubeGeometry(inner, 260, 0.08, 6, false), neonMat(finish ? 0xffffff : color, false, seed + 1));   // 内の細い管
+      add(new THREE.TubeGeometry(inner, 260, 0.45, 8, false), neonMat(finish ? 0xffffff : color, true, seed + 1));
+      // 看板
+      const panel = new THREE.Mesh(new THREE.PlaneGeometry(2 * W - 5, 3.4), holoPanelMat(bannerTexture(label, finish), color, seed + 2));
+      panel.position.y = H - 3.6; panel.rotation.y = Math.PI;   // 近づいてくる側（後ろ）から文字が正しく読めるように裏返す
+      g.add(panel); mats.push(panel.material);
+      // 水面の光の線（波に合わせて頂点を上下させる）
+      const lineGeo = new THREE.PlaneGeometry(2 * HALF, finish ? 3.2 : 1.8, 52, 1).rotateX(-Math.PI / 2);
+      const lm = waterLineMat(color, finish, seed + 3);
+      const line = new THREE.Mesh(lineGeo, lm); g.add(line); mats.push(lm);
       g.position.set(TPx[i], 0, TPz[i]);
       g.rotation.y = Math.atan2(TTx[i], TTz[i]);
+      g.renderOrder = 2;
       scene.add(g);
+      gates.push({ g, mats, line, base: Float32Array.from(lineGeo.attributes.position.array) });
     }
-    makeGate(0, true);
-    makeGate(Math.round(N / 3), false);
-    makeGate(Math.round(N * 2 / 3), false);
+    makeHoloGate(0, 'FINISH', 0xff3cf0, true);
+    // 区間の色は青みの強い水色（蛍光のミントに近いと、画面の光のあふれに拾われて白く飛ぶ）
+    makeHoloGate(Math.round(N / 3), 'SECTOR 2', 0x3aa8ff, false);
+    makeHoloGate(Math.round(N * 2 / 3), 'SECTOR 3', 0x3aa8ff, false);
+    function updateGates(t) {
+      for (const gt of gates) {
+        for (const m of gt.mats) m.uniforms.uTime.value = t;
+        // 水面の線を波に合わせる
+        const pa = gt.line.geometry.attributes.position, b = gt.base, ry = gt.g.rotation.y, c = Math.cos(ry), sn = Math.sin(ry), ox = gt.g.position.x, oz = gt.g.position.z;
+        for (let k = 0; k < pa.count; k++) { const lx = b[k * 3], lz = b[k * 3 + 2]; pa.setY(k, waveH(ox + lx * c + lz * sn, oz - lx * sn + lz * c, t) + 0.12); }
+        pa.needsUpdate = true;
+      }
+    }
 
     // 加速パネル
     function chevronTexture() {
@@ -623,7 +855,7 @@
       return new THREE.CanvasTexture(c);
     }
     const padTex = chevronTexture();
-    const pads = [0.13, 0.4, 0.62, 0.86].map((f) => {
+    const pads = (ctx.pads || [0.13, 0.4, 0.62, 0.86]).map((f) => {
       const i = Math.round(N * f);
       // 波に沿わせるため細かく分割する（平らな板だと波の山がパネルを突き抜けて隠す）
       const geo = new THREE.PlaneGeometry(10, 18, 8, 14).rotateX(-Math.PI / 2).rotateY(Math.PI);
@@ -638,6 +870,7 @@
     });
     // 毎フレーム、パネルの各頂点を真下の波の高さに合わせる
     function updatePads(t) {
+      updateGates(t);   // ゲートの立体映像も一緒に動かす
       for (const p of pads) {
         const m = p.mesh, pa = m.geometry.attributes.position, b = p.base;
         const c = Math.cos(m.rotation.y), s = Math.sin(m.rotation.y);
@@ -651,12 +884,96 @@
       }
     }
 
-    // 島と遠景の山
+    // 湖から突き出た岩（島）と遠景の山
     {
       const minX = Math.min(...TPx), maxX = Math.max(...TPx), minZ = Math.min(...TPz), maxZ = Math.max(...TPz);
-      const rockMat = new THREE.MeshStandardMaterial({ color: 0x7d7468, flatShading: true, roughness: 0.95, map: TEX.rock, bumpMap: TEX.rockBump, bumpScale: 1.2 });
-      const grassMat = new THREE.MeshStandardMaterial({ color: 0x4f8f4a, flatShading: true, roughness: 0.9, map: TEX.rock, bumpMap: TEX.rockBump, bumpScale: 0.8 });
-      const sandMat = new THREE.MeshStandardMaterial({ color: 0xe6d6a8, roughness: 1, map: TEX.sand, bumpMap: TEX.sand, bumpScale: 0.5 });
+      // 岩は角ばらせず、なめらかな凹凸と段（地層の張り出し）で形を出す。色は頂点ごと（水際は濡れて暗く、上の緩い所は草）
+      const spireMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.92, map: TEX.rock, bumpMap: TEX.rockBump, bumpScale: 1.0 });
+      const ROCK_TINTS = [0xb39a7c, 0x8c8880, 0x9a7260, 0x6e6c68].map((c) => new THREE.Color(c));   // 砂岩・灰色の岩・赤みの岩・玄武岩
+      // なめらかな 3 次元のゆらぎ（向きと周波数の違う正弦波を重ねる）
+      function makeNoise(rng) {
+        const w = [];
+        for (let k = 0; k < 7; k++) {
+          const a = rng() * Math.PI * 2, b = Math.acos(rng() * 2 - 1);
+          w.push({ x: Math.sin(b) * Math.cos(a), y: Math.cos(b), z: Math.sin(b) * Math.sin(a), f: 0.6 * Math.pow(1.7, k), p: rng() * 6.28, amp: Math.pow(0.6, k) });
+        }
+        return (x, y, z) => { let s = 0; for (const q of w) s += q.amp * Math.sin((q.x * x + q.y * y + q.z * z) * q.f + q.p); return s; };
+      }
+      // 1 本の岩の柱。prof(t)：高さの割合 t での太さの割合。頂上は平たい丸屋根で閉じる
+      function spireGeo(r, H, prof, rng, opt) {
+        const pts = [];
+        for (let j = 0; j <= 24; j++) { const t = j / 24; pts.push(new THREE.Vector2(r * prof(t), -4 + (H + 4) * t)); }
+        const rt = r * prof(1);
+        for (let j = 1; j <= 5; j++) { const a = (j / 5) * Math.PI / 2; pts.push(new THREE.Vector2(Math.max(0.01, rt * Math.cos(a)), H + rt * 0.25 * Math.sin(a))); }
+        const geo = new THREE.LatheGeometry(pts, 40);
+        const pa = geo.attributes.position, noise = makeNoise(rng), sc = 1 / Math.max(6, r * 0.45);
+        for (let i = 0; i < pa.count; i++) {
+          let x = pa.getX(i), y = pa.getY(i), z = pa.getZ(i);
+          const rad = Math.hypot(x, z) || 1, nx = x / rad, nz = z / rad;
+          const ledge = Math.pow(Math.abs(Math.sin(y * 0.33 + noise(x * sc * 0.3, 0, z * sc * 0.3) * 0.8)), 6);   // 地層の張り出し
+          const disp = r * (0.16 * noise(x * sc, y * sc * 0.7, z * sc) + 0.06 * ledge);
+          x += nx * disp; z += nz * disp;
+          y += y > H - 0.5 ? noise(x * sc, 5, z * sc) * r * 0.06 : 0;
+          x += (opt.lean || 0) * Math.max(0, y);                       // 傾き
+          pa.setXYZ(i, x * (opt.sx || 1), y, z * (opt.sz || 1));
+        }
+        geo.computeVertexNormals();
+        // 色
+        const nrm = geo.attributes.normal, col = new Float32Array(pa.count * 3), c = new THREE.Color();
+        const tint = ROCK_TINTS[Math.floor(rng() * ROCK_TINTS.length)], wet = new THREE.Color(0x2f3a30), grass = new THREE.Color(0x4d8040);
+        for (let i = 0; i < pa.count; i++) {
+          const y = pa.getY(i), ny = nrm.getY(i);
+          const band = 0.82 + 0.18 * Math.sin(y * 0.45 + Math.sin(pa.getX(i) * 0.05) * 2);
+          c.copy(tint).multiplyScalar(band);
+          c.lerp(wet, Math.max(0, Math.min(1, (1.6 - y) / 2.5)) * 0.85);                                     // 水際は濡れて暗く、藻で緑がかる
+          if (y > H * 0.6) c.lerp(grass, Math.max(0, Math.min(1, (ny - 0.62) / 0.2)));                        // 上の緩い所は草
+          col[i * 3] = c.r; col[i * 3 + 1] = c.g; col[i * 3 + 2] = c.b;
+        }
+        geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+        return geo;
+      }
+      // 根元の転石（なめらかな丸石）
+      const boulderGeos = [0, 1, 2].map((k) => {
+        const g = new THREE.IcosahedronGeometry(1, 3), pa = g.attributes.position, nz = makeNoise(mulberry32(700 + k));
+        for (let i = 0; i < pa.count; i++) { const x = pa.getX(i), y = pa.getY(i), z = pa.getZ(i), m = 1 + 0.22 * nz(x * 1.5, y * 1.5, z * 1.5); pa.setXYZ(i, x * m, y * m * 0.75, z * m); }
+        g.computeVertexNormals();
+        const col = new Float32Array(pa.count * 3);
+        for (let i = 0; i < pa.count; i++) { const v = 0.45 + 0.1 * nz(pa.getX(i) * 3, 0, pa.getZ(i) * 3); col[i * 3] = v; col[i * 3 + 1] = v * 0.97; col[i * 3 + 2] = v * 0.92; }
+        g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+        return g;
+      });
+      // 岩の種類：柱（海食柱）・きのこ岩・双子の尖塔・傾いた板岩
+      function buildRock(kind, r, rng) {
+        const g = new THREE.Group();
+        let top = null;   // ヤシを植えられる平らな頂上 { y, r }
+        if (kind === 'stack') {
+          const H = Math.min(85, r * (2.0 + rng() * 1.4));
+          g.add(new THREE.Mesh(spireGeo(r * 0.8, H, (t) => 1.05 - 0.3 * t + 0.06 * Math.sin(t * 11), rng, { lean: (rng() - 0.5) * 0.12 }), spireMat));
+          top = { y: H, r: r * 0.8 * 0.72 };
+        } else if (kind === 'hoodoo') {
+          const H = Math.min(60, r * (1.3 + rng() * 0.5));
+          g.add(new THREE.Mesh(spireGeo(r * 0.75, H, (t) => (t < 0.5 ? 0.9 - 0.4 * t / 0.5 : t < 0.78 ? 0.5 + 0.8 * (t - 0.5) / 0.28 : 1.3), rng, {}), spireMat));
+          top = { y: H, r: r * 0.75 * 1.3 };
+        } else if (kind === 'twin') {
+          const H1 = Math.min(90, r * (2.4 + rng())), H2 = H1 * (0.55 + rng() * 0.25);
+          const a = new THREE.Mesh(spireGeo(r * 0.5, H1, (t) => 1 - 0.55 * t, rng, { lean: 0.05 }), spireMat); a.position.x = -r * 0.35;
+          const b = new THREE.Mesh(spireGeo(r * 0.42, H2, (t) => 1 - 0.5 * t, rng, { lean: -0.08 }), spireMat); b.position.x = r * 0.45; b.position.z = r * 0.15;
+          g.add(a, b);
+        } else {   // slab
+          const H = Math.min(55, r * (1.1 + rng() * 0.5));
+          const m = new THREE.Mesh(spireGeo(r * 0.7, H, (t) => 1 - 0.2 * t, rng, { sx: 1.6, sz: 0.55, lean: 0.35 + rng() * 0.2 }), spireMat);
+          g.add(m);
+        }
+        // 根元の転石
+        const nb = 3 + Math.floor(rng() * 4);
+        for (let k = 0; k < nb; k++) {
+          const b = new THREE.Mesh(boulderGeos[k % 3], spireMat), a = rng() * Math.PI * 2, s = r * (0.12 + rng() * 0.16);
+          b.position.set(Math.cos(a) * r * (0.75 + rng() * 0.35), -s * 0.35, Math.sin(a) * r * (0.75 + rng() * 0.35));
+          b.scale.setScalar(s); b.rotation.y = rng() * 6;
+          g.add(b);
+        }
+        return { group: g, top };
+      }
       // ヤシの木：反った幹（節の縞つき）と、垂れ下がるギザギザの葉。形の違う 3 種類を作り、使い回す
       const trunkMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.9 });
       const frondMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.75, side: THREE.DoubleSide });
@@ -716,14 +1033,15 @@
         const r = 14 + rand() * 50;
         const d = minDistToTrack(x, z);
         if (d < HALF + r * 1.6 + 25) continue;
-        const g = new THREE.Group();
-        const sand = new THREE.Mesh(new THREE.CylinderGeometry(r * 1.25, r * 1.45, 2, 24), sandMat); sand.position.y = -0.4; g.add(sand);
-        const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(r, 1), rand() < 0.5 ? rockMat : grassMat);
-        rock.scale.set(1, 0.35 + rand() * 0.6, 1); rock.rotation.y = rand() * 6; g.add(rock);
-        if (r > 30) {
-          const n = 2 + Math.floor(rand() * 4);
+        if (ctx.avoid && ctx.avoid(x, z, r * 1.5)) continue;   // コースの仕掛け（谷など）にかかる所には置かない
+        const kinds = ['stack', 'hoodoo', 'twin', 'slab'], kind = kinds[Math.floor(rand() * kinds.length)];
+        const built = buildRock(kind, r * 0.8, mulberry32(Math.floor(x * 13 + z * 7) | 0));
+        const g = built.group;
+        g.rotation.y = rand() * 6; rand();   // 乱数を引く回数は以前と同じ
+        if (built.top && r > 26) {           // 平らな頂上にヤシを植える
+          const n = 1 + Math.floor(rand() * 3);
           for (let k = 0; k < n; k++) {
-            const a = rand() * 6.28, rr = r * (0.9 + rand() * 0.25);
+            const a = rand() * 6.28, rr = built.top.r * (0.15 + rand() * 0.45);
             const pv = palms[Math.floor(palmRng() * palms.length)];
             const tree = new THREE.Group();
             tree.add(new THREE.Mesh(pv.tg, trunkMat), new THREE.Mesh(pv.fg, frondMat));
@@ -731,8 +1049,8 @@
               const nut = new THREE.Mesh(nutGeo, nutMat);
               nut.position.set(pv.top.x + Math.cos(q * 2.1) * 0.35, pv.top.y - 0.35, pv.top.z + Math.sin(q * 2.1) * 0.35); tree.add(nut);
             }
-            tree.position.set(Math.cos(a) * rr, 0.6, Math.sin(a) * rr);
-            tree.rotation.y = -a + (rand() - 0.5) * 0.3;                     // 島の外側へ傾ける（乱数を引く回数は以前と同じ）
+            tree.position.set(Math.cos(a) * rr, built.top.y - 0.4, Math.sin(a) * rr);
+            tree.rotation.y = -a + (rand() - 0.5) * 0.3;                     // 外側へ傾ける
             g.add(tree);
           }
         }
@@ -745,7 +1063,7 @@
     }
 
     // ---------- 近くの地形（コースの約3割。カーブの内側は控えめ） ----------
-    const CANYON = [[0.04, 0.14], [0.41, 0.51], [0.69, 0.79]];
+    const CANYON = ctx.canyon || [[0.04, 0.14], [0.41, 0.51], [0.69, 0.79]];
     {
       // 曲がる向き付きの曲率（正＝右へ曲がる＝右側が内側）
       const TKS = new Float32Array(N);
@@ -911,6 +1229,65 @@
           vx * (0.5 + R() * 0.4) + (R() - 0.5) * 10, 2 + R() * 6, vz * (0.5 + R() * 0.4) + (R() - 0.5) * 10, 0.25 + R() * 0.35, 0.35, 0.12);
       }
     }
+    // ブーストに入った瞬間の「ドンッ」：水面を叩いた輪の波と、横へ低く飛ぶ大きなしぶき
+    // （自機が隠れないよう、高く上げずに左右と後ろへ。白い輪が広がって衝撃を見せる）
+    const RING_MAX = 10, rings = [];
+    const ringMat = new THREE.ShaderMaterial({
+      transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3,
+      uniforms: { uK: { value: 0 } },
+      vertexShader: `varying vec2 vUv; void main(){ vUv = uv * 2.0 - 1.0; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+      fragmentShader: `uniform float uK; varying vec2 vUv;
+        float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+        void main(){ float r = length(vUv); if (r > 1.0) discard;
+          float w = mix(0.08, 0.26, uK);                                  // 広がるほど輪の幅も太く
+          float band = smoothstep(1.0 - w, 1.0 - w * 0.45, r) * (1.0 - smoothstep(0.97, 1.0, r));
+          float inner = smoothstep(0.3, 1.0 - w, r) * 0.22 * (1.0 - uK);   // 輪の内側に残る泡
+          float ang = atan(vUv.y, vUv.x);
+          float broken = 0.6 + 0.4 * h(vec2(floor(ang * 18.0), floor(r * 12.0)));   // 泡の切れ目
+          float a = (band + inner) * broken * pow(1.0 - uK, 1.4) * 0.85;
+          if (a < 0.01) discard; gl_FragColor = vec4(0.93, 0.98, 1.0, a); }`
+    });
+    const ringGeo = new THREE.PlaneGeometry(2, 2);
+    for (let k = 0; k < RING_MAX; k++) {
+      const m = new THREE.Mesh(ringGeo, ringMat.clone()); m.rotation.x = -Math.PI / 2; m.visible = false; m.renderOrder = 2;
+      m.userData = { life: 0, x: 0, z: 0, R: 20 }; scene.add(m); rings.push(m);
+    }
+    let ringHead = 0;
+    particleSystems.push({
+      mat: { uniforms: { uScale: { value: 0 } } },
+      update(dt, t) {
+        for (const m of rings) {
+          const u = m.userData; if (u.life <= 0) continue;
+          u.life -= dt; if (u.life <= 0) { m.visible = false; continue; }
+          const k = 1 - u.life / 1.2, rad = 2 + u.R * (1 - Math.pow(1 - k, 2.5));   // 最初に速く、だんだんゆっくり広がる
+          m.scale.set(rad, rad, 1); m.position.set(u.x, waveH(u.x, u.z, t) + 0.3, u.z);
+          m.material.uniforms.uK.value = k;
+        }
+      }
+    });
+    function boostBurst(x, z, fx, fz, vx, vz) {
+      if (!nearCam(x, z, 340)) return;
+      const y = waveH(x, z, now()), rx = -fz, rz = fx;
+      const m = rings[ringHead]; ringHead = (ringHead + 1) % RING_MAX;
+      m.userData.life = 1.2; m.userData.x = x - fx * 1.5; m.userData.z = z - fz * 1.5; m.userData.R = 18 + R() * 6; m.visible = true;
+      // 左右へ低く叩き出す厚いしぶき
+      for (let k = 0; k < 170; k++) {
+        const s = R() < 0.5 ? -1 : 1, out = 9 + R() * 18, back = (R() - 0.25) * 9, high = R() < 0.15;
+        spray.emit(x + rx * s * 1.8 - fx * (1 + R() * 2), y + 0.3, z + rz * s * 1.8 - fz * (1 + R() * 2),
+          vx * 0.65 + rx * s * out - fx * back, high ? 6 + R() * 4 : 2.5 + R() * 4, vz * 0.65 + rz * s * out - fz * back,
+          0.6 + R() * 0.8, 1.2, 4 + R() * 4);
+      }
+      // 後ろへ水面を這う泡と、広がる霧
+      for (let k = 0; k < 30; k++) {
+        const a = R() * Math.PI * 2, sp = 6 + R() * 5;
+        wake.emit(x - fx * 2, 0, z - fz * 2, Math.cos(a) * sp, 0, Math.sin(a) * sp, 2.2 + R(), 2.5, 9 + R() * 4);
+      }
+      for (let k = 0; k < 50; k++) {
+        const s = R() < 0.5 ? -1 : 1;
+        mist.emit(x + rx * s * (2 + R() * 3) - fx * 2, y + 0.6 + R() * 1.2, z + rz * s * (2 + R() * 3) - fz * 2,
+          vx * 0.5 + rx * s * (4 + R() * 6), 0.8 + R() * 1.5, vz * 0.5 + rz * s * (4 + R() * 6), 1.4 + R(), 3, 11);
+      }
+    }
     // 機体ごとのしぶき（時間あたりの量で出すので、フレームレートに左右されない）
     function emitRate(r, key, rate, dt) { r[key] = (r[key] || 0) + rate * dt; const n = Math.floor(r[key]); r[key] -= n; return Math.min(n, 40); }
     function sprayFor(r, dt) {
@@ -1041,7 +1418,7 @@
       }
       tr.geo.attributes.position.needsUpdate = true; tr.geo.attributes.uv.needsUpdate = true; tr.geo.attributes.aAlpha.needsUpdate = true;
     }
-    return { makeTrail, particleSystems, resetTrail, sparkBurst, splashBurst, sprayFor, updateTrail };
+    return { boostBurst, makeTrail, particleSystems, resetTrail, sparkBurst, splashBurst, sprayFor, updateTrail };
   }
 
   window.HoverWorld = { createEnvironment, createCourse, createEffects };
@@ -1077,6 +1454,13 @@
       glass: new T.MeshStandardMaterial({ color: 0x0f2f4f, metalness: 0.9, roughness: 0.1, flatShading: !!flat }),
       accent: new T.MeshStandardMaterial({ color: 0xe6ecf2, metalness: 0.75, roughness: 0.3, map: opts.metalMap || null, flatShading: !!flat }),
       pod: hoverPodMaterial(opts, flat),
+      // 噴射口：焼けた金属の色（頂点の色で、出口側から金→青銅→青→紫→鋼）と、奥ほど赤く光る内壁
+      // 映り込み（環境マップ）が無いので、金属らしさを上げすぎると真っ黒になる。色が見える程度に抑える
+      heat: new T.MeshStandardMaterial({ vertexColors: true, metalness: 0.35, roughness: 0.38, map: opts.metalMap || null }),
+      nozzleDark: new T.MeshStandardMaterial({ color: 0x4a5058, metalness: 0.45, roughness: 0.5, map: opts.metalMap || null }),
+      inner: new T.MeshBasicMaterial({ vertexColors: true, side: T.DoubleSide }),
+      navRed: new T.MeshBasicMaterial({ color: 0xff2a1a }),
+      navGreen: new T.MeshBasicMaterial({ color: 0x2aff6a }),
     };
   }
   const mesh = (geo, mat) => new T.Mesh(geo, mat);
@@ -1099,9 +1483,9 @@
   // bottomOnly: 下を向いた面だけを光らせる（三角錐の浮きなど、平らな底面を持つ部品）
   function podMesh(geo, m, bottomOnly) {
     if (bottomOnly) {
-      geo = geo.toNonIndexed(); geo.computeVertexNormals();      // 面ごとの向きを得る
+      if (!geo.attributes.normal) geo.computeVertexNormals();
       const nr = geo.attributes.normal, low = new Float32Array(nr.count);
-      for (let i = 0; i < nr.count; i++) low[i] = nr.getY(i) < -0.6 ? 1 : 0;
+      for (let i = 0; i < nr.count; i++) low[i] = Math.min(1, Math.max(0, (-nr.getY(i) - 0.55) / 0.3));   // 下を向くほど光る（滑らかな面でも境目がにじむだけ）
       geo.setAttribute('aLow', new T.BufferAttribute(low, 1));
       return new T.Mesh(geo, m.pod);
     }
@@ -1114,88 +1498,237 @@
     geo.setAttribute('aLow', new T.BufferAttribute(low, 1));
     return new T.Mesh(geo, m.pod);
   }
-  // 三角錐（底面が三角形の錐）。先端を前（+z）に向け、平らな面を下にする
-  function triPyramidForward(r, len) {
-    const g = new T.ConeGeometry(r, len, 3);
-    g.rotateX(Math.PI / 2);      // 先端を +z へ
-    g.rotateZ(Math.PI);          // 稜線を上、平らな面を下へ
+  // いくつかの形を 1 つにまとめる（同じ材質の細かい部品を 1 回で描く）
+  function mergeGeos(list) {
+    const parts = list.map((g) => (g.index ? g.toNonIndexed() : g));
+    const out = new T.BufferGeometry();
+    for (const key of ['position', 'normal', 'uv']) {
+      const total = parts.reduce((n, g) => n + g.attributes[key].array.length, 0), arr = new Float32Array(total);
+      let o = 0; for (const g of parts) { arr.set(g.attributes[key].array, o); o += g.attributes[key].array.length; }
+      out.setAttribute(key, new T.BufferAttribute(arr, key === 'uv' ? 2 : 3));
+    }
+    return out;
+  }
+
+  // ---------- のみ（鑿）形の三角錐 ----------
+  // 断面は角を丸めた三角形（底が平ら、上が稜線）。前へ行くほど低く細くなり、先端は 1 点ではなく水平な辺（幅 tipW）で終わる。
+  // 側面は少しふくらませ、断面を細かく刻んで滑らかに陰影を付ける（角ばった低ポリゴンの見た目にしない）
+  // o: len（長さ）, halfW（後ろの半幅）, height（後ろの高さ）, tipW（先端の辺の幅）, tipLift（先端の持ち上げ）, round（角の丸め）, bulge（側面のふくらみ）
+  function chiselLoft(o) {
+    const S = 34, M = 60, third = M / 3, rings = [];
+    const round = o.round == null ? 6 : o.round, bulge = o.bulge == null ? 0.06 : o.bulge;
+    for (let j = 0; j <= S; j++) {
+      const t = Math.pow(j / S, 0.85);                                     // 0 = 後ろ、1 = 先端
+      const A = o.halfW * Math.pow(1 - t, 0.75) + (o.tipW / 2) * Math.pow(t, 1.5);
+      const H = o.height * Math.pow(1 - t, 0.9) * (1 + 0.08 * Math.sin(Math.PI * t));
+      const y0 = (o.tipLift || 0) * t * t, z = -o.len / 2 + o.len * t;
+      let pts = [];
+      const L = Math.hypot(A, H) || 1;
+      for (let k = 0; k < M; k++) {
+        const e = Math.floor(k / third), u = (k % third) / third;
+        let x, y;
+        if (e === 0) { x = -A + 2 * A * u; y = 0; }                                    // 底
+        else if (e === 1) { x = A * (1 - u); y = H * u; const b = bulge * Math.sin(Math.PI * u) * L; x += b * H / L; y += b * A / L; }   // 右の面
+        else { x = -A * u; y = H * (1 - u); const b = bulge * Math.sin(Math.PI * u) * L; x -= b * H / L; y += b * A / L; }               // 左の面
+        pts.push([x, y]);
+      }
+      for (let it = 0; it < round; it++) {                                 // 角を丸める（隣どうしをならす）
+        pts = pts.map((p, k) => { const a = pts[(k + M - 1) % M], c = pts[(k + 1) % M]; return [(a[0] + 2 * p[0] + c[0]) / 4, (a[1] + 2 * p[1] + c[1]) / 4]; });
+      }
+      rings.push({ pts, y0, z, t });
+    }
+    const pos = [], uv = [], ind = [];
+    rings.forEach((r) => r.pts.forEach((p, k) => { pos.push(p[0], r.y0 + p[1], r.z); uv.push(k / M, r.t); }));
+    for (let j = 0; j < S; j++) for (let k = 0; k < M; k++) {
+      const a = j * M + k, b = j * M + (k + 1) % M, c = a + M, d = b + M;
+      ind.push(a, b, c, b, d, c);
+    }
+    // 後ろの蓋（中心へ集める）
+    const r0 = rings[0], ci = pos.length / 3;
+    let cx = 0, cy = 0; r0.pts.forEach((p) => { cx += p[0]; cy += p[1]; });
+    pos.push(cx / M, r0.y0 + cy / M, r0.z - 0.02); uv.push(0.5, 0);
+    for (let k = 0; k < M; k++) ind.push(ci, (k + 1) % M, k);
+    const g = new T.BufferGeometry();
+    g.setAttribute('position', new T.Float32BufferAttribute(pos, 3));
+    g.setAttribute('uv', new T.Float32BufferAttribute(uv, 2));
+    g.setIndex(ind); g.computeVertexNormals();
+    // 面の向きが内向きなら裏返す（稜線の頂点の法線が上を向くように）
+    if (g.attributes.normal.getY(Math.round(S / 2) * M + 2 * third) < 0) {
+      for (let i = 0; i < ind.length; i += 3) { const tmp = ind[i + 1]; ind[i + 1] = ind[i + 2]; ind[i + 2] = tmp; }
+      g.setIndex(ind); g.computeVertexNormals();
+    }
+    return g;
+  }
+
+  // 縁を丸めた板（尾翼・翼）。pts は [前後 z, 高さ y] の並び（横から見た形）、厚み th で左右に張る
+  function finGeo(pts, th) {
+    const sh = new T.Shape(); sh.moveTo(-pts[0][0], pts[0][1]); for (const p of pts.slice(1)) sh.lineTo(-p[0], p[1]); sh.closePath();
+    const g = new T.ExtrudeGeometry(sh, { depth: th, bevelEnabled: true, bevelThickness: th * 0.45, bevelSize: th * 0.45, bevelSegments: 4, curveSegments: 12 });
+    g.translate(0, 0, -th / 2); g.rotateY(Math.PI / 2);   // 形の x を -z（前後）へ、厚みを x（左右）へ
+    g.computeVertexNormals();
+    return g;
+  }
+  // 平らな翼（上から見た形を [x, z] で与え、厚み th で上下に張る）
+  function wingGeo(pts, th) {
+    const sh = new T.Shape(); sh.moveTo(pts[0][0], -pts[0][1]); for (const p of pts.slice(1)) sh.lineTo(p[0], -p[1]); sh.closePath();
+    const g = new T.ExtrudeGeometry(sh, { depth: th, bevelEnabled: true, bevelThickness: th * 0.45, bevelSize: th * 0.6, bevelSegments: 4, curveSegments: 12 });
+    g.translate(0, 0, -th / 2); g.rotateX(Math.PI / 2);   // 形の y を z（前後）へ、厚みを y（上下）へ
+    g.computeVertexNormals();
+    return g;
+  }
+  // 航行灯（左が赤・右が緑）
+  function navLights(b, m, x, y, z) {
+    for (const s of [-1, 1]) { const l = mesh(new T.SphereGeometry(0.07, 12, 8), s < 0 ? m.navRed : m.navGreen); l.position.set(s * x, y, z); b.add(l); }
+  }
+
+  // ---------- 噴射口（ジェットエンジンの排気ノズル） ----------
+  // e: { x, y, z（出口の位置）, r（出口の半径） }、len：前へ伸びる長さ。
+  // 外筒（出口へ向かってすぼまる）・出口付近の焼け色の帯・出口を囲む可変ノズルの板（重なり合う花弁）・
+  // 奥のタービンの円錐と静翼・奥ほど赤く光る内壁、で組み立てる
+  // nac: ナセル（機体色のエンジンの覆い）。{ len: 出口から前へ伸びる長さ, sy: 上下のつぶし（1 で真円） }。
+  //   外筒をすっぽり包み、前は丸く閉じる。機体の中へ丸い頭から差し込むので、胴とは「取り付けたエンジン」として自然に交わる
+  function jetNozzle(m, e, len, nac) {
+    const r = e.r, R = r * 1.3, SEG = 40, g = new T.Group();
+    const V = (x, y) => new T.Vector2(x, y);
+    if (nac) {
+      const L = Math.max(nac.len, len * 0.6), RN = R * 1.1, cap = RN * 1.3, pts = [];
+      pts.push(V(R * 0.99, len * 0.38), V(RN * 0.97, len * 0.4), V(RN, len * 0.45));   // 後ろの縁（焼け色の帯へ丸く落とす）
+      for (let i = 0; i <= 6; i++) { const y = len * 0.45 + (L - len * 0.45) * (i / 6); pts.push(V(RN * (1 + 0.03 * Math.sin(Math.PI * i / 6)), y)); }   // 胴：わずかにふくらむ
+      for (let i = 1; i <= 10; i++) { const a = (i / 10) * Math.PI / 2; pts.push(V(Math.max(0.001, RN * Math.cos(a)), L + cap * Math.sin(a))); }   // 前：丸く閉じる
+      // 上下につぶす（回す前の z ＝ 回した後の上下）。出口の近くは噴射口に合わせて真円のまま、前へ行くほどつぶす
+      const ng = new T.LatheGeometry(pts, 48), np = ng.attributes.position, sy = nac.sy || 1;
+      for (let i = 0; i < np.count; i++) { const f = Math.min(1, Math.max(0, (np.getY(i) - len * 0.5) / (len * 0.9))), k = f * f * (3 - 2 * f); np.setZ(i, np.getZ(i) * (1 + (sy - 1) * k)); }
+      ng.computeVertexNormals();
+      g.add(mesh(ng, m.paint));
+    } else {
+      // 外筒（前半）
+      g.add(mesh(new T.LatheGeometry([V(R * 0.86, len), V(R * 0.97, len * 0.93), V(R, len * 0.8), V(R, len * 0.42)], SEG), m.nozzleDark));
+    }
+    // 出口へすぼまる後半（焼け色）。出口の縁は丸めて内側へ折り返す
+    const heatPts = [V(R, len * 0.42), V(R * 0.97, len * 0.28), V(R * 0.88, len * 0.12), V(r * 1.14, 0.04), V(r * 1.08, 0), V(r * 1.0, -0.01), V(r * 0.95, 0.03)];
+    const heat = new T.LatheGeometry(heatPts, SEG), hp = heat.attributes.position, hc = new Float32Array(hp.count * 3);
+    const tint = [[0, [0.80, 0.66, 0.42]], [0.25, [0.62, 0.43, 0.30]], [0.5, [0.33, 0.41, 0.64]], [0.75, [0.44, 0.36, 0.56]], [1, [0.56, 0.58, 0.62]]];
+    for (let i = 0; i < hp.count; i++) {
+      const f = Math.max(0, Math.min(1, hp.getY(i) / (len * 0.42)));
+      let k = 0; while (k < tint.length - 2 && f > tint[k + 1][0]) k++;
+      const [f0, c0] = tint[k], [f1, c1] = tint[k + 1], w = (f - f0) / (f1 - f0);
+      for (let c = 0; c < 3; c++) hc[i * 3 + c] = c0[c] + (c1[c] - c0[c]) * w;
+    }
+    heat.setAttribute('color', new T.BufferAttribute(hc, 3));
+    g.add(mesh(heat, m.heat));
+    // 可変ノズルの花弁：出口のまわりに少し外へ開いて並ぶ細い板
+    const NP = 16, pw = (2 * Math.PI * r / NP) * 1.25, pl = r * 0.55, petals = [], mtx = new T.Matrix4(), q = new T.Quaternion(), eu = new T.Euler();
+    for (let k = 0; k < NP; k++) {
+      const a = (k / NP) * Math.PI * 2, rad = r * 1.02 + (k % 2) * 0.012;
+      const pg = new T.BoxGeometry(pw, pl, 0.03);
+      pg.translate(0, -pl / 2, 0);                       // 出口（y = 0）から後ろ（-y）へ伸ばす
+      eu.set(-0.14, 0, 0); pg.applyMatrix4(mtx.makeRotationFromEuler(eu));   // 外へ少し開く
+      pg.translate(0, 0, rad);
+      pg.applyMatrix4(mtx.makeRotationY(a));
+      petals.push(pg);
+    }
+    g.add(mesh(mergeGeos(petals), m.nozzleDark));
+    // 内壁：出口の近くは暗く、奥ほど橙に光る
+    const inner = new T.LatheGeometry([V(r * 0.95, 0.03), V(r * 0.9, len * 0.35), V(r * 0.82, len * 0.7)], SEG), ip = inner.attributes.position, ic = new Float32Array(ip.count * 3);
+    for (let i = 0; i < ip.count; i++) { const f = Math.pow(Math.min(1, ip.getY(i) / (len * 0.7)), 1.6); ic[i * 3] = 0.05 + 0.95 * f; ic[i * 3 + 1] = 0.05 + 0.42 * f; ic[i * 3 + 2] = 0.06 + 0.12 * f; }
+    inner.setAttribute('color', new T.BufferAttribute(ic, 3));
+    g.add(mesh(inner, m.inner));
+    // 奥のタービンの円錐（先を出口へ向ける）と静翼
+    g.add(mesh(new T.ConeGeometry(r * 0.42, r * 0.9, 28).rotateX(Math.PI).translate(0, len * 0.55, 0), m.nozzleDark));
+    const vanes = [];
+    for (let k = 0; k < 10; k++) { const vg = new T.BoxGeometry(0.025, r * 0.22, r * 0.85); vg.translate(0, len * 0.66, r * 0.45); vg.applyMatrix4(mtx.makeRotationY((k / 10) * Math.PI * 2)); vanes.push(vg); }
+    g.add(mesh(mergeGeos(vanes), m.nozzleDark));
+    g.rotation.x = Math.PI / 2;   // 組み立てた +y（前）を +z へ
+    g.position.set(e.x, e.y, e.z);
     return g;
   }
 
   // ---------- デザイン ----------
   // どれも長さ約 5〜6m・幅約 3〜4.6m。原点は機体の中心の水面付近、前が +z。
-  // exhausts は噴射口（機体ローカル座標）と大きさ
+  // exhausts は噴射口の出口（機体ローカル座標）と大きさ
   const DESIGNS = {
-    // 1. 三角錐の組み合わせ
+    // 1. のみ形の三角錐の組み合わせ（先端は水平な辺）
     pyramid(m) {
       const b = new T.Group();
-      b.add(mesh(triPyramidForward(1.35, 5.6).scale(1, 0.5, 1).translate(0, 0.55, 0.2), m.paint));            // 胴体
+      const ex = [{ x: -0.68, y: 0.52, z: -3.0, r: 0.31 }, { x: 0.68, y: 0.52, z: -3.0, r: 0.31 }];
+      b.add(mesh(chiselLoft({ len: 5.8, halfW: 1.28, height: 1.05, tipW: 0.62, tipLift: 0.22 }).translate(0, 0.28, 0.25), m.paint));          // 胴体
       for (const s of [-1, 1]) {
-        b.add(podMesh(triPyramidForward(0.55, 3.6).scale(1, 0.7, 1).translate(s * 1.65, 0.25, -0.3), m, true));   // 両脇の浮き（底面だけ光る）
-        b.add(mesh(new T.CylinderGeometry(0.3, 0.42, 1.0, 3).rotateX(Math.PI / 2).translate(s * 0.62, 0.5, -2.55), m.dark));  // 三角の噴射口
+        b.add(podMesh(chiselLoft({ len: 3.8, halfW: 0.52, height: 0.58, tipW: 0.26, tipLift: 0.12, bulge: 0.04 }).translate(s * 1.68, 0.02, -0.3), m, true));   // 両脇の浮き（底面だけ光る）
       }
-      b.add(mesh(triPyramidForward(1.95, 2.9).scale(1, 0.1, 1).translate(0, 0.28, -0.9), m.paint));           // 平たい三角の翼
-      b.add(mesh(triPyramidForward(0.6, 1.9).scale(1, 0.8, 1).translate(0, 1.0, 0.6), m.glass));              // 操縦席
-      b.add(mesh(new T.ConeGeometry(0.55, 1.7, 3).scale(0.25, 1, 1.8).translate(0, 1.55, -1.9), m.paint));    // 尾翼（上向きの三角錐）
-      b.add(mesh(triPyramidForward(0.32, 1.6).scale(1, 0.6, 1).translate(0, 0.98, 1.9), m.accent));           // 機首の稜線の飾り
-      return { body: b, exhausts: [{ x: -0.62, y: 0.5, z: -3.05, r: 0.36 }, { x: 0.62, y: 0.5, z: -3.05, r: 0.36 }] };
+      b.add(mesh(chiselLoft({ len: 3.0, halfW: 2.0, height: 0.17, tipW: 0.5, round: 8, bulge: 0.02 }).translate(0, 0.24, -0.9), m.paint));     // 平たい翼
+      b.add(mesh(chiselLoft({ len: 2.0, halfW: 0.56, height: 0.52, tipW: 0.22, tipLift: 0.05, round: 9 }).translate(0, 0.66, 0.55), m.glass));  // 操縦席
+      b.add(mesh(finGeo([[-1.35, 0], [0.35, 0], [-0.75, 1.15], [-1.25, 1.25]], 0.1).translate(0, 0.95, -1.55), m.paint));   // 尾翼（後ろへ流れる）
+      b.add(mesh(chiselLoft({ len: 1.7, halfW: 0.3, height: 0.2, tipW: 0.12, round: 7 }).translate(0, 0.88, 1.75), m.accent));                 // 機首の稜線の飾り
+      navLights(b, m, 1.98, 0.36, -1.85);
+      for (const e of ex) b.add(jetNozzle(m, e, 1.0, { len: 2.5, sy: 0.85 }));   // 胴の両脇に沿うエンジン
+      return { body: b, exhausts: ex };
     },
     // 2. 円盤
     disc(m) {
       const b = new T.Group();
-      b.add(mesh(new T.SphereGeometry(2.3, 40, 16).scale(1, 0.26, 1).translate(0, 0.55, 0), m.paint));        // 皿形の本体
-      b.add(mesh(new T.TorusGeometry(2.25, 0.16, 10, 56).rotateX(Math.PI / 2).translate(0, 0.55, 0), m.accent)); // 縁の金属の輪
-      b.add(podMesh(new T.CylinderGeometry(1.6, 2.0, 0.35, 40).translate(0, 0.2, 0), m));                     // 下のスカート（浮上装置）
-      b.add(mesh(new T.SphereGeometry(0.85, 28, 14, 0, Math.PI * 2, 0, Math.PI / 2).scale(1, 0.75, 1.25).translate(0, 0.85, 0.35), m.glass));  // ドーム
+      const ex = [{ x: -0.72, y: 0.92, z: -2.6, r: 0.29 }, { x: 0.72, y: 0.92, z: -2.6, r: 0.29 }];
+      b.add(mesh(new T.SphereGeometry(2.3, 64, 24).scale(1, 0.26, 1).translate(0, 0.55, 0), m.paint));        // 皿形の本体
+      b.add(mesh(new T.TorusGeometry(2.25, 0.16, 16, 96).rotateX(Math.PI / 2).translate(0, 0.55, 0), m.accent)); // 縁の金属の輪
+      b.add(mesh(new T.TorusGeometry(1.45, 0.035, 8, 80).rotateX(Math.PI / 2).translate(0, 0.98, 0), m.accent)); // 上面の継ぎ目の輪
+      b.add(podMesh(new T.CylinderGeometry(1.6, 2.0, 0.35, 64).translate(0, 0.2, 0), m));                     // 下のスカート（浮上装置）
+      b.add(mesh(new T.SphereGeometry(0.85, 40, 20, 0, Math.PI * 2, 0, Math.PI / 2).scale(1, 0.75, 1.25).translate(0, 0.85, 0.35), m.glass));  // ドーム
+      b.add(mesh(new T.TorusGeometry(0.86, 0.05, 8, 48).rotateX(Math.PI / 2).scale(1, 1, 1.25).translate(0, 0.86, 0.35), m.accent));  // ドームの枠
       for (const s of [-1, 1]) {
-        const chev = mesh(new T.BoxGeometry(0.16, 0.05, 1.2), m.accent);                                      // 前を示す V の帯
+        const chev = mesh(new T.BoxGeometry(0.16, 0.05, 1.2), m.accent);   // 前を示す V の帯
         chev.position.set(s * 0.36, 1.03, 1.25); chev.rotation.y = -s * 0.45; b.add(chev);
-        b.add(mesh(new T.CylinderGeometry(0.32, 0.4, 1.1, 16).rotateX(Math.PI / 2).translate(s * 0.75, 0.55, -2.1), m.dark));   // 噴射口
-        const fin = mesh(new T.BoxGeometry(0.08, 0.7, 0.8), m.paint);
-        fin.position.set(s * 0.75, 1.0, -1.65); fin.rotation.z = s * 0.3; b.add(fin);
+        const fin = mesh(finGeo([[-0.45, 0], [0.35, 0], [-0.25, 0.62], [-0.5, 0.64]], 0.07), m.paint);   // 尾翼はナセルの上に立てる
+        fin.position.set(s * 0.8, 1.22, -1.75); fin.rotation.z = s * 0.35; b.add(fin);
       }
-      return { body: b, exhausts: [{ x: -0.75, y: 0.55, z: -2.65, r: 0.34 }, { x: 0.75, y: 0.55, z: -2.65, r: 0.34 }] };
+      navLights(b, m, 2.38, 0.6, 0);
+      for (const e of ex) b.add(jetNozzle(m, e, 0.95, { len: 2.3, sy: 0.9 }));   // 円盤の後ろの上に載せたエンジン
+      return { body: b, exhausts: ex };
     },
-    // 3. いままでのデザイン（下の半透明の板は無し）
+    // 3. いままでのデザイン（縁を丸め、部品を滑らかにした）
     classic(m) {
       const b = new T.Group();
+      const ex = [{ x: -0.7, y: 0.75, z: -3.0, r: 0.34 }, { x: 0.7, y: 0.75, z: -3.0, r: 0.34 }];
       const shape = new T.Shape();
-      shape.moveTo(0, 3.3); shape.lineTo(1.0, 1.0); shape.lineTo(1.3, -2.3); shape.lineTo(-1.3, -2.3); shape.lineTo(-1.0, 1.0); shape.closePath();
-      const hull = new T.ExtrudeGeometry(shape, { depth: 0.6, bevelEnabled: true, bevelThickness: 0.15, bevelSize: 0.15, bevelSegments: 2 });
-      hull.rotateX(Math.PI / 2); hull.translate(0, 0.6, 0);
+      shape.moveTo(0, 3.3); shape.quadraticCurveTo(0.75, 2.2, 1.0, 1.0); shape.quadraticCurveTo(1.3, -0.6, 1.3, -2.3); shape.lineTo(-1.3, -2.3); shape.quadraticCurveTo(-1.3, -0.6, -1.0, 1.0); shape.quadraticCurveTo(-0.75, 2.2, 0, 3.3);
+      const hull = new T.ExtrudeGeometry(shape, { depth: 0.55, bevelEnabled: true, bevelThickness: 0.2, bevelSize: 0.18, bevelSegments: 6, curveSegments: 24 });
+      hull.rotateX(Math.PI / 2); hull.translate(0, 0.62, 0); hull.computeVertexNormals();
       b.add(mesh(hull, m.paint));
+      const V = (x, y) => new T.Vector2(x, y), podPts = [];
+      for (let i = 0; i <= 24; i++) { const u = i / 24, y = -2.5 + 5 * u, rr = 0.42 * Math.pow(Math.sin(Math.PI * Math.min(1, Math.min(u, 1 - u) * 5.5) / 2), 0.6); podPts.push(V(Math.max(0.001, rr), y)); }
       for (const s of [-1, 1]) {
-        b.add(podMesh(new T.CylinderGeometry(0.42, 0.42, 5.0, 12).rotateX(Math.PI / 2).translate(s * 1.5, 0.1, -0.1), m));   // 両脇の浮き（浮上装置）
-        b.add(mesh(new T.CylinderGeometry(0.36, 0.42, 1.1, 12).rotateX(Math.PI / 2).translate(s * 0.7, 0.75, -2.45), m.dark));
+        b.add(podMesh(new T.LatheGeometry(podPts, 40).rotateX(Math.PI / 2).translate(s * 1.5, 0.1, -0.1), m));   // 両脇の浮き（両端の丸い筒）
       }
-      b.add(mesh(new T.SphereGeometry(0.75, 18, 12).scale(1, 0.6, 1.7).translate(0, 0.85, 0.35), m.glass));
-      b.add(mesh(new T.BoxGeometry(0.14, 1.1, 1.1).translate(0, 1.35, -1.85), m.paint));
-      b.add(mesh(new T.BoxGeometry(2.6, 0.08, 0.6).translate(0, 1.9, -2.05), m.paint));
-      return { body: b, exhausts: [{ x: -0.7, y: 0.75, z: -3.0, r: 0.36 }, { x: 0.7, y: 0.75, z: -3.0, r: 0.36 }] };
+      b.add(mesh(new T.SphereGeometry(0.75, 40, 24).scale(1, 0.6, 1.7).translate(0, 0.85, 0.35), m.glass));
+      b.add(mesh(finGeo([[-0.6, 0], [0.45, 0], [-0.35, 1.05], [-0.65, 1.1]], 0.12).translate(0, 1.05, -1.8), m.paint));   // 尾翼
+      b.add(mesh(wingGeo([[-1.3, -0.25], [1.3, -0.25], [1.2, 0.3], [-1.2, 0.3]], 0.07).translate(0, 1.95, -2.05), m.paint));   // 後ろの翼
+      navLights(b, m, 1.42, 0.72, -1.9);
+      for (const e of ex) b.add(jetNozzle(m, e, 1.0, { len: 2.0 }));   // 船体の後ろの上に載せたエンジン
+      return { body: b, exhausts: ex };
     },
     // 4. 水滴（前が丸く、後ろへ細くなる）
     drop(m) {
       const b = new T.Group();
+      const ex = [{ x: 0, y: 0.62, z: -3.1, r: 0.38 }];
       const R = 1.25, pts = [];
-      for (let i = 0; i <= 40; i++) {
-        const u = i / 40;
+      for (let i = 0; i <= 64; i++) {
+        const u = i / 64;
         const r = u > 0.72 ? R * Math.sqrt(Math.max(0, 1 - ((u - 0.72) / 0.28) ** 2)) : R * Math.pow(Math.sin(Math.PI / 2 * u / 0.72), 1.25);
         pts.push(new T.Vector2(Math.max(0.001, r), -2.7 + 5.4 * u));
       }
-      const lathe = new T.LatheGeometry(pts, 40);
+      const lathe = new T.LatheGeometry(pts, 64);
       lathe.rotateX(Math.PI / 2);          // 回転軸を前後（+z が丸い前）に
       lathe.scale(1, 0.62, 1); lathe.translate(0, 0.62, 0);
       b.add(mesh(lathe, m.paint));
-      b.add(mesh(new T.TorusGeometry(1.2, 0.07, 8, 48).scale(1, 0.62, 1).translate(0, 0.62, 0.4), m.accent));   // 胴の金属の帯
-      b.add(mesh(new T.SphereGeometry(0.62, 24, 14).scale(1, 0.6, 1.6).translate(0, 1.22, 0.75), m.glass));     // 操縦席
-      b.add(mesh(new T.BoxGeometry(0.08, 0.8, 1.0).translate(0, 1.15, -1.85), m.paint));                         // 縦の尾翼
+      b.add(mesh(new T.TorusGeometry(1.2, 0.07, 12, 80).scale(1, 0.62, 1).translate(0, 0.62, 0.4), m.accent));   // 胴の金属の帯
+      b.add(mesh(new T.SphereGeometry(0.62, 40, 24).scale(1, 0.6, 1.6).translate(0, 1.22, 0.75), m.glass));     // 操縦席
+      b.add(mesh(finGeo([[-0.7, 0], [0.5, 0], [-0.4, 0.85], [-0.75, 0.9]], 0.08).translate(0, 0.95, -1.75), m.paint));   // 縦の尾翼
       for (const s of [-1, 1]) {
-        const fin = mesh(new T.BoxGeometry(0.9, 0.06, 0.8), m.paint);
-        fin.position.set(s * 0.75, 0.5, -1.9); fin.rotation.z = s * 0.15; b.add(fin);
+        const fin = mesh(wingGeo([[0, -0.45], [0.9, -0.2], [0.95, 0.25], [0, 0.4]], 0.05), m.paint);
+        fin.position.set(s * 0.35, 0.5, -1.9); fin.scale.x = s; fin.rotation.z = s * 0.15; b.add(fin);
       }
-      b.add(mesh(new T.CylinderGeometry(0.32, 0.46, 0.9, 18).rotateX(Math.PI / 2).translate(0, 0.62, -2.7), m.dark));   // 噴射口（1つ）
-      b.add(podMesh(new T.SphereGeometry(1.0, 28, 12).scale(0.95, 0.32, 2.1).translate(0, 0.2, -0.1), m));            // 胴体の下の浮上装置
-      return { body: b, exhausts: [{ x: 0, y: 0.62, z: -3.15, r: 0.45 }] };
+      b.add(podMesh(new T.SphereGeometry(1.0, 48, 20).scale(0.95, 0.32, 2.1).translate(0, 0.2, -0.1), m));            // 胴体の下の浮上装置
+      navLights(b, m, 1.28, 0.5, -1.95);
+      for (const e of ex) b.add(jetNozzle(m, e, 0.9, { len: 2.0, sy: 0.72 }));   // 胴の後ろがそのまま流れ込むエンジン
+      return { body: b, exhausts: ex };
     },
   };
 
@@ -1269,7 +1802,7 @@
   // ---------- 機体を組み立てる ----------
   function build(design, opts) {
     const make = DESIGNS[design] || DESIGNS.classic;
-    const mats = materials(opts, design === 'pyramid');   // 三角錐は面をはっきり見せる
+    const mats = materials(opts, false);   // どの機体も滑らかに陰影を付ける（角ばった低ポリゴンの見た目にしない）
     const def = make(mats);
     const pod = mats.pod.userData.glow, phase = Math.random() * 6.28;
     const root = new T.Group();
@@ -1287,7 +1820,8 @@
       const k = e.r / 0.36;
       const outer = mesh(rearCone(0.4 * k, BASE_LEN), outerMat);
       const core = mesh(rearCone(0.2 * k, BASE_LEN * 0.6), coreMat);
-      const glow = mesh(new T.CircleGeometry(0.3 * k, 20).rotateY(Math.PI), nozzleMat);   // 噴射口の光（後ろ向き）
+      const glow = mesh(new T.CircleGeometry(0.3 * k, 24).rotateY(Math.PI), nozzleMat);   // 噴射口の奥の光（後ろ向き。タービンの手前に置く）
+      glow.position.z = e.r * 0.9;
       const flame = new T.Group(); flame.add(outer, core); g.add(flame, glow);
       const diamonds = [];
       for (let i = 0; i < 4; i++) {
@@ -1304,20 +1838,26 @@
     return {
       root, body, design,
       // power: 0〜1（アクセル）、boosting: ブースト中か
-      // jetOn: false のあいだは噴射しない（炎・噴射口の光・後ろの揺らぎを消す）。浮上装置の光はそのまま
+      // jetOn: false のあいだは点火前の暖機（短い種火だけ。後ろの揺らぎは出さない）。浮上装置の光はそのまま
       update(time, power, boosting, jetOn = true) {
-        for (const f of flames) f.flame.visible = f.haze.visible = f.glow.visible = jetOn;
+        // 点火前（jetOn = false）は暖機中：短く弱い種火だけをゆらめかせる（後ろの空気の揺らぎは出さない）
+        const idle = !jetOn;
+        if (idle) { power = 0; boosting = false; }
+        for (const f of flames) { f.flame.visible = f.glow.visible = true; f.haze.visible = jetOn; }
         // 浮上装置の光：アクセルで少し強まり、細かく脈打つ
         pod.uGlow.value = (1.25 + 0.45 * power + (boosting ? 0.3 : 0)) * (0.9 + 0.1 * Math.sin(time * 9 + phase) + 0.04 * Math.sin(time * 37));
-        const target = 0.4 + 0.8 * power + (boosting ? 1.1 : 0);
+        const target = idle ? 0.16 + 0.03 * Math.sin(time * 7 + phase) : 0.4 + 0.8 * power + (boosting ? 1.1 : 0);
         len += (target - len) * 0.2;
-        const pw = 0.35 + 0.65 * power + (boosting ? 0.5 : 0);
+        const pw = idle ? 0.24 + 0.04 * Math.sin(time * 11 + phase) : 0.35 + 0.65 * power + (boosting ? 0.5 : 0);
         for (const m of [outerMat, coreMat]) {
           m.uniforms.uTime.value = time; m.uniforms.uPower.value = pw; m.uniforms.uBoost.value = boosting ? 1 : 0;
         }
         hazeMat.uniforms.uTime.value = time; hazeMat.uniforms.uPower.value = 0.25 + 0.55 * power + (boosting ? 0.4 : 0);
-        diamondMat.opacity = Math.min(0.75, 0.05 + 0.3 * power + (boosting ? 0.4 : 0)) * (0.85 + 0.15 * Math.sin(time * 47));
+        diamondMat.opacity = idle ? 0 : Math.min(0.75, 0.05 + 0.3 * power + (boosting ? 0.4 : 0)) * (0.85 + 0.15 * Math.sin(time * 47));
         nozzleMat.color.setHex(boosting ? 0xffd9a8 : 0xbfe9ff);
+        // 噴射口の内壁：アクセルで明るく、ブースト中は白っぽく
+        const ig = idle ? 0.32 + 0.05 * Math.sin(time * 5 + phase) : 0.45 + 0.55 * power + (boosting ? 0.6 : 0);
+        mats.inner.color.setRGB(ig * (boosting ? 1.1 : 1), ig * (boosting ? 1.05 : 0.95), ig * (boosting ? 1.2 : 0.9));
         for (const f of flames) {
           const flick = 1 + 0.06 * Math.sin(time * 53 + f.flame.id);
           f.flame.scale.set(1 + 0.05 * Math.sin(time * 71), 1, len * flick);
@@ -1424,16 +1964,730 @@
 
 </script>
 <script>
+/* ===== 同梱: hover-features.js ===== */
+/* コースの仕掛け（hover-race.html が読み込む）
+   - createTunnel(ctx): 岩山を抜けるトンネル。中は暗く、水面に日が当たらない（水面へ渡す「屋根の下」の印も作る）
+   - createRamps(ctx):  水に浮かぶジャンプ台
+   - createValley(ctx): 両脇に急な岩壁が立つ V 字谷
+   - createMassif(ctx): コースの片側の湖を埋める山岳地帯（高さの格子）
+   - createBlimps(ctx): 観客を乗せてコースの上空を回る飛行船
+   - createShadeMask(ctx): 水面へ渡す「屋根の下・日陰」の印（トンネルと谷をまとめて 1 枚に描く）
+   - createMines(ctx):  浮いている機雷。当たると爆発して消え、しばらくして浮かび直す
+   どれも見た目だけを作る。当たり判定と動き（跳ぶ・弾かれる）はゲーム側が持つ。 */
+(() => {
+  'use strict';
+  const THREE = window.THREE;
+
+  // ---------- トンネル ----------
+  // コースの i0〜i1 の区間を覆う。内側はコンクリートの半楕円、外側は岩山。両端は出入口の枠。
+  function createTunnel(ctx) {
+    const { scene, TEX, TPx, TPz, TNx, TNz, TTx, TTz, HALF, wrap, i0, i1, mulberry32, clamp } = ctx;
+    const W = HALF + 5, HC = 13, BASE = -2.5;          // 内側の半幅・天井の高さ・水面下の裾
+    const WO = W + 42, HO = HC + 17;                    // 外側（岩山）の半幅・高さ
+    const A = 28, ST = 2;                               // 断面の分割数・コース方向の間引き
+    const idxs = []; for (let i = i0; i <= i1; i += ST) idxs.push(wrap(i));
+    const n = idxs.length, rr = mulberry32(777);
+    const pos = [], col = [], uv = [], ind = [];
+    const c = new THREE.Color();
+    const cConc = new THREE.Color(0x5b5f66), cStain = new THREE.Color(0x2c3230), cFrame = new THREE.Color(0xa7abb0);
+    const cRock = new THREE.Color(0x7d7468), cRock2 = new THREE.Color(0x5f5a52), cGrass = new THREE.Color(0x4c7f45), cSand = new THREE.Color(0xcdbb8a);
+    const P = (k, lx, y) => { const i = idxs[k]; return [TPx[i] + TNx[i] * lx, y, TPz[i] + TNz[i] * lx]; };
+    const add = (p, cc, u, v) => { pos.push(p[0], p[1], p[2]); col.push(cc.r, cc.g, cc.b); uv.push(u, v); return pos.length / 3 - 1; };
+    const grid = (rows, cols, at) => {                  // rows × cols の頂点を張り、四角を2つの三角に割る
+      const base = pos.length / 3;
+      for (let k = 0; k < rows; k++) for (let a = 0; a < cols; a++) at(k, a);
+      for (let k = 0; k < rows - 1; k++) for (let a = 0; a < cols - 1; a++) {
+        const q = base + k * cols + a;
+        ind.push(q, q + cols, q + 1, q + 1, q + cols, q + cols + 1);
+      }
+    };
+    const inner = (k, a) => { const th = Math.PI * a / A; return P(k, W * Math.cos(th), BASE + (HC - BASE) * Math.sin(th)); };
+    // 岩山のでこぼこ：コース方向にもなめらかにつながるよう、正弦波を重ねて少しだけ乱数を足す
+    const ph = [rr() * 6.28, rr() * 6.28, rr() * 6.28];
+    const jag = []; for (let k = 0; k < n; k++) { jag.push([]); for (let a = 0; a <= A; a++) jag[k].push((rr() - 0.5) * 0.06); }
+    const outerR = (k, a) => {
+      const th = Math.PI * a / A, mid = Math.sin(th);
+      const bump = 0.12 * Math.sin(k * 0.21 + a * 0.9 + ph[0]) + 0.08 * Math.sin(k * 0.07 - a * 1.7 + ph[1]) + 0.05 * Math.sin(k * 0.5 + ph[2]) + jag[k][a];
+      const endTaper = Math.min(1, Math.min(k, n - 1 - k) / 6);    // 出入口の近くは山を低く
+      return { lx: WO * Math.cos(th) * (1 + bump * 0.5), y: BASE + (HO * (0.55 + 0.45 * endTaper) - BASE) * Math.pow(mid, 0.75) * (1 + bump * mid) };
+    };
+    // 内側（天井と壁）。下ほど水垢で暗い。模様は 6 m 角のコンクリートの継ぎ目
+    const stepL = Math.hypot(TPx[idxs[1]] - TPx[idxs[0]], TPz[idxs[1]] - TPz[idxs[0]]), arcL = Math.PI * (W + HC) / 2 / A;
+    grid(n, A + 1, (k, a) => {
+      const p = inner(k, a), stain = clamp(1 - (p[1] - 0.5) / 3, 0, 1);
+      c.copy(cConc).lerp(cStain, stain * 0.8);
+      add(p, c, k * stepL / 6, a * arcL / 6);
+    });
+    const innerCount = ind.length;
+    // 外側（岩山）。高い所は草、水際は砂
+    grid(n, A + 1, (k, a) => {
+      const o = outerR(k, a), hf = o.y / HO;
+      c.copy(cSand).lerp(cRock, clamp((o.y - 0.5) / 3, 0, 1)).lerp(cRock2, clamp(Math.sin(k * 0.3 + a) * 0.5 + 0.2, 0, 1) * 0.5).lerp(cGrass, clamp((hf - 0.55) / 0.2, 0, 1));
+      add(P(k, o.lx, o.y), c, k * stepL / 40, a * 0.12);
+    });
+    // 出入口：内側の縁 → コンクリートの枠 → 岩山の縁 をつなぐ
+    for (const k of [0, n - 1]) {
+      grid(3, A + 1, (row, a) => {
+        const th = Math.PI * a / A;   // 模様は正面から見た位置で貼る（引き伸ばさない）
+        if (row === 0) { add(inner(k, a), cFrame, W * Math.cos(th) / 12, (BASE + (HC - BASE) * Math.sin(th)) / 12); return; }
+        if (row === 1) { const lx = (W + 3) * Math.cos(th), y = BASE + (HC + 3 - BASE) * Math.sin(th); add(P(k, lx, y), cFrame, lx / 12, y / 12); return; }
+        const o = outerR(k, a); add(P(k, o.lx, o.y), cRock, o.lx / 40, o.y / 40);
+      });
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    geo.setIndex(ind); geo.computeVertexNormals();
+    geo.addGroup(0, innerCount, 0); geo.addGroup(innerCount, ind.length - innerCount, 1);
+    // コンクリート：わずかなまだらと、パネルの継ぎ目
+    const concTex = (() => {
+      const cv = document.createElement('canvas'); cv.width = cv.height = 128; const g = cv.getContext('2d'), rn = mulberry32(31);
+      g.fillStyle = '#c4c4c0'; g.fillRect(0, 0, 128, 128);
+      for (let q = 0; q < 900; q++) { const v = 150 + rn() * 70; g.fillStyle = `rgba(${v},${v},${v - 4},0.25)`; g.fillRect(rn() * 128, rn() * 128, 2 + rn() * 5, 2 + rn() * 5); }
+      g.fillStyle = 'rgba(40,40,40,0.55)'; g.fillRect(0, 0, 128, 3); g.fillRect(0, 0, 3, 128);
+      const t = new THREE.CanvasTexture(cv); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t;
+    })();
+    const mesh = new THREE.Mesh(geo, [
+      new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.9, map: concTex, side: THREE.DoubleSide }),
+      new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 0.95, map: TEX.rock, bumpMap: TEX.rockBump, bumpScale: 0.8, side: THREE.DoubleSide }),
+    ]);
+    scene.add(mesh);
+
+    // 照明：壁と天井に沿って途切れずに走るネオン管。白く光る芯と、そのまわりのにじみ（管の正面ほど濃い）。管の中を光の粒が流れる
+    // 色は壁が赤紫、天井が青（蛍光のミント〜水色は画面の光のあふれに拾われて白く飛ぶので使わない）
+    const NEON_VS = `varying vec2 vUv; varying vec3 vN; varying vec3 vW;
+      void main(){ vUv = uv; vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * viewMatrix * w; }`;
+    const neonMat = (color, halo, speed) => new THREE.ShaderMaterial({
+      uniforms: { uTime: { value: 0 }, uColor: { value: new THREE.Color(color) } },
+      vertexShader: NEON_VS,
+      fragmentShader: `uniform float uTime; uniform vec3 uColor; varying vec2 vUv; varying vec3 vN; varying vec3 vW;
+        void main(){
+          float facing = abs(dot(normalize(vN), normalize(cameraPosition - vW)));
+          float run = 0.7 + 0.3 * sin(vUv.x * 240.0 - uTime * ${speed.toFixed(1)});                  // 流れる光
+          float pulse = pow(max(0.0, sin(vUv.x * 18.0 - uTime * 2.2)), 24.0);                     // ときどき走る明るい光の粒
+          vec3 c; float a;
+          if (${halo ? 'true' : 'false'}) { a = pow(facing, 2.2) * 0.55 * (run + pulse * 2.0); c = uColor; }
+          else { a = 1.0; c = mix(uColor * 1.4, vec3(1.0), 0.18 + 0.6 * pulse) * (0.85 + 0.25 * run); }   // 芯も色を残す（白く飛ばさない）
+          gl_FragColor = vec4(c * a, 1.0);
+        }`,
+      transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide, fog: false,
+    });
+    const neonMats = [];
+    const lampMesh = new THREE.Group();
+    // th：断面の角度（0 が右の壁の根元、π/2 が天井）、その高さで壁から少し内側に浮かせる
+    const neonPath = (th, s) => new THREE.CatmullRomCurve3(idxs.map((_, k) => new THREE.Vector3(...P(k, W * s * Math.cos(th), BASE + (HC - BASE) * s * Math.sin(th)))));
+    for (const L of [{ th: 0.42, c: 0xff3cf0 }, { th: Math.PI - 0.42, c: 0xff3cf0 }, { th: 0.95, c: 0xff3cf0 }, { th: Math.PI - 0.95, c: 0xff3cf0 }, { th: Math.PI / 2, c: 0x3a8cff }]) {
+      const path = neonPath(L.th, 0.965), seg = idxs.length * 3;
+      const core = new THREE.Mesh(new THREE.TubeGeometry(path, seg, 0.09, 6, false), neonMat(L.c, false, 9.0));
+      const halo = new THREE.Mesh(new THREE.TubeGeometry(path, seg, 0.65, 8, false), neonMat(L.c, true, 9.0));
+      lampMesh.add(core, halo); neonMats.push(core.material, halo.material);
+    }
+    scene.add(lampMesh);
+    function updateNeon(t) { for (const m of neonMats) m.uniforms.uTime.value = t; }
+
+    // 水面へ渡す「屋根の下」の印：上から見たトンネルの形を白で塗った画像
+    let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+    for (const i of idxs) { minX = Math.min(minX, TPx[i]); maxX = Math.max(maxX, TPx[i]); minZ = Math.min(minZ, TPz[i]); maxZ = Math.max(maxZ, TPz[i]); }
+    const pad = W + 12; minX -= pad; maxX += pad; minZ -= pad; maxZ += pad;
+    const S = 512, sx = S / (maxX - minX), sz = S / (maxZ - minZ);
+    const cv = document.createElement('canvas'); cv.width = cv.height = S;
+    const g = cv.getContext('2d');
+    g.fillStyle = '#000'; g.fillRect(0, 0, S, S);
+    g.filter = 'blur(3px)';
+    g.strokeStyle = '#fff'; g.lineCap = 'butt'; g.lineJoin = 'round'; g.lineWidth = 2 * (W - 1) * Math.min(sx, sz);
+    g.beginPath();
+    idxs.forEach((i, k) => { const u = (TPx[i] - minX) * sx, v = (TPz[i] - minZ) * sz; k ? g.lineTo(u, v) : g.moveTo(u, v); });
+    g.stroke();
+    const data = g.getImageData(0, 0, S, S).data;
+    const tex = new THREE.CanvasTexture(cv);
+    tex.minFilter = tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+    tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
+    const box = [minX, minZ, maxX - minX, maxZ - minZ];
+    // その地点が屋根の下か（0〜1）。カメラの明るさ合わせに使う
+    function shadeAt(x, z) {
+      const u = Math.floor((x - minX) * sx), v = Math.floor((z - minZ) * sz);
+      if (u < 0 || v < 0 || u >= S || v >= S) return 0;
+      return data[(v * S + u) * 4] / 255;
+    }
+    return { mesh, lampMesh, updateNeon, shadeTex: tex, shadeBox: box, shadeAt, i0, i1, W, HC, BASE };   // W・HC・BASE：内側の断面（半楕円）の半幅・天井の高さ・裾
+  }
+
+  // ---------- V 字谷 ----------
+  // コースの脇に、ガードレールのすぐ外から急な岩壁を立てる（両側なら断面が V 字）。尾根の上は草、外側はなだらかに湖へ下りる。
+  // sides: [{ side: -1（左）/ 1（右）, i0, i1 }]：側ごとに壁を立てる区間（片側だけの崖もこれで作る）。省略時は i0〜i1 の両側
+  // 各側の両端は尾根を低くして湖へ沈める。ほかの区間のコースにかぶらないよう、場所ごとに空いている幅を測って山の大きさを決める。
+  function createValley(ctx) {
+    const { scene, TEX, TPx, TPz, TNx, TNz, N, HALF, wrap, clamp, mulberry32 } = ctx;
+    const sides = ctx.sides || [{ side: -1, i0: ctx.i0, i1: ctx.i1 }, { side: 1, i0: ctx.i0, i1: ctx.i1 }];
+    const L0 = HALF + 4, BASE = -4, SLOPE_IN = 1.6, SLOPE_OUT = 0.8, CREST = 22, H_MAX = 75;   // 壁の根元・裾・内側と外側の傾き・尾根の幅・高さ
+    const ST = 3, rr = mulberry32(8080);
+    for (const sv of sides) { sv.idxs = []; for (let i = sv.i0; i <= sv.i1; i += ST) sv.idxs.push(wrap(i)); }
+    const sd = (a, b) => { let d = (a - b) % N; if (d > N / 2) d -= N; if (d < -N / 2) d += N; return d; };
+    // 曲がり具合（正＝右へ曲がる）。曲がりの内側では、断面どうしが重ならない幅までにする
+    const curv = (i) => { const a = wrap(i - 10), b = wrap(i + 10), ax = TPx[wrap(a + 1)] - TPx[a], az = TPz[wrap(a + 1)] - TPz[a], bx = TPx[wrap(b + 1)] - TPx[b], bz = TPz[wrap(b + 1)] - TPz[b];
+      const la = Math.hypot(ax, az), lb = Math.hypot(bx, bz); return (ax * bz - az * bx) / (la * lb) / (20 * la); };
+    // 横へどこまで山を広げてよいか（ほかの区間のコースから HALF + 25 m 離す）
+    function freeWidth(i, side) {
+      // 前後 ±75 m で一番きつい曲がりを使う（その先で隣の断面と重ならないよう、曲がりの半径の半分まで）
+      let k = curv(i); for (let q = -40; q <= 40; q += 8) { const kq = curv(wrap(i + q)); if (kq * side > k * side) k = kq; }
+      const inner = k * side > 0 ? 0.62 / Math.max(Math.abs(k), 1e-4) : 1e9;   // 曲がりの内側は、断面が中心へ寄り集まりすぎない所まで
+      let l = L0;
+      for (; l < 230 && l < inner; l += 6) {
+        const x = TPx[i] + TNx[i] * side * l, z = TPz[i] + TNz[i] * side * l;
+        let near = false;
+        for (let j = 0; j < N && !near; j += 4) {
+          if (Math.abs(sd(j, i)) < 130) continue;
+          if ((TPx[j] - x) ** 2 + (TPz[j] - z) ** 2 < (HALF + 25) ** 2) near = true;
+        }
+        if (near) break;
+      }
+      return Math.min(l, inner);
+    }
+    // 断面の大きさ：空いている幅 F に収める。狭い所は高さを保ったまま、外側の斜面を急にし尾根を細くする（それでも足りなければ低くする）
+    // 前後でならし、両端は湖へ下ろす
+    const SLOPE_STEEP = 1.4, CREST_MIN = 8;
+    for (const sv of sides) sv.shapes = (() => {
+      const side = sv.side, idxs = sv.idxs, n = idxs.length;
+      const f0 = idxs.map((i) => freeWidth(i, side));
+      const f = f0.map((_, k) => { let m = Infinity; for (let q = -4; q <= 4; q++) m = Math.min(m, f0[Math.min(n - 1, Math.max(0, k + q))]); return m; });   // 前後の一番狭い所に合わせる
+      const raw = f.map((F) => {
+        const H = clamp(Math.min(H_MAX, (F - L0 - CREST_MIN) / (1 / SLOPE_IN + 1 / SLOPE_STEEP)), 0, H_MAX);
+        const room = F - (L0 + H / SLOPE_IN);
+        const out = clamp(room - CREST, (H - BASE) / SLOPE_STEEP, (H - BASE) / SLOPE_OUT);
+        return { H, out, crest: clamp(room - out, CREST_MIN, CREST) };
+      });
+      const avg = (key, k) => { let a = 0; for (let q = -4; q <= 4; q++) a += raw[Math.min(n - 1, Math.max(0, k + q))][key]; return a / 9; };
+      return raw.map((_, k) => {
+        const u = k / (n - 1), e = Math.min(u, 1 - u) / 0.14, t = e >= 1 ? 1 : e * e * (3 - 2 * e);
+        return { H: avg('H', k) * t, out: avg('out', k) * Math.max(t, 0.3), crest: avg('crest', k) };
+      });
+    })();
+    const COLS = 15;
+    const pos = [], col = [], uv = [], ind = [];
+    const c = new THREE.Color(), cRock = new THREE.Color(0x8a7f70), cRock2 = new THREE.Color(0x6f6a62), cWet = new THREE.Color(0x3c3a34), cGrass = new THREE.Color(0x527f44);
+    const ph = [rr() * 6.28, rr() * 6.28, rr() * 6.28, rr() * 6.28];
+    sides.forEach((sv) => {
+      const { side, idxs, shapes } = sv, n = idxs.length, k0 = Math.round(sd(sv.i0, sides[0].i0) / ST);   // k0：模様を側どうしでずらさない
+      const base = pos.length / 3;
+      for (let kk = 0; kk < n; kk++) {
+        const k = kk + k0, i = idxs[kk], sh = shapes[kk];
+        const kIn = curv(i) * side;   // この側へ曲がる強さ（正＝この側が曲がりの内側。外へ行くほど断面の間隔が 1 − kIn·l に縮む）
+        const { H, out, crest } = sh, lc = L0 + H / SLOPE_IN;
+        const low = clamp((H + 1) / 10, 0.1, 1);   // 尾根が低い所（入口・出口）は凹凸も小さく（水面の上下へ細切れに出入りさせない）
+        for (let q = 0; q < COLS; q++) {
+          // 断面：0〜5 が内側の壁、6〜8 が尾根、9〜14 が外側の斜面
+          let l, y;
+          if (q <= 5) { const t = q / 5; l = L0 - 1 + (lc - L0 + 1) * t; y = BASE + (H - BASE) * Math.pow(t, 0.9); }
+          else if (q <= 8) { const t = (q - 5) / 3; l = lc + crest * t; y = H * (1 + 0.06 * Math.sin(t * 3.1)); }
+          else { const t = (q - 8) / 6; l = lc + crest + out * t; y = H + (BASE - H) * Math.pow(t, 1.2); }
+          // 岩肌のでこぼこ（前後にもなめらかにつながる正弦波＋少しの乱れ）。根元と湖際は動かさない
+          const mid = q === 0 || q === COLS - 1 ? 0 : 1;
+          // 曲がりの内側で断面の間隔が縮む所は、凹凸も縮める（縮まないと細い三角形が尖って筋状に乱れる）
+          const gap = clamp(1 - kIn * l, 0.05, 1), tame = clamp((gap - 0.08) / 0.5, 0, 1);
+          const nz = Math.sin(k * 0.31 + q * 1.7 + ph[0]) * 0.6 + Math.sin(k * 0.11 - q * 0.9 + ph[1]) * 0.8 + Math.sin(k * 0.77 + ph[2]) * 0.3 + (rr() - 0.5) * 0.5 * tame;
+          y += nz * Math.min(8, 0.08 * H + 1) * mid * (0.35 + 0.65 * tame) * low;
+          l += Math.sin(k * 0.23 + q * 2.3 + ph[3]) * 2.5 * mid * tame * low;
+          const x = TPx[i] + TNx[i] * side * l, z = TPz[i] + TNz[i] * side * l;
+          // 色：水際は濡れて暗く、地層の縞、上の緩い所は草
+          const strata = 0.5 + 0.5 * Math.sin(y * 0.35 + Math.sin(k * 0.05) * 2);
+          c.copy(cRock).lerp(cRock2, strata * 0.6).lerp(cWet, clamp(1 - (y + 1) / 4, 0, 1) * 0.8);
+          if (q >= 5 && q <= 10) c.lerp(cGrass, clamp((y / Math.max(H, 1) - 0.82) / 0.12, 0, 1) * (H > 12 ? 1 : 0));
+          pos.push(x, y, z); col.push(c.r, c.g, c.b); uv.push(k * ST * 1.86 * gap / 30, (y + l * 0.3) / 30);   // 模様もコース方向の実際の間隔に合わせて縮める（引き伸ばされた筋にしない）
+        }
+      }
+      for (let kk = 0; kk < n - 1; kk++) for (let q = 0; q < COLS - 1; q++) {
+        const a = base + kk * COLS + q;
+        ind.push(a, a + COLS, a + 1, a + 1, a + COLS, a + COLS + 1);
+      }
+    });
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+    geo.setIndex(ind); geo.computeVertexNormals();
+    const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, flatShading: true, roughness: 0.95, map: TEX.rock, bumpMap: TEX.rockBump, bumpScale: 1.2, side: THREE.DoubleSide }));
+    scene.add(mesh);
+    // 谷の範囲（島を置かない判定に使う）：谷の中心線から外側の裾までの距離
+    const reach = L0 + H_MAX / SLOPE_IN + CREST + (H_MAX - BASE) / SLOPE_OUT;
+    function covers(x, z, margin) {
+      for (const sv of sides) for (let k = 0; k < sv.idxs.length; k += 2) { const i = sv.idxs[k]; if ((TPx[i] - x) ** 2 + (TPz[i] - z) ** 2 < (reach + margin) ** 2) return true; }
+      return false;
+    }
+    // コースの位置 i の、その側（-1 / 1）に壁があるか
+    const has = (i, side) => sides.some((sv) => sv.side === side && sd(i, sv.i0) >= 0 && sd(sv.i1, i) >= 0);
+    // 高さ y で、カメラが横へ出てよい幅（壁から 2.5 m あける）
+    function wallAt(y) { return L0 - 1 + Math.max(0, y - BASE) / SLOPE_IN - 2.5; }
+    return { mesh, L0, covers, has, wallAt };
+  }
+
+  // ---------- 山岳地帯 ----------
+  // コースの i0〜i1 の区間の片側（side）に広がる湖を、外へ行くほど高くなる山並みで埋める（高さの格子）。
+  // 尾根と谷は「尾根を強調したフラクタル雑音」で作る。どの場所も、コースのどこからも十分離れた所でしか盛り上がらない。
+  // 色は高さと斜面で決める（裾は緑、急な所は岩、高く緩い所は雪）
+  function createMassif(ctx) {
+    const { scene, TEX, TPx, TPz, TNx, TNz, N, HALF, wrap, clamp, mulberry32, i0, i1, side } = ctx;
+    const maxR = ctx.maxR || 2050, cx = ctx.cx, cz = ctx.cz;   // 中心からこの半径より外には作らない（遠景の山の輪へつなぐ）
+    const sd = (a, b) => { let d = (a - b) % N; if (d > N / 2) d -= N; if (d < -N / 2) d += N; return d; };
+    // 値の雑音（格子点の乱数をなめらかにつなぐ）と、尾根を強調したフラクタル
+    const rr = mulberry32(31337), G = 256, grid = new Float32Array(G * G);
+    for (let k = 0; k < grid.length; k++) grid[k] = rr();
+    const vn = (x, y) => {
+      const xi = Math.floor(x), yi = Math.floor(y), fx = x - xi, fy = y - yi, sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+      const at = (i, j) => grid[((j & (G - 1)) * G) + (i & (G - 1))];
+      const a = at(xi, yi), b = at(xi + 1, yi), c = at(xi, yi + 1), d = at(xi + 1, yi + 1);
+      return a + (b - a) * sx + (c - a) * sy + (a - b - c + d) * sx * sy;
+    };
+    const ridged = (x, z) => {
+      let s = 0, amp = 0.5, f = 1 / 260, w = 1, t = 0;
+      for (let o = 0; o < 6; o++) {
+        let n = 1 - Math.abs(2 * vn(x * f + o * 17.3, z * f - o * 9.1) - 1); n = n * n * w;   // 尾根ほど 1
+        s += n * amp; t += amp; w = Math.min(1, n * 1.6); amp *= 0.5; f *= 2.03;
+      }
+      return s / t;
+    };
+    // その場所の高さ（湖の中は水面下）
+    function heightAt(x, z) {
+      if (Math.hypot(x - cx, z - cz) > maxR + 150) return -12;
+      // 区間の中で一番近い点（bi, dIn）と、区間の外で一番近い点（dOut）。区間の外のコースへ近づくほど低くする（境目で切り立たせない）
+      let bi = -1, dIn = Infinity, dOut = Infinity;
+      for (let j = 0; j < N; j += 4) {
+        const d = (TPx[j] - x) ** 2 + (TPz[j] - z) ** 2;
+        if (sd(j, i0) >= 0 && sd(i1, j) >= 0) { if (d < dIn) { dIn = d; bi = j; } } else if (d < dOut) dOut = d;
+      }
+      dIn = Math.sqrt(dIn); dOut = Math.sqrt(dOut);
+      const md = Math.min(dIn, dOut);
+      const lat = (x - TPx[bi]) * TNx[bi] + (z - TPz[bi]) * TNz[bi];
+      if (lat * side <= 0 && dIn < 400) return -12;                                                       // 区間の内側（反対の側）には作らない
+      const own = clamp((dOut - dIn) / 260, 0, 1), ownS = own * own * (3 - 2 * own);
+      const u = sd(bi, i0) / Math.max(1, sd(i1, i0)), e = clamp(Math.min(u, 1 - u) / 0.2, 0, 1), endFade = e * e * (3 - 2 * e) * ownS;   // 区間の両端と、ほかの区間との境へ向かって湖まで下ろす
+      const near = clamp((md - (HALF + 40)) / 110, 0, 1);                                                  // コースの近くは盛り上げない
+      const base = 380 * (1 - Math.exp(-Math.max(0, md - 60) / 320));                                      // 外へ行くほど高い
+      const rc = Math.hypot(x - cx, z - cz), outer = clamp((maxR + 150 - rc) / 450, 0, 1);                // 遠景の山の輪の手前で湖まで下ろす（円の縁で切り立たせない）
+      const r = ridged(x, z);
+      const h = base * (0.35 + 0.95 * r) * near * endFade * outer * outer * (3 - 2 * outer);
+      return h - 12 * (1 - near * endFade * outer);
+    }
+    // 格子を張る範囲：区間のコースから外側へ伸ばした点の範囲
+    let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+    for (let i = i0; i <= i1; i += 6) {
+      const j = wrap(i);
+      for (const l of [0, 400, 900, 1500]) {
+        let x = TPx[j] + TNx[j] * side * l, z = TPz[j] + TNz[j] * side * l;
+        const dc = Math.hypot(x - cx, z - cz); if (dc > maxR + 100) { const k = (maxR + 100) / dc; x = cx + (x - cx) * k; z = cz + (z - cz) * k; }
+        minX = Math.min(minX, x); maxX = Math.max(maxX, x); minZ = Math.min(minZ, z); maxZ = Math.max(maxZ, z);
+      }
+    }
+    minX -= 350; maxX += 350; minZ -= 350; maxZ += 350;   // 山の外縁が格子の端で切れて壁にならないよう、広めに取る
+    const STEP = 11, NX = Math.ceil((maxX - minX) / STEP) + 1, NZ = Math.ceil((maxZ - minZ) / STEP) + 1;
+    const hs = new Float32Array(NX * NZ);
+    for (let b = 0; b < NZ; b++) for (let a = 0; a < NX; a++) {
+      const edge = Math.min(a, b, NX - 1 - a, NZ - 1 - b), ef = Math.min(1, edge / 12);   // 格子の端の 12 マスは湖まで下ろす
+      const h = heightAt(minX + a * STEP, minZ + b * STEP);
+      hs[b * NX + a] = h > 0 ? h * ef - 12 * (1 - ef) : h;
+    }
+    // 水面下にしかない四角は張らない（描く量を減らす）
+    const pos = new Float32Array(NX * NZ * 3), uv = new Float32Array(NX * NZ * 2), ind = [];
+    for (let b = 0; b < NZ; b++) for (let a = 0; a < NX; a++) {
+      const k = b * NX + a, x = minX + a * STEP, z = minZ + b * STEP;
+      pos[k * 3] = x; pos[k * 3 + 1] = hs[k]; pos[k * 3 + 2] = z; uv[k * 2] = x / 70; uv[k * 2 + 1] = z / 70;
+    }
+    for (let b = 0; b < NZ - 1; b++) for (let a = 0; a < NX - 1; a++) {
+      const k = b * NX + a;
+      if (Math.max(hs[k], hs[k + 1], hs[k + NX], hs[k + NX + 1]) < -1) continue;
+      ind.push(k, k + NX, k + 1, k + 1, k + NX, k + NX + 1);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    geo.setIndex(ind); geo.computeVertexNormals();
+    const nrm = geo.attributes.normal, col = new Float32Array(NX * NZ * 3), c = new THREE.Color();
+    const green = new THREE.Color(0x4f7a44), rock = new THREE.Color(0x857a6c), rock2 = new THREE.Color(0x66625c), snow = new THREE.Color(0xf1f4f7), wet = new THREE.Color(0x3a3d34);
+    for (let k = 0; k < NX * NZ; k++) {
+      const y = hs[k], ny = nrm.getY(k), steep = clamp((0.86 - ny) / 0.25, 0, 1), wob = (rr() - 0.5) * 0.08;
+      c.copy(green).lerp(rock, Math.max(steep, clamp((y - 120) / 90 + wob, 0, 1)));
+      c.lerp(rock2, clamp((y - 180) / 120, 0, 1) * 0.6);
+      c.lerp(snow, clamp((y - 250 + wob * 200) / 50, 0, 1) * clamp((ny - 0.55) / 0.2, 0, 1));
+      c.lerp(wet, clamp(1 - (y + 1) / 4, 0, 1) * 0.7);
+      col[k * 3] = c.r; col[k * 3 + 1] = c.g; col[k * 3 + 2] = c.b;
+    }
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.93, map: TEX.rock, bumpMap: TEX.rockBump, bumpScale: 1.0 }));
+    mesh.frustumCulled = false;
+    scene.add(mesh);
+    // 島を置かない判定：その場所が山（水面より上）か
+    function covers(x, z, margin) {
+      if (x < minX - margin || x > maxX + margin || z < minZ - margin || z > maxZ + margin) return false;
+      const a = Math.round((x - minX) / STEP), b = Math.round((z - minZ) / STEP), m = Math.ceil(margin / STEP);
+      for (let q = -m; q <= m; q += Math.max(1, m)) for (let p = -m; p <= m; p += Math.max(1, m)) {
+        const aa = a + p, bb = b + q; if (aa < 0 || bb < 0 || aa >= NX || bb >= NZ) continue;
+        if (hs[bb * NX + aa] > -2) return true;
+      }
+      return false;
+    }
+    return { mesh, covers };
+  }
+
+  // ---------- 水面の「屋根の下・日陰」の印 ----------
+  // parts: [{ i0, i1, half: 中心から両側への幅 [m], value: 0〜1（1 ＝ 真っ暗な屋根の下） }] をまとめて 1 枚の画像に描く
+  function createShadeMask(ctx) {
+    const { TPx, TPz, wrap, parts } = ctx;
+    let minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
+    for (const pt of parts) for (let i = pt.i0; i <= pt.i1; i += 2) {
+      const j = wrap(i), m = pt.half + 12;
+      minX = Math.min(minX, TPx[j] - m); maxX = Math.max(maxX, TPx[j] + m); minZ = Math.min(minZ, TPz[j] - m); maxZ = Math.max(maxZ, TPz[j] + m);
+    }
+    const S = 1024, sx = S / (maxX - minX), sz = S / (maxZ - minZ);
+    const cv = document.createElement('canvas'); cv.width = cv.height = S;
+    const g = cv.getContext('2d');
+    g.fillStyle = '#000'; g.fillRect(0, 0, S, S);
+    g.filter = 'blur(4px)'; g.globalCompositeOperation = 'lighten'; g.lineCap = 'butt'; g.lineJoin = 'round';
+    for (const pt of parts) {
+      const v = Math.round(pt.value * 255);
+      g.strokeStyle = `rgb(${v},${v},${v})`; g.lineWidth = 2 * pt.half * Math.min(sx, sz);
+      g.beginPath();
+      for (let i = pt.i0; i <= pt.i1; i += 2) { const j = wrap(i), u = (TPx[j] - minX) * sx, w = (TPz[j] - minZ) * sz; i === pt.i0 ? g.moveTo(u, w) : g.lineTo(u, w); }
+      g.stroke();
+    }
+    const tex = new THREE.CanvasTexture(cv);
+    tex.minFilter = tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+    tex.wrapS = tex.wrapT = THREE.ClampToEdgeWrapping;
+    return { tex, box: [minX, minZ, maxX - minX, maxZ - minZ] };
+  }
+
+  // ---------- ジャンプ台 ----------
+  // list: [{ i: 踏み始めの位置, lat: 横の位置（右が正）, len, width, h: 先端の高さ }]
+  function createRamps(ctx) {
+    const { scene, TPx, TPz, TNx, TNz, TTx, TTz, list } = ctx;
+    // 上面の模様：黄と黒の縞と、進む向きの矢印
+    const cv = document.createElement('canvas'); cv.width = 128; cv.height = 256;
+    const g = cv.getContext('2d');
+    g.fillStyle = '#20262c'; g.fillRect(0, 0, 128, 256);
+    g.fillStyle = '#ffcf2e';
+    for (let y = -128; y < 256; y += 32) { g.beginPath(); g.moveTo(0, y); g.lineTo(14, y); g.lineTo(14, y + 16); g.lineTo(0, y + 30); g.fill(); g.beginPath(); g.moveTo(128, y); g.lineTo(114, y); g.lineTo(114, y + 16); g.lineTo(128, y + 30); g.fill(); }
+    g.strokeStyle = '#ffe680'; g.lineWidth = 10; g.lineJoin = 'round';
+    for (let k = 0; k < 3; k++) { const y = 200 - k * 70; g.beginPath(); g.moveTo(32, y); g.lineTo(64, y - 30); g.lineTo(96, y); g.stroke(); }
+    const topTex = new THREE.CanvasTexture(cv);
+    const topMat = new THREE.MeshStandardMaterial({ map: topTex, roughness: 0.6, metalness: 0.2, emissive: 0x332a00, emissiveMap: topTex });
+    const bodyMat = new THREE.MeshStandardMaterial({ color: 0x3a4148, roughness: 0.7, metalness: 0.4 });
+    const ramps = list.map((rp) => {
+      const { len: L, width: Wd, h: H } = rp, y0 = -0.6, yb = -2;
+      const hw = Wd / 2;
+      // 局所座標：z が進む向き（0 が踏み始め、L が先端）
+      const top = new THREE.BufferGeometry();
+      top.setAttribute('position', new THREE.Float32BufferAttribute([-hw, y0, 0, hw, y0, 0, -hw, H, L, hw, H, L], 3));
+      top.setAttribute('uv', new THREE.Float32BufferAttribute([1, 0, 0, 0, 1, 1, 0, 1], 2));
+      top.setIndex([0, 2, 1, 1, 2, 3]); top.computeVertexNormals();
+      const body = new THREE.BufferGeometry();
+      body.setAttribute('position', new THREE.Float32BufferAttribute([
+        -hw, yb, 0, -hw, y0, 0, -hw, H, L, -hw, yb, L,   // 左の側面
+        hw, yb, 0, hw, y0, 0, hw, H, L, hw, yb, L,       // 右の側面
+      ], 3));
+      body.setIndex([0, 1, 2, 0, 2, 3, 4, 6, 5, 4, 7, 6, 3, 2, 6, 3, 6, 7]);   // 両側面と先端の切り立った面
+      body.computeVertexNormals();
+      const grp = new THREE.Group();
+      const tm = new THREE.Mesh(top, topMat), bm = new THREE.Mesh(body, bodyMat);
+      bm.material.side = THREE.DoubleSide; tm.material.side = THREE.DoubleSide;
+      grp.add(tm, bm);
+      // 先端の両脇に、点滅する目印
+      const beacon = new THREE.MeshBasicMaterial({ color: 0xffd24a });
+      for (const s of [-1, 1]) { const b = new THREE.Mesh(new THREE.SphereGeometry(0.45, 10, 8), beacon); b.position.set(s * hw, H + 0.4, L); grp.add(b); }
+      const i = rp.i;
+      grp.position.set(TPx[i] + TNx[i] * rp.lat, 0, TPz[i] + TNz[i] * rp.lat);
+      grp.rotation.y = Math.atan2(TTx[i], TTz[i]);
+      scene.add(grp);
+      return { ...rp, group: grp, beacon };
+    });
+    function update(t) { for (const r of ramps) r.beacon.color.setHSL(0.13, 1, 0.45 + 0.25 * Math.max(0, Math.sin(t * 8))); }
+    return { ramps, update };
+  }
+
+  // ---------- 機雷 ----------
+  // list: [{ x, z, i, lat }]。当たると爆発して消え（ゲーム側が explode を呼ぶ）、しばらくすると同じ場所に浮かび直す
+  // 数が多い（列で通路を作る）ので、殻・帯・灯り・角をそれぞれ 1 つのインスタンス描画にまとめる
+  function createMines(ctx) {
+    const { scene, list, waveH } = ctx;
+    const clamp01 = (v) => Math.max(0, Math.min(1, v));
+    const n = list.length, SIZE = 1.35, SPIKES = 10;   // 走りながら見つけられる大きさ（半径 約 1.5 m ＋ 角）
+    const shellMat = new THREE.MeshStandardMaterial({ color: 0x2b2f36, roughness: 0.45, metalness: 0.7 });
+    // 帯と灯りの色は 1 つずつ変える：ふつうは赤、通り道の両脇（gate）は緑（航路標識のように、通り道が遠くから分かる）
+    const bandMat = new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x3a3a3a, roughness: 0.5, metalness: 0.2 });   // 暗い水面でも見えるよう、帯は自ら少し光る
+    const lampMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const cRed = new THREE.Color(0xff3020), cGreen = new THREE.Color(0x20ff70);
+    const inst = (geo, mat, count) => { const m = new THREE.InstancedMesh(geo, mat, count); m.frustumCulled = false; scene.add(m); return m; };
+    const shell = inst(new THREE.SphereGeometry(1.1, 18, 12), shellMat, n);
+    const band = inst(new THREE.TorusGeometry(1.1, 0.13, 6, 24).rotateX(Math.PI / 2), bandMat, n);
+    const lamp = inst(new THREE.SphereGeometry(0.3, 10, 8).translate(0, 1.2, 0), lampMat, n);
+    const spike = inst(new THREE.ConeGeometry(0.16, 0.6, 6), shellMat, n * SPIKES);
+    list.forEach((m, k) => { const c = m.gate ? cGreen : cRed; band.setColorAt(k, c); lamp.setColorAt(k, c); });
+    // 角（触角）：球の表面から外へ向けた 10 本の、機雷から見た置き方
+    const up = new THREE.Vector3(0, 1, 0), spikeLocal = [];
+    for (let k = 0; k < SPIKES; k++) {
+      const y = 1 - (k + 0.5) / SPIKES * 1.6, r = Math.sqrt(Math.max(0, 1 - y * y)), a = k * 2.4;
+      const d = new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r).normalize();
+      spikeLocal.push(new THREE.Matrix4().compose(d.clone().multiplyScalar(1.25), new THREE.Quaternion().setFromUnitVectors(up, d), new THREE.Vector3(1, 1, 1)));
+    }
+    const mines = list.map((m, k) => ({ ...m, k, pos: new THREE.Vector3(m.x, 0, m.z), active: true, respawn: 0, grow: 1, phase: k * 1.3 }));
+    const _m = new THREE.Matrix4(), _s = new THREE.Matrix4(), _q = new THREE.Quaternion(), _e = new THREE.Euler(), _v = new THREE.Vector3(), ZERO = new THREE.Matrix4().makeScale(0, 0, 0);
+    function place(m, mat) {
+      shell.setMatrixAt(m.k, mat); band.setMatrixAt(m.k, mat); lamp.setMatrixAt(m.k, mat);
+      for (let j = 0; j < SPIKES; j++) spike.setMatrixAt(m.k * SPIKES + j, mat === ZERO ? ZERO : _s.multiplyMatrices(mat, spikeLocal[j]));
+    }
+
+    // 爆発：粒（板の絵）を重ねて作る。
+    //  火の玉：ゆらいだ炎の粒が一瞬で膨らみ、黄→橙→暗い赤へ冷えて消える（加算合成）
+    //  水柱：白い水しぶきの粒が高く打ち上がり、重力で落ちる
+    //  煙：黒っぽい煙の粒がゆっくり昇りながら広がり、長く残る
+    //  衝撃波：水面に白い輪が広がる。周りを一瞬照らす灯り
+    function puffTexture(seed, soft) {   // ふちがゆらいだ丸いもや（中心ほど濃い）
+      const S = 128, c = document.createElement('canvas'); c.width = c.height = S; const g = c.getContext('2d');
+      const img = g.createImageData(S, S), r = mulberry(seed), ph = [r() * 6.28, r() * 6.28, r() * 6.28, r() * 6.28];
+      for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+        const dx = x / S * 2 - 1, dy = y / S * 2 - 1, d = Math.hypot(dx, dy), a = Math.atan2(dy, dx);
+        const edge = 0.72 + 0.12 * Math.sin(a * 5 + ph[0]) + 0.08 * Math.sin(a * 9 + ph[1]) + 0.05 * Math.sin(a * 17 + ph[2]);
+        const n = 0.75 + 0.25 * Math.sin(dx * 9 + ph[3]) * Math.sin(dy * 11 - ph[0]);
+        const v = Math.max(0, 1 - Math.pow(d / edge, soft)) * n;
+        const i = (y * S + x) * 4; img.data[i] = img.data[i + 1] = img.data[i + 2] = 255; img.data[i + 3] = Math.min(255, v * 255);
+      }
+      g.putImageData(img, 0, 0);
+      return new THREE.CanvasTexture(c);
+    }
+    function mulberry(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+    const texFire = [puffTexture(3, 1.6), puffTexture(7, 1.6)], texSmoke = [puffTexture(11, 1.2), puffTexture(13, 1.2)], texSpray = puffTexture(17, 2.4);
+    const parts = [];
+    const KINDS = { fire: 0, smoke: 1, spray: 2 };
+    function makePool(kind, count, tex, blending) {
+      for (let k = 0; k < count; k++) {
+        const mat = new THREE.SpriteMaterial({ map: Array.isArray(tex) ? tex[k % tex.length] : tex, transparent: true, depthWrite: false, blending, fog: kind !== 'fire' });
+        const sp = new THREE.Sprite(mat); sp.visible = false; scene.add(sp);
+        parts.push({ kind: KINDS[kind], sp, life: 0, age: 1, vx: 0, vy: 0, vz: 0, s0: 1, s1: 1, rot: 0 });
+      }
+    }
+    makePool('smoke', 60, texSmoke, THREE.NormalBlending);
+    makePool('spray', 70, texSpray, THREE.NormalBlending);
+    makePool('fire', 50, texFire, THREE.AdditiveBlending);
+    const R = mulberry(4242);
+    function emit(kind, x, y, z, vx, vy, vz, life, s0, s1) {
+      const p = parts.find((q) => q.kind === KINDS[kind] && q.age >= q.life);
+      if (!p) return;
+      p.sp.position.set(x, y, z); p.vx = vx; p.vy = vy; p.vz = vz; p.life = life; p.age = 0; p.s0 = s0; p.s1 = s1;
+      p.sp.material.rotation = R() * 6.28; p.rot = (R() - 0.5) * 1.5; p.sp.visible = true;
+    }
+    // 水面の衝撃波の輪
+    const rings = [];
+    for (let k = 0; k < 3; k++) {
+      const m = new THREE.Mesh(new THREE.RingGeometry(0.85, 1, 48).rotateX(-Math.PI / 2), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false }));
+      m.visible = false; scene.add(m); rings.push({ m, t: 1 });
+    }
+    const flashLight = new THREE.PointLight(0xffa860, 0, 120, 1.6);
+    scene.add(flashLight);
+    let flashT = 0;
+    const cHot = new THREE.Color(0xfff0b0), cFire = new THREE.Color(0xff7a1e), cEmber = new THREE.Color(0x6a1806), cSmoke = new THREE.Color(0x2e2b29), cSmoke2 = new THREE.Color(0x77716b);
+    function explode(m) {
+      m.active = false; m.respawn = 14; place(m, ZERO);
+      const x = m.pos.x, y = m.pos.y + 0.5, z = m.pos.z;
+      for (let k = 0; k < 22; k++) {   // 火の玉
+        const a = R() * 6.28, up = R(), sp = 4 + R() * 9;
+        emit('fire', x + (R() - 0.5) * 2, y + R() * 2, z + (R() - 0.5) * 2, Math.cos(a) * sp * (1 - up * 0.6), 3 + up * 12, Math.sin(a) * sp * (1 - up * 0.6), 0.45 + R() * 0.45, 2.5 + R() * 2, 7 + R() * 6);
+      }
+      for (let k = 0; k < 40; k++) {   // 水柱（中心ほど高く）
+        const a = R() * 6.28, rr = Math.pow(R(), 1.5), sp = 2 + rr * 12;
+        emit('spray', x + Math.cos(a) * rr * 2, y, z + Math.sin(a) * rr * 2, Math.cos(a) * sp, 16 + (1 - rr) * 22 + R() * 6, Math.sin(a) * sp, 1.4 + R() * 0.9, 1.5 + R() * 1.5, 4 + R() * 4);
+      }
+      for (let k = 0; k < 18; k++) {   // 煙（少し遅れて出るよう、はじめは小さく）
+        const a = R() * 6.28, sp = 1 + R() * 3;
+        emit('smoke', x + (R() - 0.5) * 4, y + 1 + R() * 4, z + (R() - 0.5) * 4, Math.cos(a) * sp, 2 + R() * 4, Math.sin(a) * sp, 2.8 + R() * 1.8, 3 + R() * 2, 12 + R() * 8);
+      }
+      const rg = rings.find((q) => q.t >= 1) || rings[0];
+      rg.t = 0; rg.m.visible = true; rg.m.position.set(x, m.pos.y + 0.25, z);
+      flashLight.position.set(x, y + 4, z); flashT = 1;
+    }
+    // isClear(x, z): その場所の近くに機体がいなければ true（浮かび直してよい）
+    function update(dt, t, isClear) {
+      lampMat.color.setScalar(Math.sin(t * 6) > 0 ? 1 : 0.3);   // 点滅
+      for (const m of mines) {
+        if (!m.active) {
+          m.respawn -= dt;
+          if (m.respawn <= 0 && (!isClear || isClear(m.x, m.z))) { m.active = true; m.grow = 0; }
+          else continue;
+        }
+        m.grow = clamp01(m.grow + dt * 1.5);
+        m.pos.set(m.x, waveH(m.x, m.z, t) - 0.35 + Math.sin(t * 1.7 + m.phase) * 0.12, m.z);
+        _q.setFromEuler(_e.set(Math.sin(t * 1.1 + m.phase) * 0.12, t * 0.3 + m.phase, Math.cos(t * 0.9 + m.phase) * 0.12));
+        const sc = Math.max(0.001, m.grow) * SIZE;
+        place(m, _m.compose(m.pos, _q, _v.set(sc, sc, sc)));
+      }
+      shell.instanceMatrix.needsUpdate = band.instanceMatrix.needsUpdate = lamp.instanceMatrix.needsUpdate = spike.instanceMatrix.needsUpdate = true;
+      for (const p of parts) {
+        if (p.age >= p.life) { if (p.sp.visible) p.sp.visible = false; continue; }
+        p.age += dt;
+        const u = Math.min(1, p.age / p.life), sp = p.sp, mat = sp.material;
+        if (p.kind === 0) {          // 火：すぐ減速して少し昇る。黄白→橙→暗い赤
+          const drag = Math.exp(-dt * 4); p.vx *= drag; p.vz *= drag; p.vy = p.vy * drag + dt * 3;
+          mat.color.copy(cHot).lerp(cFire, Math.min(1, u * 2.5)).lerp(cEmber, Math.max(0, u * 1.6 - 0.6));
+          mat.opacity = Math.min(1, (1 - u) * 1.6) * (0.85 + 0.15 * Math.sin(p.age * 40 + p.s0));
+        } else if (p.kind === 1) {   // 煙：ゆっくり昇り、広がって薄れる
+          const drag = Math.exp(-dt * 1.2); p.vx *= drag; p.vz *= drag; p.vy = p.vy * drag + dt * 0.8;
+          mat.color.copy(cSmoke).lerp(cSmoke2, u);
+          mat.opacity = Math.min(1, u * 6) * (1 - u) * 0.75;
+        } else {                     // 水しぶき：重力で落ちる
+          p.vy -= 24 * dt; const drag = Math.exp(-dt * 0.6); p.vx *= drag; p.vz *= drag;
+          mat.color.setRGB(0.92, 0.96, 1.0);
+          mat.opacity = Math.min(1, u * 8) * (1 - u) * 0.85;
+          if (sp.position.y < waveH(sp.position.x, sp.position.z, t) - 0.5) p.age = p.life;
+        }
+        sp.position.x += p.vx * dt; sp.position.y += p.vy * dt; sp.position.z += p.vz * dt;
+        const sc = p.s0 + (p.s1 - p.s0) * (1 - Math.pow(1 - u, 2.2));
+        sp.scale.set(sc, sc, 1);
+        mat.rotation += p.rot * dt;
+      }
+      for (const rg of rings) {
+        if (rg.t >= 1) continue;
+        rg.t = Math.min(1, rg.t + dt / 0.9);
+        const e = 1 - Math.pow(1 - rg.t, 2.5);
+        rg.m.scale.setScalar(1 + e * 26); rg.m.material.opacity = 0.7 * (1 - rg.t);
+        if (rg.t >= 1) rg.m.visible = false;
+      }
+      flashT = Math.max(0, flashT - dt * 2.5);
+      flashLight.intensity = 8 * flashT * flashT;
+    }
+    return { mines, explode, update };
+  }
+
+  // ---------- 観客の飛行船 ----------
+  // コースのあちこちの上空を、ゆっくり円を描いて飛ぶ。下に観覧用のゴンドラ（明かりの点いた窓の列と展望デッキ）を吊り、
+  // 気嚢（きのう）には大会の名前を描く。list: [{ x, z, y（高さ）, r（回る半径）, speed（m/s）, color, accent, dir（1 / -1）, phase }]
+  function createBlimps(ctx) {
+    const { scene, list } = ctx;
+    const L = 46, R = 8.2;   // 気嚢の長さと太さ
+    // 気嚢の形（前が丸く、後ろへ細る）。回転体の軸を前後に向ける
+    const prof = [];
+    for (let i = 0; i <= 40; i++) {
+      const u = i / 40, r = R * Math.pow(Math.sin(Math.PI * Math.pow(u, 0.85)), 0.75) * (u > 0.6 ? 1 : 0.92 + 0.08 * u / 0.6);
+      prof.push(new THREE.Vector2(Math.max(0.01, r), -L / 2 + L * u));
+    }
+    const envGeo = new THREE.LatheGeometry(prof, 48).rotateX(Math.PI / 2);   // v: 0 = 後ろ、1 = 前。u: 0.25 / 0.75 が左右の側面
+    function envTexture(color, accent) {
+      const W = 1024, H = 512, c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+      g.fillStyle = color; g.fillRect(0, 0, W, H);
+      const cc = new THREE.Color(color), light = cc.r * 0.3 + cc.g * 0.59 + cc.b * 0.11 > 0.6;
+      // 前後に巻いた帯（後ろ寄りに太い帯、前寄りに細い帯）
+      g.fillStyle = accent; g.fillRect(0, H * 0.2, W, H * 0.07); g.fillRect(0, H * 0.82, W, H * 0.025);
+      g.fillStyle = 'rgba(255,255,255,0.85)'; g.fillRect(0, H * 0.28, W, H * 0.012);
+      // 左右の側面に大会の名前（文字の並びが前後方向になるよう回して描く）
+      for (const [u, rot] of [[0.25, Math.PI / 2], [0.75, -Math.PI / 2]]) {
+        // 文字の並びは気嚢の前後（画像の縦 H）に沿わせる。尾翼にかからないよう、少し前寄りに置く
+        g.save(); g.translate(u * W, H * 0.52); g.rotate(rot);   // 帯（0.2〜0.28 と 0.82 付近）の間
+        g.textAlign = 'center'; g.textBaseline = 'middle';
+        g.fillStyle = light ? accent : 'rgba(255,255,255,0.95)';   // 明るい気嚢には帯の色、暗い気嚢には白で書く
+        g.font = 'bold 58px "Segoe UI", "Arial Black", sans-serif';
+        g.fillText('AQUA HOVER 300', 0, -16, H * 0.46);
+        g.fillStyle = light ? '#3a3f46' : accent;
+        g.font = 'bold 24px "Segoe UI", sans-serif';
+        g.fillText('LAKE GRAND PRIX', 0, 30, H * 0.36);
+        g.restore();
+      }
+      // 継ぎ目（縦の細い線）と、上ほど明るい陰影は光源に任せる
+      g.strokeStyle = 'rgba(0,0,0,0.08)'; g.lineWidth = 2;
+      for (let k = 0; k < 24; k++) { g.beginPath(); g.moveTo(k * W / 24, 0); g.lineTo(k * W / 24, H); g.stroke(); }
+      const t = new THREE.CanvasTexture(c); t.anisotropy = 4; return t;
+    }
+    // ゴンドラの窓（暖かい明かり。ところどころ人影で暗い）
+    function windowTexture(seed) {
+      const c = document.createElement('canvas'); c.width = 512; c.height = 64; const g = c.getContext('2d');
+      g.fillStyle = '#1b2026'; g.fillRect(0, 0, 512, 64);
+      let a = seed;
+      const r = () => { a = (a * 9301 + 49297) % 233280; return a / 233280; };
+      for (let k = 0; k < 16; k++) {
+        const x = 8 + k * 31.5;
+        g.fillStyle = '#ffd89a'; g.fillRect(x, 14, 24, 32);
+        // 窓から外を見る観客の影（頭と肩）
+        if (r() < 0.75) { g.fillStyle = 'rgba(40,30,30,0.85)'; g.beginPath(); g.arc(x + 12, 30, 5, 0, Math.PI * 2); g.fill(); g.fillRect(x + 4, 36, 16, 10); }
+      }
+      const t = new THREE.CanvasTexture(c); return t;
+    }
+    const finGeo = (() => {   // 尾翼：縁を丸めた台形の板
+      const sh = new THREE.Shape(); sh.moveTo(0, 0); sh.lineTo(9, 0); sh.lineTo(6.5, 6.5); sh.lineTo(2.2, 6.5); sh.closePath();
+      const g = new THREE.ExtrudeGeometry(sh, { depth: 0.5, bevelEnabled: true, bevelThickness: 0.25, bevelSize: 0.3, bevelSegments: 3 });
+      g.translate(0, 0, -0.25); g.rotateY(Math.PI / 2);   // 形の x を -z（後ろ）へ
+      return g;
+    })();
+    const metal = new THREE.MeshStandardMaterial({ color: 0xe4e8ee, metalness: 0.25, roughness: 0.4 });   // 映り込みが無いので金属らしさは控えめに（上げると黒くなる）
+    const dark = new THREE.MeshStandardMaterial({ color: 0x4a525c, metalness: 0.3, roughness: 0.5 });
+    const glass = new THREE.MeshStandardMaterial({ color: 0x8fb8d8, metalness: 0.2, roughness: 0.1, transparent: true, opacity: 0.45 });
+    const navR = new THREE.MeshBasicMaterial({ color: 0xff2a1a }), navG = new THREE.MeshBasicMaterial({ color: 0x2aff6a }), strobe = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const blimps = list.map((b, idx) => {
+      const root = new THREE.Group(), body = new THREE.Group(); root.add(body);
+      const envMat = new THREE.MeshStandardMaterial({ map: envTexture(b.color, b.accent), roughness: 0.55, metalness: 0.05 });
+      body.add(new THREE.Mesh(envGeo, envMat));
+      const finMat = new THREE.MeshStandardMaterial({ color: b.accent, roughness: 0.5 });
+      for (let k = 0; k < 4; k++) {   // 尾翼 4 枚（上下左右）
+        const f = new THREE.Mesh(finGeo, finMat); f.position.z = -L / 2 + 9.5; f.rotation.z = k * Math.PI / 2; body.add(f);
+      }
+      // ゴンドラ：長い観覧室。窓の列と、後ろの展望デッキ（手すり）
+      const gondola = new THREE.Group(); gondola.position.y = -R - 1.6; body.add(gondola);
+      const cab = new THREE.Mesh(new THREE.CylinderGeometry(1.9, 1.9, 15, 20, 1).rotateX(Math.PI / 2), metal);
+      cab.scale.set(1, 0.85, 1); gondola.add(cab);
+      for (const z of [-7.5, 7.5]) { const cap = new THREE.Mesh(new THREE.SphereGeometry(1.9, 20, 12), metal); cap.scale.set(1, 0.85, 0.7); cap.position.z = z; gondola.add(cap); }
+      const winTex = windowTexture(17 + idx * 31), winMat = new THREE.MeshBasicMaterial({ map: winTex });
+      for (const s of [-1, 1]) {   // 左右の窓の帯（明かりは自ら光る）
+        const w = new THREE.Mesh(new THREE.PlaneGeometry(13, 1.4), winMat); w.position.set(s * 1.93, 0.1, 0); w.rotation.y = s * Math.PI / 2; gondola.add(w);
+      }
+      const nose = new THREE.Mesh(new THREE.SphereGeometry(1.75, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2), glass); nose.rotation.x = Math.PI / 2; nose.scale.set(1, 0.65, 0.85); nose.position.set(0, 0.1, 7.6); gondola.add(nose);   // 前の展望窓
+      const deck = new THREE.Mesh(new THREE.BoxGeometry(3.6, 0.15, 3.2), dark); deck.position.set(0, -1.6, -9.2); gondola.add(deck);
+      for (const s of [-1, 1]) { const rail = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.8, 3.2), metal); rail.position.set(s * 1.8, -1.2, -9.2); gondola.add(rail); }
+      // 吊り索（気嚢とゴンドラをつなぐ斜めの線）
+      for (const [x, z] of [[-1.3, -5], [1.3, -5], [-1.3, 5], [1.3, 5]]) {
+        const c = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 2.6, 4), dark); c.position.set(x * 1.4, 1.5, z); c.rotation.z = -x * 0.25; gondola.add(c);
+      }
+      // プロペラ（ゴンドラの左右の後ろ）
+      const props = [];
+      for (const s of [-1, 1]) {
+        const pod = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.7, 2.4, 14).rotateX(Math.PI / 2), dark); pod.position.set(s * 3.6, 0.2, -4.5); gondola.add(pod);
+        const arm = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.15, 0.4), dark); arm.position.set(s * 2.7, 0.2, -4.5); gondola.add(arm);
+        const prop = new THREE.Group(); prop.position.set(s * 3.6, 0.2, -5.85);
+        for (let k = 0; k < 3; k++) { const bl = new THREE.Mesh(new THREE.BoxGeometry(0.22, 2.6, 0.06), dark); bl.position.y = 0; bl.rotation.z = k * Math.PI * 2 / 3; const h = new THREE.Group(); h.add(bl); bl.position.y = 1.2; h.rotation.z = k * Math.PI * 2 / 3; prop.add(h); }
+        gondola.add(prop); props.push(prop);
+      }
+      // 航行灯（左が赤・右が緑）と、上の白い衝突防止灯
+      for (const s of [-1, 1]) { const l = new THREE.Mesh(new THREE.SphereGeometry(0.35, 10, 8), s < 0 ? navR : navG); l.position.set(s * R * 0.98, 0, 2); body.add(l); }
+      const top = new THREE.Mesh(new THREE.SphereGeometry(0.4, 10, 8), strobe.clone()); top.position.set(0, R + 0.2, 4); body.add(top);
+      root.position.set(b.x, b.y, b.z);
+      scene.add(root);
+      return { ...b, root, body, props, strobe: top.material, ang: b.phase || 0 };
+    });
+    function update(dt, t) {
+      for (const b of blimps) {
+        b.ang += (b.speed / b.r) * dt * b.dir;
+        const x = b.x + Math.cos(b.ang) * b.r, z = b.z + Math.sin(b.ang) * b.r;
+        b.root.position.set(x, b.y + Math.sin(t * 0.25 + b.phase) * 1.5, z);
+        // 進む向き（円の接線）へ機首を向け、少し内側へ傾ける
+        const hx = -Math.sin(b.ang) * b.dir, hz = Math.cos(b.ang) * b.dir;
+        b.root.rotation.set(0, Math.atan2(hx, hz), 0);
+        b.body.rotation.z = -0.05 * b.dir; b.body.rotation.x = 0.02 * Math.sin(t * 0.4 + b.phase);
+        for (const pr of b.props) pr.rotation.z += dt * 14;
+        b.strobe.color.setScalar(Math.sin(t * 3 + b.phase * 5) > 0.92 ? 1 : 0.15);   // 衝突防止灯の点滅
+      }
+    }
+    return { blimps, update };
+  }
+
+  window.HoverFeatures = { createTunnel, createValley, createMassif, createShadeMask, createRamps, createMines, createBlimps };
+})();
+
+</script>
+<script>
 (() => {
 'use strict';
 
 // ---------- 定数 ----------
 const TOTAL_LAPS = 3;
 const HALF = 26;            // コースの半幅 [m]
-const THRUST = 30;          // 推力の加速度 [m/s^2]
-const BOOST_THRUST = 34;          // ブースト中の最高速 ≒ 125 m/s（450 km/h）
-const DRAG1 = 0.05, DRAG2 = 0.0037;   // 最高速 ≒ 83 m/s（300 km/h）
+const PAD_KICK = 28;              // 加速パネル：踏んだ瞬間に足す速度 [m/s]（約 100 km/h）
+const PAD_THRUST = 46, PAD_TIME = 1.8;   // 加速パネル：その後しばらく続く推力 [m/s^2] と長さ [s]（だんだん弱まる）
+const DRAG1 = 0.05;               // 速さに比例する抵抗。2乗に比例する分と推力・ブーストはマシンごと（MACHINES）
 const HOVER_H = 1.3;
+const GRAVITY = 24;               // ジャンプ中の重力 [m/s^2]（ゲーム向けに強め：滞空が間延びしない）
 const FOG_NEAR = 260, FOG_FAR = 2600;
 const KMH = 3.6;
 
@@ -1450,12 +2704,41 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.5, 9000);
 // 見た目（光・空・質感・水面）は hover-world.js（index と共有）
-const { FOG_COLOR, TEX, renderReflection, sky, sunDir, water, waterMat, waveH } = HoverWorld.createEnvironment({ FOG_FAR, FOG_NEAR, camera, clamp, mulberry32, renderer, scene });
+const { FOG_COLOR, TEX, hemi, renderReflection, setShade, sky, sun, sunDir, water, waterMat, waveH } = HoverWorld.createEnvironment({ FOG_FAR, FOG_NEAR, camera, clamp, mulberry32, renderer, scene });
 
-// ---------- コース ----------
-const SCALE = 0.8;
-const ctrl = [[0,0],[0,500],[150,850],[500,950],[800,800],[850,450],[650,250],[700,-50],[950,-300],[800,-650],[400,-700],[150,-450],[-150,-600],[-450,-450],[-400,-100],[-150,-50]]
-  .map(([x, z]) => new THREE.Vector3(x * SCALE, 0, z * SCALE));
+// ---------- コース（今後増やす。いまは湖コースだけ） ----------
+// 位置はすべて周回に対する割合（0 = スタートライン）。
+const COURSES = [{
+  id: 'lake', name: '湖コース',
+  desc: '島の間を抜ける水上コース。岩山のトンネル、ジャンプ台、機雷原、V 字谷がある。',
+  scale: 0.8,
+  ctrl: [[0,0],[0,500],[150,850],[500,950],[800,800],[850,450],[650,250],[700,-50],[950,-300],[800,-650],[400,-700],[150,-450],[-150,-600],[-450,-450],[-400,-100],[-150,-50]],
+  pads: [0.13, 0.232, 0.4, 0.553, 0.62, 0.86],              // 加速パネル（0.232 はトンネルの中、0.553 は飛び越し用ジャンプ台の手前）
+  canyon: [[0.04, 0.14], [0.41, 0.51], [0.69, 0.75]],       // 岸の岩場（3 つ目は V 字谷の入口の岩山と重ならないよう、手前で終える）
+  valley: [0.80, 0.915],                                    // V 字谷（コースマップの右下の張り出し。約 510 m）
+  cliffRight: 0.975,                                        // 谷を抜けた後は右側だけ崖が続く（スタートの約 110 m 手前まで）
+  massif: { from: 0.78, to: 0.99, side: 1 },                // 谷と崖の右側（コースマップの右下）は、遠景の山まで山岳地帯で埋める
+  tunnel: [0.18, 0.265],                                    // 岩山を抜けるトンネル（約 380 m）
+  // ジャンプ台。over: 機雷原を飛び越すための台（AI もここでは機雷を避けずに台をねらう）
+  // 飛び越し用は幅を広く取る（高速で少し流れても乗れる）。速さで飛べる距離が変わる：加速パネルから乗れば機雷原のほとんどを越える
+  ramps: [{ f: 0.30, lat: 0 }, { f: 0.561, lat: 0, over: true, width: 26 }, { f: 0.643, lat: -7 }],
+  // 機雷原：コースを横切る機雷の列を並べ、各列に 1 か所だけ通り道を空ける。通り道は列ごとに少しずつずれて、ゆるい S 字の通路になる
+  // from: 1 列目の位置、gap: 列の間隔 [m]、pitch: 列の中の機雷の間隔 [m]（機体が抜けられない）、width: 通り道の幅（両脇の機雷の中心どうし）[m]
+  // path: 各列の通り道の中心（コースの中心から右が正）[m]
+  // 観客の飛行船：コースの位置 f の横（lat。右が正）の上空を、半径 r で回る
+  blimps: [
+    { f: 0.02, lat: 90, y: 70, r: 70, color: '#f3f1ea', accent: '#e0322c' },
+    { f: 0.22, lat: -130, y: 85, r: 90, color: '#1f3e6e', accent: '#ffcc33' },
+    { f: 0.36, lat: 120, y: 65, r: 60, color: '#f3f1ea', accent: '#1e7fd8' },
+    { f: 0.59, lat: -110, y: 80, r: 80, color: '#2a2a30', accent: '#ff3cf0' },
+    { f: 0.76, lat: -140, y: 95, r: 100, color: '#f3f1ea', accent: '#1fbf6a' },
+    { f: 0.93, lat: -100, y: 75, r: 70, color: '#c8322b', accent: '#ffffff' },
+  ],
+  mines: { from: 0.574, gap: 21, pitch: 6, width: 22, path: [-7, -4, 1, 5, 7, 4, 0] },
+}];
+let courseIdx = 0;
+const course = COURSES[courseIdx];
+const ctrl = course.ctrl.map(([x, z]) => new THREE.Vector3(x * course.scale, 0, z * course.scale));
 const curve = new THREE.CatmullRomCurve3(ctrl, true, 'centripetal');
 const N = 2400;
 const spaced = curve.getSpacedPoints(N); spaced.pop();
@@ -1484,10 +2767,68 @@ function nearestIdx(x, z, hint) {
 const minDistToTrack = (x, z) => { let bd = Infinity; for (let i = 0; i < N; i += 6) { const d = (TPx[i] - x) ** 2 + (TPz[i] - z) ** 2; if (d < bd) bd = d; } return Math.sqrt(bd); };
 
 // コースの見た目（ガードレール・ゲート・加速パネル・島・近くの地形）は hover-world.js
-const { RAIL_STEP, pads, pushRail, rails, updatePads, updateRails } = HoverWorld.createCourse({ FOG_COLOR, HALF, N, SEG, TEX, TNx, TNz, TPx, TPz, TTx, TTz, camera, clamp, minDistToTrack, mulberry32, rand, scene, sunDir, waveH, wrap });
+// V 字谷（hover-features.js）。島を置かない場所を決めるので、コースの見た目より先に作る
+const valley = course.valley ? (() => {
+  const v0 = Math.round(course.valley[0] * N), v1 = Math.round(course.valley[1] * N), r1 = course.cliffRight ? Math.round(course.cliffRight * N) : v1;
+  const vl = HoverFeatures.createValley({ scene, TEX, TPx, TPz, TNx, TNz, N, HALF, wrap, clamp, mulberry32,
+    sides: [{ side: -1, i0: v0, i1: v1 }, { side: 1, i0: v0, i1: r1 }] });   // 右の壁は谷の先まで途切れずに続ける
+  return { ...vl, i0: v0, i1: v1, iEnd: r1 };
+})() : null;
+// 山岳地帯（谷の外側）。島を置かない場所を決めるので、これもコースの見た目より先に作る
+const massif = course.massif ? (() => {
+  const xs = Array.from(TPx), zs = Array.from(TPz);
+  return HoverFeatures.createMassif({ scene, TEX, TPx, TPz, TNx, TNz, N, HALF, wrap, clamp, mulberry32,
+    i0: Math.round(course.massif.from * N), i1: Math.round(course.massif.to * N), side: course.massif.side,
+    cx: (Math.min(...xs) + Math.max(...xs)) / 2, cz: (Math.min(...zs) + Math.max(...zs)) / 2 });
+})() : null;
+const { RAIL_STEP, pads, pushRail, rails, updatePads, updateRails } = HoverWorld.createCourse({ FOG_COLOR, HALF, N, SEG, TEX, TNx, TNz, TPx, TPz, TTx, TTz, camera, clamp, minDistToTrack, mulberry32, rand, scene, sunDir, waveH, wrap, pads: course.pads, canyon: course.canyon, avoid: (x, z, r) => (valley && valley.covers(x, z, r)) || (massif && massif.covers(x, z, r)) });
+// 2 つの位置の差（コース上の向き付き。-N/2〜N/2）
+const sdiff = (a, b) => { let d = (a - b) % N; if (d > N / 2) d -= N; if (d < -N / 2) d += N; return d; };
+
+// コースの仕掛け（hover-features.js）：トンネル・ジャンプ台・機雷
+const tunnel = course.tunnel ? HoverFeatures.createTunnel({ scene, TEX, TPx, TPz, TNx, TNz, TTx, TTz, HALF, wrap, clamp, mulberry32,
+  i0: Math.round(course.tunnel[0] * N), i1: Math.round(course.tunnel[1] * N) }) : null;
+// 水面の日陰：トンネルの中は真っ暗、谷底は半分ほど日が陰る
+{
+  const parts = [];
+  if (tunnel) parts.push({ i0: tunnel.i0, i1: tunnel.i1, half: tunnel.W - 1, value: 1 });
+  if (valley) parts.push({ i0: valley.i0, i1: valley.i1, half: valley.L0, value: 0.45 });
+  if (parts.length) { const mask = HoverFeatures.createShadeMask({ TPx, TPz, wrap, parts }); setShade(mask.tex, mask.box); }
+}
+const RAMP = { len: 26, width: 16, h: 3.4 };
+const { ramps, update: updateRamps } = HoverFeatures.createRamps({ scene, TPx, TPz, TNx, TNz, TTx, TTz,
+  list: (course.ramps || []).map((r) => ({ ...RAMP, i: wrap(Math.round(r.f * N)), lat: r.lat, over: !!r.over, width: r.width || RAMP.width })) });
+// 機雷の配置：列ごとに、通り道の両脇から外へ pitch 間隔で並べる（ガードレールの手前まで）
+const mineList = [], mineRows = [];
+if (course.mines) {
+  const mc = course.mines, edge = HALF - 2.5;
+  mc.path.forEach((c, k) => {
+    const i = wrap(Math.round(mc.from * N + k * mc.gap / SEG));
+    mineRows.push({ i, center: c });
+    const lats = [];
+    let l = c + mc.width / 2;
+    for (; l <= edge; l += mc.pitch) lats.push(l);
+    if (l - mc.pitch < edge - 1) lats.push(edge);     // ガードレール沿いをすり抜けられないよう、端にも 1 つ
+    l = c - mc.width / 2;
+    for (; l >= -edge; l -= mc.pitch) lats.push(l);
+    if (l + mc.pitch > -edge + 1) lats.push(-edge);
+    // 通り道の両脇の 2 つ（gate）は緑の印にする
+    for (const lat of lats) mineList.push({ i, lat, gate: Math.abs(Math.abs(lat - c) - mc.width / 2) < 0.01, x: TPx[i] + TNx[i] * lat, z: TPz[i] + TNz[i] * lat });
+  });
+}
+// 観客の飛行船（hover-features.js）
+const { update: updateBlimps } = HoverFeatures.createBlimps({ scene, list: (course.blimps || []).map((b, k) => {
+  const i = wrap(Math.round(b.f * N));
+  return { ...b, x: TPx[i] + TNx[i] * b.lat, z: TPz[i] + TNz[i] * b.lat, speed: 7 + (k % 3) * 2, dir: k % 2 ? 1 : -1, phase: k * 1.9 };
+}) });
+const { mines, explode: explodeMine, update: updateMines } = HoverFeatures.createMines({ scene, waveH, list: mineList });
+// トンネルの中で、カメラが追う機体のまわりだけを照らす灯り（外では消す）
+const tunnelLight = new THREE.PointLight(0xffe2b8, 0, 46, 1.4);
+scene.add(tunnelLight);
+let tunnelDark = 0;
 
 // しぶき・火花・航跡は hover-world.js
-const { makeTrail, particleSystems, resetTrail, sparkBurst, splashBurst, sprayFor, updateTrail } = HoverWorld.createEffects({ FOG_COLOR, FOG_FAR, FOG_NEAR, camera, clamp, mulberry32, scene, waveH, now: () => simTime });
+const { boostBurst, makeTrail, particleSystems, resetTrail, sparkBurst, splashBurst, sprayFor, updateTrail } = HoverWorld.createEffects({ FOG_COLOR, FOG_FAR, FOG_NEAR, camera, clamp, mulberry32, scene, waveH, now: () => simTime });
 
 // ---------- 機体 ----------
 // デザインと炎・揺らぎは hover-craft.js（index と共有）
@@ -1497,36 +2838,61 @@ function makeCraft(color, design) {
   return { root: craft.root, body: craft.body, craft };
 }
 
-const RACER_DEFS = [
-  { name: 'あなた', color: 0xff8a1f, player: true, design: 'pyramid' },   // 1. 三角錐の組み合わせ
-  { name: 'CORAL', color: 0xff3d7f, skill: 0.985, design: 'disc' },      // 2. 円盤
-  { name: 'MARLIN', color: 0x3d7bff, skill: 0.97, design: 'classic' },   // 3. いままでのデザイン
-  { name: 'GULL', color: 0xe8e8e8, skill: 0.955, design: 'drop' },       // 4. 水滴
+// マシン：見た目（hover-craft.js のデザイン）と性能。stats は選択画面の 5 段階表示
+// top: 最高速 [m/s]、thrust: 推力、turn: 旋回の速さ、grip: 横に流れにくさ、corner: AI がカーブで出せる速さ
+// boost: ブーストの推力、charge: ゲージの溜まりやすさ、drain: ゲージの減りやすさ、mass: ぶつかったときの重さ
+const MACHINES = [
+  { id: 'pyramid', name: 'FALCON', color: 0xff8a1f, type: 'バランス', desc: '癖が無く、どこでも戦える。',
+    top: 84, thrust: 30, turn: 1.0, grip: 3.0, corner: 1.0, boost: 34, charge: 1.0, drain: 1.0, mass: 1.0, stats: [3, 3, 3, 3, 3] },
+  { id: 'disc', name: 'CORAL', color: 0xff3d7f, type: '旋回', desc: '鋭く曲がり、横に流れにくい。最高速は低め。',
+    top: 77, thrust: 30, turn: 1.2, grip: 4.0, corner: 1.1, boost: 32, charge: 1.0, drain: 1.0, mass: 0.95, stats: [2, 3, 5, 3, 2] },
+  { id: 'classic', name: 'MARLIN', color: 0x3d7bff, type: '最高速', desc: '直線で一番伸びる。曲がりは重く、よく滑る。',
+    top: 97, thrust: 28, turn: 0.9, grip: 2.6, corner: 0.95, boost: 37, charge: 0.85, drain: 1.0, mass: 1.3, stats: [5, 2, 2, 3, 5] },
+  { id: 'drop', name: 'GULL', color: 0xe8e8e8, type: '加速・ブースト', desc: '出足が鋭く、ブーストがよく溜まる。軽くて弾かれやすい。',
+    top: 80, thrust: 37, turn: 1.06, grip: 3.1, corner: 1.0, boost: 31, charge: 1.5, drain: 0.8, mass: 0.75, stats: [2, 5, 3, 5, 1] },
 ];
-const racers = RACER_DEFS.map((d) => {
-  const m = makeCraft(d.color, d.design);
+const STAT_NAMES = ['最高速', '加速', '旋回', 'ブースト', '重さ'];
+// 推力と最高速から空気抵抗の係数を決める（推力 = DRAG1·v + drag2·v² が最高速でつり合う）
+for (const M of MACHINES) M.drag2 = (M.thrust - DRAG1 * M.top) / (M.top * M.top);
+const AI_SKILL = [0.985, 0.97, 0.955];   // 選ばれなかったマシンを AI が走らせる強さ（並び順）
+
+const racers = MACHINES.map((M, mi) => {
+  const m = makeCraft(M.color, M.id);
   return {
-    ...m, trail: makeTrail(), name: d.name, color: d.color, isPlayer: !!d.player, skill: d.skill || 1,
+    ...m, trail: makeTrail(), M, mi, name: M.name, color: M.color, isPlayer: false, skill: 1,
     x: 0, z: 0, y: HOVER_H, vx: 0, vz: 0, h: 0, w: 0, idx: 0, s: 0, lap: 0, half: false,
-    finished: false, finishTime: 0, laps: [], lapStart: 0, boost: 0.5, boosting: false, padCD: 0,
+    finished: false, finishTime: 0, laps: [], lapStart: 0, boost: 0.5, boosting: false, padCD: 0, padT: 0,
     ctrl: { throttle: 0, brake: 0, steer: 0, air: false, boost: false },
     lane: 0, laneTarget: 0, laneTimer: 0, aiBoostT: 0, accelVis: 0, phase: rand() * 6.28, hit: 0, prevS: 0, dLat: 0,
+    alt: 0, vy: 0, onRamp: false, spinLeft: 0, tumble: 0, tumbleV: 0,
   };
 });
-const player = racers[0];
+let player = racers[0];
+let selectedMachine = 0;
+try { const v = parseInt(localStorage.getItem('hover-machine'), 10); if (v >= 0 && v < MACHINES.length) selectedMachine = v; } catch (e) {}
+// 自機を決め、残りを AI に割り当てる
+function assignMachines() {
+  let k = 0;
+  racers.forEach((r) => {
+    r.isPlayer = r.mi === selectedMachine;
+    r.skill = r.isPlayer ? 1 : AI_SKILL[k++];
+    r.name = r.isPlayer ? 'あなた' : r.M.name;
+  });
+  player = racers[selectedMachine];
+}
+assignMachines();
 
 function placeOnGrid() {
   const slots = [[0, -8], [0, 8], [1, -8], [1, 8]];
-  const order = [1, 2, 3, 0];  // プレイヤーは後列
-  order.forEach((ri, k) => {
-    const r = racers[ri];
+  const order = racers.filter((r) => !r.isPlayer).concat([player]);  // プレイヤーは後列
+  order.forEach((r, k) => {
     const [row, lane] = slots[k];
     const i = wrap(Math.round((40 - row * 16) / SEG));
     r.x = TPx[i] + TNx[i] * lane; r.z = TPz[i] + TNz[i] * lane;
     r.vx = r.vz = 0; r.w = 0; r.h = Math.atan2(TTx[i], TTz[i]);
     r.idx = i; r.s = i * SEG; r.prevS = r.s; r.lap = 0; r.half = false;
-    r.finished = false; r.finishTime = 0; r.laps = []; r.boost = 0.5; r.padCD = 0;
-    r.lane = lane; r.laneTarget = lane; r.hit = 0;
+    r.finished = false; r.finishTime = 0; r.laps = []; r.boost = 0.5; r.padCD = 0; r.padT = 0;
+    r.lane = lane; r.laneTarget = lane; r.hit = 0; r.alt = 0; r.vy = 0; r.onRamp = false; r.spinLeft = 0; r.tumble = 0; r.tumbleV = 0;
     resetTrail(r.trail);
     r.scrape = 0;
     for (const k2 in r.ctrl) r.ctrl[k2] = typeof r.ctrl[k2] === 'boolean' ? false : 0;
@@ -1538,13 +2904,32 @@ const keys = {};
 window.addEventListener('keydown', (e) => {
   keys[e.code] = true;
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) e.preventDefault();
+  if (demo) { if (e.code === 'Enter') leaveDemo(); return; }      // デモ中は Enter で選択画面へ（ほかのキーは効かない）
+  // 一時停止中は、メニューの操作だけを受け付ける
+  if (paused && (state === 'race' || state === 'countdown')) {
+    if (e.code === 'Escape' || e.code === 'KeyP') setPause(false);
+    else if (['ArrowUp', 'ArrowDown', 'KeyW', 'KeyS'].includes(e.code)) { pauseSel = 1 - pauseSel; showPauseSel(); }
+    else if (e.code === 'Enter') { if (pauseSel === 0) setPause(false); else retire(); }
+    else if (e.code === 'KeyM') { muted = !muted; }
+    return;
+  }
+  if (e.code === 'Escape' && (state === 'race' || state === 'countdown') && !AUTO) { setPause(true); return; }
   if (e.code === 'Enter') { if (state === 'title' || state === 'result') startRace(); }
-  if (e.code === 'KeyP' && (state === 'race' || state === 'countdown')) paused = !paused;
+  if (e.code === 'Escape' && state === 'title' && !AUTO) { enterDemo(); return; }
+  if (state === 'title' && !AUTO) {
+    if (e.code === 'ArrowLeft' || e.code === 'KeyA') pickMachine((selectedMachine + MACHINES.length - 1) % MACHINES.length);
+    if (e.code === 'ArrowRight' || e.code === 'KeyD') pickMachine((selectedMachine + 1) % MACHINES.length);
+  }
+  if (e.code === 'Escape' && state === 'result' && !AUTO) backToTitle();
+  if (e.code === 'KeyP' && (state === 'race' || state === 'countdown') && !AUTO) setPause(true);
   if (e.code === 'KeyM') { muted = !muted; if (audio) audio.master.gain.value = muted ? 0 : 0.6; }
   if (e.code === 'KeyR' && state === 'race') respawn(player);
 });
 window.addEventListener('keyup', (e) => { keys[e.code] = false; });
-window.addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+window.addEventListener('blur', () => {
+  for (const k in keys) keys[k] = false;
+  if ((state === 'race' || state === 'countdown') && !AUTO && !demo && !paused) setPause(true);   // ほかのウィンドウへ移ったら止める
+});
 
 function playerControl(dt) {
   const c = player.ctrl;
@@ -1562,10 +2947,19 @@ function aiControl(r, dt) {
   const speed = Math.hypot(r.vx, r.vz);
   r.laneTimer -= dt;
   if (r.laneTimer <= 0) { r.laneTimer = 2 + rand() * 3; r.laneTarget = (rand() * 2 - 1) * HALF * 0.55; }
-  r.lane += (r.laneTarget - r.lane) * Math.min(1, dt * 0.6);
-  const look = 16 + speed * 0.5;
+  // 飛び越し用のジャンプ台が近いときは、機雷を避けずに台の真ん中（手前の加速パネルも同じ線上）をねらう
+  let jump = null;
+  for (const rp of ramps) if (rp.over) { const a = sdiff(rp.i, r.idx) * SEG; if (a > -2 && a < 220) jump = rp; }
+  // 機雷原では、次の列の通り道の中心をねらう（ジャンプ台へ向かう間と跳んでいる間は除く）
+  let row = null, rowAhead = Infinity;
+  if (!jump && r.alt <= 0.3) for (const q of mineRows) { const a = sdiff(q.i, r.idx) * SEG; if (a > -3 && a < 120 && a < rowAhead) { rowAhead = a; row = q; } }
+  if (jump) r.lane += (jump.lat - r.lane) * Math.min(1, dt * 3);
+  else if (row) r.lane += (row.center - r.lane) * Math.min(1, dt * 3);
+  else r.lane += (r.laneTarget - r.lane) * Math.min(1, dt * 0.6);
+  const look = jump ? 10 + speed * 0.25 : 16 + speed * 0.5;   // ジャンプ台へ合わせるときは近くを見て細かく合わせる
   const ti = wrap(r.idx + Math.round(look / SEG));
-  const tx = TPx[ti] + TNx[ti] * r.lane, tz = TPz[ti] + TNz[ti] * r.lane;
+  let tx = TPx[ti] + TNx[ti] * r.lane, tz = TPz[ti] + TNz[ti] * r.lane;
+  if (row && rowAhead > 6) { tx = TPx[row.i] + TNx[row.i] * row.center; tz = TPz[row.i] + TNz[row.i] * row.center; }   // 次の列の通り道を直接ねらう
   const fx = Math.sin(r.h), fz = Math.cos(r.h), rx = -fz, rz = fx;
   const dx = tx - r.x, dz = tz - r.z;
   const ang = Math.atan2(dx * rx + dz * rz, dx * fx + dz * fz);
@@ -1579,13 +2973,14 @@ function aiControl(r, dt) {
     const diff = progressOf(player) - progressOf(r);
     rubber = clamp(1 + diff / 4000, 0.96, 1.04);
   }
-  const vmax = (r.aiBoostT > 0 ? 125 : 83) * r.skill * rubber;
-  const vT = Math.min(vmax, Math.sqrt(34 / Math.max(kmax, 1e-5)));
+  const vmax = r.M.top * (r.padT > 0 ? 1.9 : r.aiBoostT > 0 ? 1.5 : 1) * r.skill * rubber;   // パネルの勢いをブレーキで殺さない
+  let vT = Math.min(vmax, Math.sqrt(34 * r.M.corner / Math.max(kmax, 1e-5)));
   c.throttle = speed < vT ? 1 : 0;
   c.brake = speed > vT + 7 ? 1 : 0;
-  c.air = Math.abs(ang) > 0.32 && speed > 35;
+  c.air = Math.abs(ang) > 0.32 && speed > 35 && r.alt <= 0;
   r.aiBoostT -= dt;
   if (r.aiBoostT <= 0 && r.boost > 0.6 && kmax < 0.003 && speed > 50) r.aiBoostT = 1.2 + rand();
+  if (jump && r.boost > 0.3 && sdiff(jump.i, r.idx) * SEG < 90) r.aiBoostT = Math.max(r.aiBoostT, 0.3);   // 飛び越し用の台へはブーストして入る
   c.boost = r.aiBoostT > 0;
 }
 
@@ -1595,35 +2990,39 @@ function stepRacer(r, dt, controlsOn) {
   // 旋回：速いほど曲がりにくく、エアブレーキで鋭く曲がる
   let fx = Math.sin(r.h), fz = Math.cos(r.h);
   const vf0 = r.vx * fx + r.vz * fz;
-  const turnMax = 1.9 / (1 + Math.max(0, vf0) / 60) * (c.air ? 1.6 : 1);
+  const M = r.M, airborne = r.alt > 0.3 && !r.onRamp;   // 跳んでいる間は水を掴めない
+  const turnMax = 1.9 * M.turn / (1 + Math.max(0, vf0) / 60) * (c.air ? 1.6 : 1) * (airborne ? 0.45 : 1);
   const dir = vf0 < -1 ? -1 : 1;
   const low = Math.min(1, Math.abs(vf0) / 6 + 0.3);
   const targetW = -c.steer * turnMax * dir * low;
   r.w += (targetW - r.w) * Math.min(1, dt * 6);
   r.h += r.w * dt;
+  // 機雷で吹き飛ばされると、その場で 1 回転する（回り終えると元の向きに戻る）
+  if (r.spinLeft) { const st = Math.sign(r.spinLeft) * Math.min(Math.abs(r.spinLeft), 9 * dt); r.h += st; r.spinLeft -= st; if (Math.abs(r.spinLeft) < 1e-4) r.spinLeft = 0; }
   fx = Math.sin(r.h); fz = Math.cos(r.h);
   const rx = -fz, rz = fx;
   let vf = r.vx * fx + r.vz * fz;
   let vl = r.vx * rx + r.vz * rz;
   // 推力・ブレーキ
   let a = 0;
-  if (c.throttle) a += THRUST * r.skill;
+  if (c.throttle) a += M.thrust * r.skill * (airborne ? 0.5 : 1);
   r.boosting = false;
-  if (c.boost && r.boost > 0.01 && vf > 5) { a += BOOST_THRUST; r.boost = Math.max(0, r.boost - dt * 0.25); r.boosting = true; }
+  if (c.boost && r.boost > 0.01 && vf > 5) { a += M.boost; r.boost = Math.max(0, r.boost - dt * 0.25 * M.drain); r.boosting = true; }
+  if (r.padT > 0) { const k = r.padT / PAD_TIME; a += PAD_THRUST * (0.35 + 0.65 * k); r.padT -= dt; r.boosting = true; }   // パネルの追い風
   if (c.brake) a -= vf > 1 ? 34 : 12;
   vf += a * dt;
   // 抵抗（エアブレーキで増える）
-  const k2 = c.air ? DRAG2 * 1.9 : DRAG2;
+  const k2 = c.air ? M.drag2 * 1.9 : M.drag2;
   vf -= (DRAG1 * vf + k2 * vf * Math.abs(vf)) * dt;
   // 横滑り：ホバーなのでグリップは弱め。逃がした横速度の一部を前進に回す
-  const grip = c.air ? 1.0 : 3.0;
+  const grip = (c.air ? M.grip / 3 : M.grip) * (airborne ? 0.25 : 1);
   const lose = vl * (1 - Math.exp(-grip * dt));
   vl -= lose;
   vf += Math.abs(lose) * 0.22 * Math.sign(vf || 1);
   // ドリフトでブーストが溜まる
   const speed = Math.hypot(vf, vl);
-  if (c.air && speed > 35 && Math.abs(vl) > 4) r.boost = Math.min(1, r.boost + dt * 0.28);
-  r.boost = Math.min(1, r.boost + dt * 0.015);
+  if (c.air && speed > 35 && Math.abs(vl) > 4) r.boost = Math.min(1, r.boost + dt * 0.28 * M.charge);
+  r.boost = Math.min(1, r.boost + dt * 0.015 * M.charge);
   r.vx = vf * fx + vl * rx; r.vz = vf * fz + vl * rz;
   r.x += r.vx * dt; r.z += r.vz * dt;
   r.accelVis += (a - r.accelVis) * Math.min(1, dt * 4);
@@ -1675,15 +3074,62 @@ function stepRacer(r, dt, controlsOn) {
       }
     }
   }
+  // ジャンプ台：上っている間は台の面に沿って持ち上がり、先端を越えたら放物線で跳ぶ
+  {
+    let on = null, along = 0;
+    if (vf > 2) for (const rp of ramps) {
+      const al = sdiff(i, rp.i) * SEG;
+      if (al >= 0 && al <= rp.len && Math.abs(d - rp.lat) < rp.width / 2) { on = rp; along = al; break; }
+    }
+    const surf = on ? on.h * along / on.len : -1;
+    if (on && surf >= r.alt - 0.6) {
+      r.alt = surf; r.vy = vf * on.h / on.len; r.onRamp = true;
+    } else {
+      if (r.onRamp && r.isPlayer && r.vy > 6) flash('JUMP!', 600);
+      r.onRamp = false;
+      if (r.alt > 0 || r.vy > 0) {
+        r.vy -= GRAVITY * dt; r.alt += r.vy * dt;
+        if (r.alt <= 0) {                                   // 着水
+          const impact = -r.vy;
+          r.alt = 0; r.vy = 0;
+          if (impact > 4) {
+            splashBurst(r.x, r.z, Math.min(90, 20 + impact * 4), 6 + impact * 0.5);
+            r.hit = Math.max(r.hit, Math.min(1, impact / 16));
+            r.vx *= 0.97; r.vz *= 0.97;
+          }
+        }
+      }
+    }
+  }
+  // 機雷：当たると爆発して消え、機体は吹き飛ばされる（ダメージは無い。勢いを失った分がタイムロスになる）。高く跳んでいれば越えられる
+  if (r.alt < 2.5) for (const m of mines) {
+    if (!m.active || Math.abs(sdiff(i, m.i)) > 10) continue;
+    const dx = r.x - m.x, dz = r.z - m.z, dd = Math.hypot(dx, dz);
+    if (dd > 3.4) continue;   // 機雷（角まで 約 2 m）＋機体の半径
+    explodeMine(m);
+    const nx = dd > 0.01 ? dx / dd : -fx, nz = dd > 0.01 ? dz / dd : -fz;
+    const keep = 0.25 + 0.1 * M.mass, kick = 15 / Math.sqrt(M.mass);   // 重い機体ほど勢いが残り、飛ばされにくい
+    r.vx = r.vx * keep + nx * kick; r.vz = r.vz * keep + nz * kick;
+    r.vy = 12 / Math.sqrt(M.mass); r.alt = Math.max(r.alt, 0.5); r.onRamp = false;
+    r.w = 0; r.padT = 0; r.aiBoostT = 0;
+    const sg = Math.random() < 0.5 ? -1 : 1;
+    r.spinLeft = sg * Math.PI * 2; r.tumble = 0; r.tumbleV = -sg * Math.PI * 2 / 0.9;
+    r.hit = 1;
+    splashBurst(m.x, m.z, 110, 18); sparkBurst(m.x, m.z, 0, 0, 90);
+    if (r.isPlayer) { flash('BOOM!', 900); sfxBoom(); }
+    if (r === (camRacer || player)) shake = Math.max(shake, 2.6);
+    break;
+  }
   // 加速パネル
   r.padCD -= dt;
-  if (r.padCD <= 0) {
+  if (r.padCD <= 0 && r.alt < 1) {
     for (const p of pads) {
       let di = Math.abs(i - p.i); di = Math.min(di, N - di);
       if (di * SEG < 9 && Math.abs(d) < 5.5) {
-        r.vx += fx * 20; r.vz += fz * 20; r.padCD = 1.2;
-        splashBurst(r.x, r.z, 36, 9);
-        if (r.isPlayer) { flash('BOOST!', 600); sfxPad(); }
+        r.vx += fx * PAD_KICK; r.vz += fz * PAD_KICK; r.padCD = 1.2; r.padT = PAD_TIME;
+        r.boost = Math.min(1, r.boost + 0.2);                          // ブーストのゲージも少し回復
+        splashBurst(r.x, r.z, 30, 8);
+        if (r.isPlayer) { flash('BOOST!', 700); sfxPad(); shake = Math.max(shake, 0.5); }
       }
     }
   }
@@ -1699,6 +3145,7 @@ function progressOf(r) { return r.lap * TRACK_LEN + r.s; }
 function respawn(r) {
   const i = r.idx;
   r.x = TPx[i]; r.z = TPz[i]; r.vx = r.vz = 0; r.w = 0; r.h = Math.atan2(TTx[i], TTz[i]);
+  r.alt = 0; r.vy = 0; r.onRamp = false;
 }
 
 function collideRacers() {
@@ -1707,12 +3154,13 @@ function collideRacers() {
     const dx = B.x - A.x, dz = B.z - A.z; const d = Math.hypot(dx, dz);
     const R = 3.4;
     if (d > 0.001 && d < R) {
-      const nx = dx / d, nz = dz / d, push = (R - d) / 2;
-      A.x -= nx * push; A.z -= nz * push; B.x += nx * push; B.z += nz * push;
+      if (Math.abs(A.alt - B.alt) > 2.5) continue;          // 片方が跳んでいれば当たらない
+      const nx = dx / d, nz = dz / d, wa = B.M.mass / (A.M.mass + B.M.mass), wb = 1 - wa, push = R - d;
+      A.x -= nx * push * wa; A.z -= nz * push * wa; B.x += nx * push * wb; B.z += nz * push * wb;
       const rv = (B.vx - A.vx) * nx + (B.vz - A.vz) * nz;
       if (rv < 0) {
-        const j = -rv * 0.75;
-        A.vx -= nx * j; A.vz -= nz * j; B.vx += nx * j; B.vz += nz * j;
+        const j = -rv * 1.5;                                   // 重さの比で分ける（同じ重さなら以前と同じ 0.75 ずつ）
+        A.vx -= nx * j * wa; A.vz -= nz * j * wa; B.vx += nx * j * wb; B.vz += nz * j * wb;
         const m = Math.min(1, -rv / 20);
         A.hit = Math.max(A.hit, m); B.hit = Math.max(B.hit, m);
         if (-rv > 4) splashBurst((A.x + B.x) / 2, (A.z + B.z) / 2, Math.min(50, 8 - rv * 2), 4 - rv * 0.3);
@@ -1743,16 +3191,37 @@ function onLap(r) {
 
 function startRace() {
   $('title').classList.add('hidden'); $('result').classList.add('hidden');
-  if (!AUTO) ensureAudio();
+  document.body.classList.remove('intitle');
+  for (const q of racers) q.root.visible = true;
+  if (!AUTO && !demo) ensureAudio();
   placeOnGrid();
-  raceTime = 0; countdown = 3.999; finishOrder = []; bestLap = Infinity; resultTimer = 0; paused = false;
+  raceTime = 0; countdown = 3.999; finishOrder = []; bestLap = Infinity; resultTimer = 0; paused = false; $('pause').classList.add('hidden');
   state = 'countdown';
   racers.forEach((r) => { r.lapStart = 0; });
   snapCamera();
 }
 
+// 一時停止：レースを止めてメニューを出す（音も止める）。リタイアは選択画面へ戻る
+let pauseSel = 0;
+function showPauseSel() { $('resumebtn').classList.toggle('sel', pauseSel === 0); $('retirebtn').classList.toggle('sel', pauseSel === 1); }
+function setPause(on) {
+  paused = on;
+  $('pause').classList.toggle('hidden', !on);
+  if (on) { pauseSel = 0; showPauseSel(); }
+  if (audio) audio.master.gain.value = on || muted ? 0 : 0.6;
+}
+function retire() { setPause(false); backToTitle(); }
+
+function backToTitle() {
+  $('result').classList.add('hidden'); $('title').classList.remove('hidden');
+  document.body.classList.add('intitle');
+  state = 'title'; paused = false; $('pause').classList.add('hidden'); finishOrder = []; camRacer = null; camMode = 'chase';
+  $('center').textContent = ''; $('laptoast').textContent = '';
+  placeOnGrid();
+}
+
 function showResult() {
-  if (AUTO) { state = 'result'; setTimeout(startRace, 3500); return; }
+  if (AUTO || demo) { state = 'result'; setTimeout(() => { if (AUTO || demo) startRace(); }, 3500); return; }   // 自動走行はレースを繰り返す
   state = 'result';
   const rank = finishOrder.indexOf(player) + 1;
   $('resulttitle').textContent = rank === 1 ? 'WINNER!' : 'FINISH';
@@ -1820,6 +3289,14 @@ function sfxThud(m) {
   s.buffer = audio.buf; lp.type = 'lowpass'; lp.frequency.value = 500; g.gain.setValueAtTime(0.5 * m, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
   s.connect(lp); lp.connect(g); g.connect(audio.master); s.start(t); s.stop(t + 0.4);
 }
+function sfxBoom() {   // 爆発：低い雑音の「ドン」と、尾を引く響き
+  if (!audio) return;
+  const t = audio.ctx.currentTime, s = audio.ctx.createBufferSource(), g = audio.ctx.createGain(), lp = audio.ctx.createBiquadFilter();
+  s.buffer = audio.buf; lp.type = 'lowpass'; lp.frequency.setValueAtTime(900, t); lp.frequency.exponentialRampToValueAtTime(120, t + 1.2);
+  g.gain.setValueAtTime(0.9, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.4);
+  s.connect(lp); lp.connect(g); g.connect(audio.master); s.start(t); s.stop(t + 1.5);
+  blip(70, 0.5, 'sine', 0.35);
+}
 const sfxPad = () => { blip(660, 0.15, 'triangle', 0.15); setTimeout(() => blip(990, 0.2, 'triangle', 0.12), 70); };
 const sfxFinish = () => { [523, 659, 784, 1046].forEach((f, k) => setTimeout(() => blip(f, 0.35, 'triangle', 0.15), k * 120)); };
 
@@ -1834,12 +3311,31 @@ function desiredCam(r, out) {
   const fx = Math.sin(r.h), fz = Math.cos(r.h);
   const sp = Math.hypot(r.vx, r.vz);
   if (camMode === 'side') { const sx = Math.sin(sideH), sz = Math.cos(sideH); out.set(r.x - sz * 11 + sx * 7, sideY + 2.2, r.z + sx * 11 + sz * 7); return; }
-  const back = 11 + sp * 0.03;
-  out.set(r.x - fx * back, r.y + 4.2 + sp * 0.006, r.z - fz * back);
+  // トンネルの中では少し近く・低くする（狭い所でも機体と前が見える）
+  const back = (11 + sp * 0.03) * (1 - 0.3 * camTunnel);
+  out.set(r.x - fx * back, r.y + (4.2 + sp * 0.006) * (1 - 0.25 * camTunnel), r.z - fz * back);
+}
+// カメラがトンネルの壁・天井にめり込まないよう、内側の断面（半楕円）から一回り内側へ押し戻す
+let camTunnel = 0;   // 追っている機体がトンネルの中にいる度合い（0〜1。ならした値）
+function keepCameraInTunnel(cr) {
+  const p = camera.position, ci = nearestIdx(p.x, p.z, cr.idx);
+  if (valley) {   // 谷・崖：壁のある側だけ、斜面より内側へ
+    const d = (p.x - TPx[ci]) * TNx[ci] + (p.z - TPz[ci]) * TNz[ci], m = valley.wallAt(p.y);
+    const dc = clamp(d, valley.has(ci, -1) ? -m : -Infinity, valley.has(ci, 1) ? m : Infinity);
+    p.x += TNx[ci] * (dc - d); p.z += TNz[ci] * (dc - d);
+  }
+  if (!tunnel) return;
+  if (sdiff(ci, tunnel.i0) < 0 || sdiff(tunnel.i1, ci) < 0) return;     // カメラがトンネルの区間の外
+  const W = tunnel.W - 3, B = tunnel.BASE, H = tunnel.HC - 2;           // 壁から 3 m、天井から 2 m あける
+  p.y = Math.min(p.y, B + (H - B) * 0.92);
+  const k = (p.y - B) / (H - B), maxD = W * Math.sqrt(Math.max(0, 1 - k * k));   // その高さで横へ出てよい幅
+  const d = (p.x - TPx[ci]) * TNx[ci] + (p.z - TPz[ci]) * TNz[ci], dc = clamp(d, -maxD, maxD);
+  p.x += TNx[ci] * (dc - d); p.z += TNz[ci] * (dc - d);
 }
 function snapCamera() {
   const sr = camRacer || player; sideH = sr.h; sideY = sr.y;
-  desiredCam(sr, camTarget); camera.position.copy(camTarget);
+  camTunnel = tunnel && tunnel.shadeAt(sr.x, sr.z) > 0.5 ? 1 : 0;
+  desiredCam(sr, camTarget); camera.position.copy(camTarget); keepCameraInTunnel(sr);
 }
 function updateCamera(dt) {
   const cr = camRacer || player;
@@ -1847,9 +3343,11 @@ function updateCamera(dt) {
     sideH += wrapAng(cr.h - sideH) * (1 - Math.exp(-dt * 1.2));   // 向きは約 0.8 秒かけてならす
     sideY += (cr.y - sideY) * (1 - Math.exp(-dt * 1.0));           // 上下は約 1 秒かけてならす
   }
+  if (tunnel) camTunnel += ((tunnel.shadeAt(cr.x, cr.z) > 0.5 ? 1 : 0) - camTunnel) * (1 - Math.exp(-dt * 3));
   desiredCam(cr, camTarget);
   if (camMode === 'side') camera.position.copy(camTarget);         // 前後左右は機体にそのまま付ける（遅らせると置いていかれる）
   else camera.position.lerp(camTarget, 1 - Math.exp(-dt * 7));
+  keepCameraInTunnel(cr);
   const minY = waveH(camera.position.x, camera.position.z, simTime) + 1.5;
   if (camera.position.y < minY) camera.position.y = minY;
   const fx = Math.sin(cr.h), fz = Math.cos(cr.h);
@@ -1865,20 +3363,31 @@ function updateCamera(dt) {
 
 // ---------- 見た目の更新 ----------
 function updateVisual(r, dt, t) {
-  r.y = waveH(r.x, r.z, t) + HOVER_H + Math.sin(t * 6.5 + r.phase) * 0.07;
+  r.y = waveH(r.x, r.z, t) + HOVER_H + Math.sin(t * 6.5 + r.phase) * 0.07 * (r.alt > 0 ? 0 : 1) + r.alt;
   r.root.position.set(r.x, r.y, r.z);
   r.root.rotation.y = r.h;
   const fx = Math.sin(r.h), fz = Math.cos(r.h);
   const hf = waveH(r.x + fx * 2.5, r.z + fz * 2.5, t), hb = waveH(r.x - fx * 2.5, r.z - fz * 2.5, t);
   const hl = waveH(r.x + fz * 1.5, r.z - fx * 1.5, t), hr = waveH(r.x - fz * 1.5, r.z + fx * 1.5, t);
   const sp = Math.hypot(r.vx, r.vz);
-  const pitch = Math.atan2(hf - hb, 5) + r.accelVis * 0.004;
+  const pitch = (r.alt > 0 ? Math.atan2(r.vy, Math.max(sp, 10)) * 0.9 : Math.atan2(hf - hb, 5)) + r.accelVis * 0.004;   // 跳んでいる間は飛ぶ向きに機首を向ける
   const roll = clamp(-r.w * sp * 0.011, -0.5, 0.5) + Math.atan2(hl - hr, 3) * 0.5;
   r.body.rotation.x += (-pitch - r.body.rotation.x) * Math.min(1, dt * 8);
-  r.body.rotation.z += (roll - r.body.rotation.z) * Math.min(1, dt * 6);
+  if (r.tumbleV) {   // 吹き飛ばされている間は横に 1 回転（きりもみ）
+    r.tumble += r.tumbleV * dt;
+    if (Math.abs(r.tumble) >= Math.PI * 2) { r.tumble = 0; r.tumbleV = 0; r.body.rotation.z = roll; }
+    else r.body.rotation.z = roll + r.tumble;
+  } else r.body.rotation.z += (roll - r.body.rotation.z) * Math.min(1, dt * 6);
   r.craft.update(t, r.ctrl.throttle ? 1 : 0, r.boosting, state === 'race' || state === 'result');   // スタートまで噴射しない
-  sprayFor(r, dt);
-  updateTrail(r, t);
+  // ブースト（ボタン・加速パネル）に入った瞬間に「ドンッ」。連打で出続けないよう 0.6 秒あける
+  r._burstCD = (r._burstCD || 0) - dt;
+  if (r.boosting && !r._wasBoost && r._burstCD <= 0 && (state === 'race' || state === 'result')) {
+    boostBurst(r.x, r.z, fx, fz, r.vx, r.vz); r._burstCD = 0.6;
+    if (r === (camRacer || player)) { shake = Math.max(shake, 0.9); camera.fov -= 5; }   // 一瞬つぶれてから広がる
+    if (r.isPlayer) sfxThud(1.4);
+  }
+  r._wasBoost = r.boosting;
+  if (r.alt < 1) { sprayFor(r, dt); updateTrail(r, t); }   // 跳んでいる間はしぶきも航跡も出ない
 }
 
 // ---------- 画面表示 ----------
@@ -1892,6 +3401,26 @@ const toMM = (x, z) => [200 - (mmB.ox + (x - mmB.minX) * mmB.s), 200 - (mmB.oz +
   g.lineWidth = 7; g.strokeStyle = 'rgba(160,230,255,0.35)'; g.lineJoin = 'round'; g.beginPath();
   for (let i = 0; i <= N; i += 8) { const [u, v] = toMM(TPx[i % N], TPz[i % N]); i ? g.lineTo(u, v) : g.moveTo(u, v); }
   g.closePath(); g.stroke();
+  if (valley) {   // V 字谷は両脇の尾根を茶色の帯で
+    g.lineWidth = 16; g.strokeStyle = 'rgba(150,120,85,0.55)'; g.lineCap = 'butt'; g.beginPath();
+    for (let i = valley.i0; i <= valley.i1; i += 4) { const [u, v] = toMM(TPx[wrap(i)], TPz[wrap(i)]); i === valley.i0 ? g.moveTo(u, v) : g.lineTo(u, v); }
+    g.stroke();
+    g.lineWidth = 7; g.strokeStyle = 'rgba(160,230,255,0.35)'; g.stroke();
+    if (valley.iEnd > valley.i1) {   // 右側だけの崖は、右に寄せた細い帯
+      g.lineWidth = 5; g.strokeStyle = 'rgba(150,120,85,0.7)'; g.beginPath();
+      for (let i = valley.i1; i <= valley.iEnd; i += 4) { const j = wrap(i), [u, v] = toMM(TPx[j] + TNx[j] * 34, TPz[j] + TNz[j] * 34); i === valley.i1 ? g.moveTo(u, v) : g.lineTo(u, v); }
+      g.stroke();
+    }
+  }
+  if (tunnel) {   // トンネルは暗い太線
+    g.lineWidth = 9; g.strokeStyle = 'rgba(20,24,30,0.9)'; g.lineCap = 'butt'; g.beginPath();
+    for (let i = tunnel.i0; i <= tunnel.i1; i += 4) { const [u, v] = toMM(TPx[wrap(i)], TPz[wrap(i)]); i === tunnel.i0 ? g.moveTo(u, v) : g.lineTo(u, v); }
+    g.stroke();
+  }
+  g.fillStyle = '#ffd24a';   // ジャンプ台
+  for (const rp of ramps) { const [u, v] = toMM(TPx[rp.i], TPz[rp.i]); g.beginPath(); g.arc(u, v, 3, 0, Math.PI * 2); g.fill(); }
+  g.fillStyle = '#ff4030';   // 機雷
+  for (const m of mines) { const [u, v] = toMM(m.x, m.z); g.fillRect(u - 1, v - 1, 2, 2); }
   const [u0, v0] = toMM(TPx[0], TPz[0]); g.fillStyle = '#fff'; g.fillRect(u0 - 4, v0 - 4, 8, 8);
 }
 function drawMinimap() {
@@ -1921,7 +3450,7 @@ function updateHUD() {
   });
   $('posnum').textContent = order.indexOf(player) + 1; $('posof').textContent = '/' + racers.length;
   const wrong = state === 'race' && (player.vx * TTx[player.idx] + player.vz * TTz[player.idx]) < -8;
-  $('msg').textContent = wrong ? '逆走しています' : (paused ? '一時停止中（P で再開）' : '');
+  $('msg').textContent = wrong && !paused ? '逆走しています' : '';
   drawMinimap();
 }
 
@@ -1931,7 +3460,7 @@ const FIXED = 1 / 120;
 let acc = 0;
 function frame(now) {
   requestAnimationFrame(frame);
-  let dt = Math.min(0.05, (now - last) / 1000); last = now;
+  let dt = clamp((now - last) / 1000, 0, 0.05); last = now;   // 最初のコマの時刻が初期化より前になることがあるので、負にしない
   if (paused) { updateHUD(); renderReflection(); haze.render(); return; }
   simTime += dt;
 
@@ -1945,9 +3474,9 @@ function frame(now) {
   if (state === 'race') raceTime += dt;
 
   const running = state === 'race' || state === 'result';
-  if (state === 'race' && !player.finished && !AUTO) playerControl(dt);
+  if (state === 'race' && !player.finished && !AUTO && !demo) playerControl(dt);
   // 自機がゴールした後（と ?auto のとき）は AI に任せて流す
-  for (const r of racers) if (!r.isPlayer || player.finished || AUTO) aiControl(r, dt);
+  for (const r of racers) if (!r.isPlayer || player.finished || AUTO || demo) aiControl(r, dt);
 
   acc += dt;
   while (acc >= FIXED) {
@@ -1964,13 +3493,29 @@ function frame(now) {
   for (const ps of particleSystems) { ps.mat.uniforms.uScale.value = pScale; ps.update(dt, simTime); }
   updateRails(dt, simTime);
   updatePads(simTime);
+  updateRamps(simTime);
+  updateBlimps(dt, simTime);
+  if (tunnel) tunnel.updateNeon(simTime);
+  updateMines(dt, simTime, (x, z) => racers.every((q) => Math.hypot(q.x - x, q.z - z) > 45));   // 機体が近くにいないときだけ浮かび直す
 
   if (state === 'title') {
-    // タイトル画面ではゆっくり回るカメラ
-    const a = simTime * 0.08;
-    camera.position.set(Math.cos(a) * 700, 160, Math.sin(a) * 700 + 150);
-    camera.lookAt(150, 0, 150); camera.fov = 60; camera.updateProjectionMatrix();
+    // タイトル画面では、選んでいるマシンのまわりをゆっくり回る（右側の選択欄に隠れないよう、機体を画面の左寄りに置く）
+    const r = player, a = simTime * 0.35, wide = window.innerWidth > 640;
+    for (const q of racers) q.root.visible = q === r;   // 選んでいるマシンだけを見せる
+    camera.position.set(r.x + Math.sin(a) * 15, r.y + 4, r.z + Math.cos(a) * 15);
+    const ox = wide ? Math.cos(a) * 6 : 0, oz = wide ? -Math.sin(a) * 6 : 0;   // カメラから見て右へずらした点を見る
+    camera.lookAt(r.x + ox, r.y + 0.6, r.z + oz); camera.fov = 50; camera.updateProjectionMatrix();
   } else { attractCamera(dt); updateCamera(dt); }
+
+  // トンネル：カメラが屋根の下に入ったら、日の光を弱めて暗くし、追っている機体のまわりだけ灯りで照らす
+  if (tunnel) {
+    tunnelDark += (tunnel.shadeAt(camera.position.x, camera.position.z) - tunnelDark) * Math.min(1, dt * 4);
+    sun.intensity = 1.05 * (1 - 0.93 * tunnelDark);
+    hemi.intensity = 0.75 * (1 - 0.7 * tunnelDark);
+    const cr = camRacer || player;
+    tunnelLight.intensity = 1.5 * tunnelDark;
+    tunnelLight.position.set(cr.x + Math.sin(cr.h) * 5, cr.y + 4, cr.z + Math.cos(cr.h) * 5);
+  }
 
   water.position.x = camera.position.x;
   water.position.z = camera.position.z;
@@ -1996,9 +3541,20 @@ const ATTRACT = /attract/.test(location.search + location.hash);   // デモ画�
 const AUTO = ATTRACT || /auto/.test(location.search + location.hash);  // 自機も AI が走らせる
 if (ATTRACT) document.body.classList.add('attract');
 let readyPings = 0;
+// 起動時のデモ：AI だけでレースを繰り返し、PRESS ENTER を出す。Enter（クリック・タップ）で選択画面へ、選択画面の Esc で戻る
+let demo = false;
+function enterDemo() {
+  demo = true; document.body.classList.add('demo'); document.body.classList.remove('intitle');
+  camTimer = 0; startRace();
+}
+function leaveDemo() {
+  demo = false; document.body.classList.remove('demo');
+  backToTitle();
+}
+$('press').addEventListener('click', leaveDemo);
 let camTimer = 0, camIdx = 0;
 function attractCamera(dt) {
-  if (!ATTRACT || state === 'title') return;
+  if (!(ATTRACT || demo) || state === 'title') return;
   camTimer -= dt;
   if (camTimer > 0) return;
   camTimer = 9 + Math.random() * 4;
@@ -2007,9 +3563,39 @@ function attractCamera(dt) {
   camMode = Math.random() < 0.35 ? 'side' : 'chase';
   snapCamera();
 }
-if (AUTO) startRace();
+if (AUTO) startRace(); else enterDemo();
 $('startbtn').addEventListener('click', startRace);
 $('retrybtn').addEventListener('click', startRace);
+$('menubtn').addEventListener('click', backToTitle);
+$('resumebtn').addEventListener('click', () => setPause(false));
+$('retirebtn').addEventListener('click', retire);
+
+// ---------- 選択画面（マシンとコース） ----------
+const hex = (c) => '#' + c.toString(16).padStart(6, '0');
+function renderPicker() {
+  $('machines').innerHTML = MACHINES.map((M, i) => `
+    <button class="pick${i === selectedMachine ? ' on' : ''}" data-mi="${i}" type="button">
+      <div class="nm"><span class="dot" style="background:${hex(M.color)}"></span>${M.name}</div>
+      <div class="ty">${M.type}</div>
+      ${M.stats.map((v, k) => `<div class="stat"><span>${STAT_NAMES[k]}</span><span class="bar">${[0, 1, 2, 3, 4].map((q) => `<i class="${q < v ? 'f' : ''}"></i>`).join('')}</span></div>`).join('')}
+    </button>`).join('');
+  $('machinedesc').textContent = `${MACHINES[selectedMachine].name}：${MACHINES[selectedMachine].desc}`;
+  $('courses').innerHTML = COURSES.map((C, i) => `
+    <button class="pick${i === courseIdx ? ' on' : ''}" type="button">
+      <canvas width="120" height="120" data-ci="${i}"></canvas>
+      <div><div class="nm">${C.name}</div><div class="ds">${C.desc}<br>1周 ${(TRACK_LEN / 1000).toFixed(1)} km × ${TOTAL_LAPS}周</div></div>
+    </button>`).join('');
+  // コースの形はコースマップの下絵を縮めて使う（いまのコースだけ。増やしたら各コースで描く）
+  const cv = $('courses').querySelector('canvas'); cv.getContext('2d').drawImage(mmBg, 0, 0, 120, 120);
+  $('machines').querySelectorAll('.pick').forEach((el) => el.addEventListener('click', () => pickMachine(+el.dataset.mi)));
+}
+function pickMachine(mi) {
+  if (state !== 'title') return;
+  selectedMachine = mi;
+  try { localStorage.setItem('hover-machine', String(mi)); } catch (e) {}
+  assignMachines(); placeOnGrid(); renderPicker();
+}
+renderPicker();
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
